@@ -1,13 +1,19 @@
 package org.esfe.stayloop.modelos;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 import java.util.List;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "tipos_habitacion")
 public class TipoHabitacion {
-    
+
+    // Getters y Setters
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -31,60 +37,4 @@ public class TipoHabitacion {
     @OneToMany(mappedBy = "tipoHabitacion", cascade = CascadeType.ALL)
     private List<Reserva> reservas;
 
-    // Getters y Setters
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getIdHotel() {
-        return idHotel;
-    }
-
-    public void setIdHotel(Integer idHotel) {
-        this.idHotel = idHotel;
-    }
-
-    public Byte getCantpersonas() {
-        return cantpersonas;
-    }
-
-    public void setCantpersonas(Byte cantpersonas) {
-        this.cantpersonas = cantpersonas;
-    }
-
-    public Byte getCanthab() {
-        return canthab;
-    }
-
-    public void setCanthab(Byte canthab) {
-        this.canthab = canthab;
-    }
-
-    public BigDecimal getCosto() {
-        return costo;
-    }
-
-    public void setCosto(BigDecimal costo) {
-        this.costo = costo;
-    }
-
-    public Hotel getHotel() {
-        return hotel;
-    }
-
-    public void setHotel(Hotel hotel) {
-        this.hotel = hotel;
-    }
-
-    public List<Reserva> getReservas() {
-        return reservas;
-    }
-
-    public void setReservas(List<Reserva> reservas) {
-        this.reservas = reservas;
-    }
 }

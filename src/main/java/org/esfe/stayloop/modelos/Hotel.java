@@ -1,12 +1,18 @@
 package org.esfe.stayloop.modelos;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "hoteles")
 public class Hotel {
-    
+
+    // Getters y Setters
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -35,76 +41,4 @@ public class Hotel {
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
     private List<Imagenes> imagenes;
 
-    // Getters y Setters
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
-    public Integer getIdZona() {
-        return idZona;
-    }
-
-    public void setIdZona(Integer idZona) {
-        this.idZona = idZona;
-    }
-
-    public Zona getZona() {
-        return zona;
-    }
-
-    public void setZona(Zona zona) {
-        this.zona = zona;
-    }
-
-    public List<TipoHabitacion> getTiposHabitacion() {
-        return tiposHabitacion;
-    }
-
-    public void setTiposHabitacion(List<TipoHabitacion> tiposHabitacion) {
-        this.tiposHabitacion = tiposHabitacion;
-    }
-
-    public List<Reserva> getReservas() {
-        return reservas;
-    }
-
-    public void setReservas(List<Reserva> reservas) {
-        this.reservas = reservas;
-    }
-
-    public List<Imagenes> getImagenes() {
-        return imagenes;
-    }
-
-    public void setImagenes(List<Imagenes> imagenes) {
-        this.imagenes = imagenes;
-    }
 }
