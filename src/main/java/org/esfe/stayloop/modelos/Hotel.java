@@ -25,11 +25,11 @@ public class Hotel {
     @Column(nullable = false)
     private String direccion;
     
-    @Column(name = "id_zona")
+    @Column(name = "idZona")
     private Integer idZona;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_zona", insertable = false, updatable = false)
+    @JoinColumn(name = "idZona", insertable = false, updatable = false)
     private Zona zona;
     
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)

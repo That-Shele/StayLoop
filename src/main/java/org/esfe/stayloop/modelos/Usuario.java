@@ -22,7 +22,7 @@ public class Usuario {
     @Column(nullable = false)
     private String nombre;
     
-    @Column(name = "id_rol")
+    @Column(name = "idRol", nullable = false)
     private Integer idRol;
     
     @Email
@@ -34,7 +34,7 @@ public class Usuario {
     private String password;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_rol", insertable = false, updatable = false)
+    @JoinColumn(name = "idRol", insertable = false, updatable = false)
     private Rol rol;
     
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)

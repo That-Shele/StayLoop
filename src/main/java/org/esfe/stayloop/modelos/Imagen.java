@@ -16,7 +16,7 @@ public class Imagen {
     private Integer id;
     
     @NotNull(message = "El hotel es obligatorio")
-    @Column(name = "id_hotel")
+    @Column(name = "idHotel")
     private Integer idHotel;
     
     @NotNull(message = "La imagen es obligatoria")
@@ -25,6 +25,6 @@ public class Imagen {
     private byte[] imagen;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_hotel", insertable = false, updatable = false)
+    @JoinColumn(name = "idHotel", insertable = false, updatable = false)
     private Hotel hotel;
 }

@@ -19,15 +19,15 @@ public class Reserva {
     private Integer id;
     
     @NotNull(message = "El usuario es obligatorio")
-    @Column(name = "id_usuario")
+    @Column(name = "idUsuario")
     private Integer idUsuario;
     
     @NotNull(message = "El hotel es obligatorio")
-    @Column(name = "id_hotel")
+    @Column(name = "idHotel")
     private Integer idHotel;
     
     @NotNull(message = "El tipo de habitación es obligatorio")
-    @Column(name = "id_tipo_habitacion")
+    @Column(name = "idTipoHabitacion")
     private Integer idTipoHabitacion;
     
     @NotNull(message = "La fecha de realización es obligatoria")
@@ -51,15 +51,15 @@ public class Reserva {
     private LocalDateTime fechaFin;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_usuario", insertable = false, updatable = false)
+    @JoinColumn(name = "idUsuario", insertable = false, updatable = false)
     private Usuario usuario;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_hotel", insertable = false, updatable = false)
+    @JoinColumn(name = "idHotel", insertable = false, updatable = false)
     private Hotel hotel;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_tipo_habitacion", insertable = false, updatable = false)
+    @JoinColumn(name = "idTipoHabitacion", insertable = false, updatable = false)
     private TipoHabitacion tipoHabitacion;
 
 }

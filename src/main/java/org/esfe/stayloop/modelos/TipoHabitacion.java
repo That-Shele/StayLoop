@@ -18,7 +18,7 @@ public class TipoHabitacion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    @Column(name = "id_hotel")
+    @Column(name = "idHotel")
     private Integer idHotel;
     
     @Column(nullable = false)
@@ -31,7 +31,7 @@ public class TipoHabitacion {
     private BigDecimal costo;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_hotel", insertable = false, updatable = false)
+    @JoinColumn(name = "idHotel", insertable = false, updatable = false)
     private Hotel hotel;
     
     @OneToMany(mappedBy = "tipoHabitacion", cascade = CascadeType.ALL)
