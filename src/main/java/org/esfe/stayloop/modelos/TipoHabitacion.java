@@ -22,10 +22,10 @@ public class TipoHabitacion {
     private Integer idHotel;
     
     @Column(nullable = false)
-    private Byte cantpersonas;
+    private Byte cantPersonas;
     
     @Column(nullable = false)
-    private Byte canthab;
+    private Byte cantHab;
     
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal costo;
