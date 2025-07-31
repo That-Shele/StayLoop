@@ -1,29 +1,30 @@
 package org.esfe.stayloop.modelos;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
 @Getter
+@Setter
 @Entity
-@Table(name = "imagen")
+@Table(name = "imagenes")
 public class Imagen {
-
-    // Getters y Setters
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
+    @NotNull(message = "El hotel es obligatorio")
     @Column(name = "id_hotel")
     private Integer idHotel;
     
+    @NotNull(message = "La imagen es obligatoria")
     @Lob
     @Column(nullable = false)
     private byte[] imagen;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_hotel", insertable = false, updatable = false)
     private Hotel hotel;
-
 }

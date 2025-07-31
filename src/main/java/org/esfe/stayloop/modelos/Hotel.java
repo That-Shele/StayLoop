@@ -1,7 +1,6 @@
 package org.esfe.stayloop.modelos;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,19 +18,17 @@ public class Hotel {
     private Integer id;
     
     @Column(nullable = false)
-    @NotBlank(message = "El nombre es requerido")
     private String nombre;
-
+    
     private String descripcion;
     
     @Column(nullable = false)
-    @NotBlank(message = "La direccion es requerida")
     private String direccion;
     
     @Column(name = "id_zona")
     private Integer idZona;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_zona", insertable = false, updatable = false)
     private Zona zona;
     

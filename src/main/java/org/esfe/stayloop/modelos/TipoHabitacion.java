@@ -30,7 +30,7 @@ public class TipoHabitacion {
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal costo;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_hotel", insertable = false, updatable = false)
     private Hotel hotel;
     
