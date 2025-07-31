@@ -7,8 +7,8 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
-@Table(name = "imagenes")
-public class Imagenes {
+@Table(name = "imagen")
+public class Imagen {
 
     // Getters y Setters
     @Id
@@ -22,7 +22,7 @@ public class Imagenes {
     @Column(nullable = false)
     private byte[] imagen;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "id_hotel", insertable = false, updatable = false)
     private Hotel hotel;
 

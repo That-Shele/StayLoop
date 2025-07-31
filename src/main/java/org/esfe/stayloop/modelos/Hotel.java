@@ -1,6 +1,7 @@
 package org.esfe.stayloop.modelos;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,17 +19,19 @@ public class Hotel {
     private Integer id;
     
     @Column(nullable = false)
+    @NotBlank(message = "El nombre es requerido")
     private String nombre;
-    
+
     private String descripcion;
     
     @Column(nullable = false)
+    @NotBlank(message = "La direccion es requerida")
     private String direccion;
     
     @Column(name = "id_zona")
     private Integer idZona;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "id_zona", insertable = false, updatable = false)
     private Zona zona;
     
@@ -39,6 +42,6 @@ public class Hotel {
     private List<Reserva> reservas;
     
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
-    private List<Imagenes> imagenes;
+    private List<Imagen> imagenes;
 
 }

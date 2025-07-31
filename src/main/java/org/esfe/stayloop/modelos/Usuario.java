@@ -33,7 +33,7 @@ public class Usuario {
     @Column(nullable = false)
     private String password;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "id_rol", insertable = false, updatable = false)
     private Rol rol;
     

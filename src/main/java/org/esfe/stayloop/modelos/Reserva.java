@@ -39,11 +39,11 @@ public class Reserva {
     @Column(nullable = false)
     private LocalDateTime fechaFin;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "id_usuario", insertable = false, updatable = false)
     private Usuario usuario;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "id_hotel", insertable = false, updatable = false)
     private Hotel hotel;
     
