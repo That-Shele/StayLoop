@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface IRolRepository extends JpaRepository<Rol, Integer> {
-    List<Rol> findByNombreContaining(String nombre);
+    List<Rol> findByNombreContainingIgnoreCase(String nombre);
 }
