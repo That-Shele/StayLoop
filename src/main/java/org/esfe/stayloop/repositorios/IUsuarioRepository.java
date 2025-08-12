@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IUsuarioRepository extends JpaRepository<Usuario, Integer> {
-    List<Usuario> findByIdRolEquals(Integer idRol);
+    List<Usuario> findByIdRolEqualsDesc(Integer idRol);
     List<Usuario> findByNombreContainingIgnoreCase(String nombre);
     Optional<Usuario> findByEmailContainingIgnoreCase(String email);
     List<Usuario> findByPassword(String password);

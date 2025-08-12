@@ -12,8 +12,8 @@ public interface IReservaRepository extends JpaRepository<Reserva, Integer> {
     List<Reserva> findByFechaInicioBefore(LocalDateTime fechaInicio);
     List<Reserva> findByFechaFinAfter(LocalDateTime fechaFin);
     List<Reserva> findByFechaInicioAfter(LocalDateTime fechaInicio);
-    List<Reserva> findByIdUsuario(Integer idUsuario);
+    List<Reserva> findByIdUsuarioDesc(Integer idUsuario);
     List<Reserva> findByTotalGreaterThanEqual(BigDecimal total);
-    List<Reserva> findByIdUsuarioAndIdHotel(Integer idUsuario, Integer idHotel);
-    List<Reserva> findByIdHotel(Integer idHotel);
+    List<Reserva> findByIdUsuarioAndIdHotelDesc(Integer idUsuario, Integer idHotel);
+    List<Reserva> findByIdHotelDesc(Integer idHotel);
 }
