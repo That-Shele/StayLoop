@@ -15,5 +15,5 @@ public interface IReservaRepository extends JpaRepository<Reserva, Integer> {
     List<Reserva> findByIdUsuario(Integer idUsuario);
     List<Reserva> findByTotalGreaterThanEqual(BigDecimal total);
     List<Reserva> findByIdUsuarioAndIdHotel(Integer idUsuario, Integer idHotel);
-
+    List<Reserva> findByIdHotel(Integer idHotel);
 }
