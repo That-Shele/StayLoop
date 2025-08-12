@@ -10,12 +10,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface IReservaRepository extends JpaRepository<Reserva, Integer> {
-    Page<Reserva> findByFechaFinBefore(Pageable pageable);
-    Page<Reserva> findByFechaInicioBefore(Pageable pageable);
-    Page<Reserva> findByFechaFinAfter(Pageable pageable);
-    Page<Reserva> findByFechaInicioAfter(Pageable pageable);
-    Page<Reserva> findByOrderByIdUsuarioDesc(Pageable pageable);
-    Page<Reserva> findByTotalGreaterThanEqual(Pageable pageable);
-    Page<Reserva> findByIdUsuarioAndIdHotelOrderByIdUsuarioDesc(Pageable pageable);
-    Page<Reserva> findByOrderByIdHotelDesc(Pageable pageable);
+    Page<Reserva> findByFechaFinBefore(LocalDateTime fechaFin, Pageable pageable);
+    Page<Reserva> findByFechaInicioBefore(LocalDateTime fechaInicio, Pageable pageable);
+    Page<Reserva> findByFechaFinAfter(LocalDateTime fechaFin, Pageable pageable);
+    Page<Reserva> findByFechaInicioAfter(LocalDateTime fechaInicio, Pageable pageable);
+    Page<Reserva> findByIdUsuarioOrderByIdUsuarioDesc(Integer idUsuario, Pageable pageable);
+    Page<Reserva> findByTotalGreaterThan(BigDecimal total, Pageable pageable);
+    Page<Reserva> findByIdUsuarioAndIdHotelOrderByIdHotelDesc(Integer idUsuario, Integer idHotel, Pageable pageable);
+    Page<Reserva> findByIdHotelOrderByIdHotelDesc(Integer idHotel, Pageable pageable);
 }
