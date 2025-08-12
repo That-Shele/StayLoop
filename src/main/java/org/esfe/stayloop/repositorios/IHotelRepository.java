@@ -1,12 +1,14 @@
 package org.esfe.stayloop.repositorios;
 
 import org.esfe.stayloop.modelos.Hotel;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface IHotelRepository extends JpaRepository<Hotel, Integer> {
-    List<Hotel> findByNombreContainingIgnoreCase(String nombre);
+    Page<Hotel> findByNombreContainingIgnoreCase(Pageable pageable);
 
-    List<Hotel> findByIdZona(Integer idZona);
+    Page<Hotel> findByIdZona(Pageable pageable);
 }
