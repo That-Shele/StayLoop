@@ -10,7 +10,6 @@ import java.util.List;
 
 public interface IHotelRepository extends JpaRepository<Hotel, Integer> {
 
-    Page<Hotel> findByNombreContainingIgnoreCase(String nombre, Pageable pageable);
+    Page<Hotel> findByIdZonaAndNombreContainingIgnoreCaseOrderByIdDesc(Integer idZona, String nombre, Pageable pageable);
 
-    Page<Hotel> findByIdZona(Integer idZona, Pageable pageable);
 }

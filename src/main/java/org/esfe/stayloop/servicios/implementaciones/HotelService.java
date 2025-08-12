@@ -20,13 +20,8 @@ public class HotelService implements IHotelService {
     }
 
     @Override
-    public Page<Hotel> buscarNombrePaginados(Pageable pageable, String nombre) {
-        return hotelRepository.findByNombreContainingIgnoreCase(nombre, pageable);
-    }
-
-    @Override
-    public Page<Hotel> buscarPorZonaPaginados(Pageable pageable, Integer idZona) {
-        return hotelRepository.findByIdZona(idZona, pageable);
+    public Page<Hotel> buscarPaginados(Pageable pageable, Integer zona, String nombre) {
+        return hotelRepository.findByIdZonaAndNombreContainingIgnoreCaseOrderByIdDesc(zona, nombre, pageable);
     }
 
     @Override

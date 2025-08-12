@@ -9,9 +9,7 @@ import java.util.List;
 public interface IHotelService {
     List<Hotel> obtenerTodos();
 
-    Page<Hotel> buscarNombrePaginados(Pageable pageable, String nombre);
-
-    Page<Hotel> buscarPorZonaPaginados(Pageable pageable, Integer idZona);
+    Page<Hotel> buscarPaginados(Pageable pageable,Integer zona, String nombre);
 
     Hotel buscarPorId(Integer id);
 
