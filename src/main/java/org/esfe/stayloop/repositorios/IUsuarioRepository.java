@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IUsuarioRepository extends JpaRepository<Usuario, Integer> {
-    Page<Usuario> findByIdRolEqualsDesc(Integer idRol, Pageable pageable);
+    Page<Usuario> findByIdRolEqualsOrderByIdRolDesc(Integer idRol, Pageable pageable);
     List<Usuario> findByNombreContainingIgnoreCase(String nombre);
     Optional<Usuario> findByEmailContainingIgnoreCase(String email);
     List<Usuario> findByPassword(String password);
