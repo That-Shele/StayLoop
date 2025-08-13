@@ -23,6 +23,9 @@
         .secondary-button {
             @apply bg-[var(--secondary-color)] text-[var(--text-primary)] hover:bg-gray-200;
         }
+        .input-field {
+        @apply w-full rounded-xl transition-shadow duration-200 focus:ring-2 border-[var(--border-color)] bg-[var(--surface-secondary)] px-4 py-3 text-[var(--text-primary)] placeholder-[var(--text-secondary)] focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)];
+      }
     </style>
 </head>
 <body>
@@ -40,10 +43,10 @@
             <nav class="flex flex-1 justify-end gap-8">
                 <div class="flex gap-4">
                     <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-6 bg-[var(--primary-color)] text-white text-base font-bold leading-normal tracking-[0.015em] hover:bg-green-500 transition-colors">
-                        <span class="truncate">Iniciar Sesión</span>
+                        <a th:href="@{/login}"><span class="truncate">Iniciar Sesión</span></a>
                     </button>
                     <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-6 bg-[var(--card-background-color)] text-[var(--text-primary)] text-base font-bold leading-normal tracking-[0.015em] hover:bg-gray-200 transition-colors">
-                        <span class="truncate">Registrarse</span>
+                        <a th:href="@{/register}"><span class="truncate">Registrarse</span></a>
                     </button>
                 </div>
             </nav>
