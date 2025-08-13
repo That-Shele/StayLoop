@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html  lang="es"
+       xmlns:th="http://www.thymeleaf.org"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       layout:decorate="/layouts/_mainLayout">
+<div layout:fragment="content" class="flex flex-1 items-center justify-center p-8">
+    <div class="w-full max-w-md rounded-2xl bg-white/90 p-8 shadow-2xl backdrop-blur-md">
+        <div class="text-center">
+            <h1 class="text-3xl font-bold tracking-tight text-[var(--text-primary)]">¡Hola de nuevo!</h1>
+            <p class="mt-2 text-base text-[var(--text-secondary)]">Inicia sesión para continuar.</p>
+        </div>
+        <form th:action="@{/login}" method="post" class="mt-8 space-y-6" >
+            <div class="space-y-4">
+                <div>
+                    <label class="sr-only" for="email">Email</label>
+                    <input autocomplete="email" class="relative block w-full appearance-none rounded-xl border border-[var(--border-color)] bg-white px-4 py-3 text-base text-[var(--text-primary)] placeholder-gray-500 ring-inset ring-[var(--input-focus-border)] transition-shadow duration-200 focus:outline-none focus:ring-2" id="email" name="email" placeholder="Ingresa tu correo" required="" type="email"/>
+                </div>
+                <div>
+                    <label class="sr-only" for="password">Contraseña</label>
+                    <input autocomplete="current-password" class="relative block w-full appearance-none rounded-xl border border-[var(--border-color)] bg-white px-4 py-3 text-base text-[var(--text-primary)] placeholder-gray-500 ring-inset ring-[var(--input-focus-border)] transition-shadow duration-200 focus:outline-none focus:ring-2" id="password" name="password" placeholder="Ingresa tu contraseña" required="" type="password"/>
+                </div>
+            </div>
+            <div>
+                <button class="group relative flex w-full justify-center rounded-full border border-transparent bg-[var(--primary-color)] py-3 px-4 text-base font-bold text-white transition-colors hover:bg-green-500 transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)] focus:ring-offset-2" type="submit">
+                    Iniciar Sesión
+                </button>
+            </div>
+        </form>
+        <p class="mt-8 text-center text-sm text-[var(--text-secondary)]">
+            No tienes una cuenta?
+            <a class="font-medium text-[var(--primary-color)] hover:text-green-500 transition-colors" th:href="@{/register}">
+                Registrate
+            </a>
+        </p>
+    </div>
+</div>
