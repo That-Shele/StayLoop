@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html  lang="es"
+       xmlns:th="http://www.thymeleaf.org"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       layout:decorate="/layouts/_mainLayout">
+<div layout:fragment="content" class="flex flex-1 items-center justify-center py-12 sm:px-6 lg:px-8">
+    <div class="w-full max-w-md space-y-8 rounded-2xl bg-[var(--surface-primary)] p-10 shadow-lg">
+            <h2 class="text-center text-3xl font-bold tracking-tight text-[var(--text-primary)]">Crea una nueva cuenta</h2>
+        <form action="#" class="space-y-6" method="post">
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-[var(--text-primary)]" for="full-name">Nombre</label>
+                    <div class="mt-1">
+                        <input autocomplete="name" class="input-field" id="full-name" name="full-name" placeholder="Nombre de usuario" required="" type="text"/>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-[var(--text-primary)]" for="email-address">Email</label>
+                    <div class="mt-1">
+                        <input autocomplete="email" class="input-field" id="email-address" name="email" placeholder="email@ejemplo.com" required="" type="email"/>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-[var(--text-primary)]" for="password">Contraseña</label>
+                    <div class="mt-1">
+                        <input autocomplete="new-password" class="input-field" id="password" name="password" placeholder="Contraseña" required="" type="password"/>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button class="group relative flex w-full justify-center rounded-full border border-transparent bg-[var(--primary-color)] px-4 py-3 text-base font-bold text-white transition-colors hover:bg-green-500 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors focus:ring-offset-2" type="submit">
+                    Registrarse
+                </button>
+            </div>
+        </form>
+        <p class="mt-6 text-center text-xs text-[var(--text-secondary)]">
+            Al crear una cuenta, aceptas seguir nuestros
+            <a class="font-medium underline hover:text-green-500 transition-colors" href="/terms">Terminos y Condiciones</a>
+        </p>
+    </div>
+</div>
