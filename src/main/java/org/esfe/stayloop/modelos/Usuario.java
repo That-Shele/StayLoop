@@ -32,6 +32,9 @@ public class Usuario {
     @NotBlank
     @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
+    private byte status;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idRol", insertable = false, updatable = false)
