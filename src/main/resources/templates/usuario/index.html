@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html  lang="es"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       layout:decorate="/layouts/_mainLayout">
+<div layout:fragment="content" class="px-10 lg:px-40 flex flex-1 justify-center py-8" style="background: radial-gradient(circle, rgba(247,243,240,0.5) 0%, rgba(255,255,255,1) 60%);">
+    <div class="layout-content-container flex flex-col w-full max-w-5xl">
+        <h2 class="text-[var(--text-primary)] text-3xl font-bold tracking-tight">Welcome back, Amelia!</h2>
+        <p class="text-[var(--text-secondary)] mt-1 mb-8">Ready to find your next perfect stay?</p>
+        <div class="relative mb-12">
+            <form class="flex w-full items-center rounded-full bg-white shadow-lg border border-gray-100 h-16">
+                <div class="pl-6 pr-3 text-[var(--text-secondary)]">
+                    <svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
+                    </svg>
+                </div>
+                <input class="form-input flex-grow w-full h-full text-[var(--text-primary)] focus:outline-none focus:ring-0 border-none bg-transparent placeholder:text-gray-400 text-base" placeholder="Search destinations, e.g., 'Paris'" value=""/>
+                <button class="btn-primary font-bold rounded-full h-12 px-8 mr-2" type="submit">Search</button>
+            </form>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            <a class="group block rounded-2xl border border-gray-100 bg-white p-6 shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1" href="#">
+                <div class="flex flex-col justify-between h-full">
+                    <div>
+                        <h3 class="text-lg font-bold text-[var(--text-primary)]">My Reservations</h3>
+                        <p class="text-sm text-[var(--text-secondary)] mt-2">View and manage your upcoming and past stays.</p>
+                    </div>
+                    <span class="text-sm font-semibold text-[var(--primary-color)] mt-4 inline-flex items-center">
+                    Go to Reservations
+                    <svg class="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M17 8l4 4m0 0l-4 4m4-4H3" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</span>
+                </div>
+            </a>
+
+            <a class="group block rounded-2xl border border-gray-100 bg-white p-6 shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1" href="#">
+                <div class="flex flex-col justify-between h-full">
+                    <div>
+                        <h3 class="text-lg font-bold text-[var(--text-primary)]">Profile Settings</h3>
+                        <p class="text-sm text-[var(--text-secondary)] mt-2">Update your personal information and preferences.</p>
+                    </div>
+                    <span class="text-sm font-semibold text-[var(--primary-color)] mt-4 inline-flex items-center">
+                    Edit Profile
+                    <svg class="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M17 8l4 4m0 0l-4 4m4-4H3" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</span>
+                </div>
+            </a>
+        </div>
+        <div>
+            <h3 class="text-2xl font-bold tracking-tight text-[var(--text-primary)] mb-6">Personalized Recommendations</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="group flex flex-col rounded-2xl overflow-hidden bg-white border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="w-full bg-center bg-no-repeat aspect-video bg-cover" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB5vVe7xZfnBxPenBD1SLb-M96uiofY7Sz2KT3d4YOhr23O8Mrx_KwZVDoV_vGP-sFrcwGJu_YHbksiFbBTUOlBwQ0E4U_1SHfQcWnsNx-8S_AKl5H97F6YWUeSHZ1d_uIZ5A-cJJSqzd9N6SlWqWaSaHkyVAoURxgUwDacreIxQsc0Ak6TdX33S_oHnb1tok1Q9knDiUb1MyzpCC31CbeIjEV1srVYvJ22qX7E-SnHAOqFYoWquaENCvdhCewp14bSM1QCVVY");'></div>
+                    <div class="p-5 flex flex-col flex-grow">
+                        <h4 class="text-base font-bold text-[var(--text-primary)]">Coastal Retreat</h4>
+                        <p class="text-sm text-[var(--text-secondary)] mt-1 flex-grow">Enjoy the sun and sand at this luxurious beach resort.</p>
+                        <a class="btn-primary rounded-full px-5 py-2.5 text-sm font-bold w-full text-center mt-4" href="#">View Details</a>
+                    </div>
+                </div>
+                <div class="group flex flex-col rounded-2xl overflow-hidden bg-white border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="w-full bg-center bg-no-repeat aspect-video bg-cover" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDTJEDcN_fZLfm9cbFgxsn8vvCcSpt6KMA3OzxxCQhLIwJ4-IY8xXQ5NmVwSQRUx2ONkg4IrYh6Rgzfvbi82bV3HQRvqZuT2zfwi_kiUj4ocEOGwiuuB-L9ttEq3GUZ0FGhAXuaD3RihDCN6RftQq6bdbz54MHlYjB7USVpCjJ362XcdKfOEEttPcaWPqtefp8nnlm3Yhww-yHXXN9GL-MFpxlilILvzNErlxYy2sMASYIoSniej3Q6r0dFnA71h4mYnB63-lE");'></div>
+                    <div class="p-5 flex flex-col flex-grow">
+                        <h4 class="text-base font-bold text-[var(--text-primary)]">Mountain Getaway</h4>
+                        <p class="text-sm text-[var(--text-secondary)] mt-1 flex-grow">Escape to the mountains with this cozy cabin.</p>
+                        <a class="btn-primary rounded-full px-5 py-2.5 text-sm font-bold w-full text-center mt-4" href="#">View Details</a>
+                    </div>
+                </div>
+                <div class="group flex flex-col rounded-2xl overflow-hidden bg-white border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="w-full bg-center bg-no-repeat aspect-video bg-cover" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBVN3M0XhysGwJDrwTJeLghQmm1Sc-ouffz8fQu_YnQ1Y99dRA1p71GlcRaxA188d52syr6VJFjRz01Q2VGaSqoComGUzl5RFDKBO2ETLIaxAxe_syn742EUv7i48AzOrxyaJcsA0XMMHcGm08uoFafhNsG92LPS19NnwP_tphvG7_y6eqfuEU-hFJ21GT7eV_9GGdSsYI-rGAS-ZIX9k78T7vVcWOwK56HeDeK0Nqj34SbB90XO_lr25aDX99bQXpWd5IZROM");'></div>
+                    <div class="p-5 flex flex-col flex-grow">
+                        <h4 class="text-base font-bold text-[var(--text-primary)]">Urban Oasis</h4>
+                        <p class="text-sm text-[var(--text-secondary)] mt-1 flex-grow">Experience the city in style at this modern hotel.</p>
+                        <a class="btn-primary rounded-full px-5 py-2.5 text-sm font-bold w-full text-center mt-4" href="#">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -43,6 +43,7 @@ public class DatabaseWebSecurity {
                 .anyRequest().authenticated());
         http.formLogin(form -> form.loginPage("/login").permitAll());
 
+
         return http.build();
     }
 
