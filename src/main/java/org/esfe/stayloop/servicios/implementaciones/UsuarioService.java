@@ -23,11 +23,6 @@ public class UsuarioService implements IUsuarioService {
     }
 
     @Override
-    public Usuario validarCredenciales(String email, String password) {
-        return null;
-    }
-
-    @Override
     public Page<Usuario> buscarPaginados(Pageable pageable, Integer idRol, String nombre, String email) {
         return usuarioRepository
                 .findByIdRolAndNombreContainingIgnoreCaseAndEmailContainingIgnoreCaseOrderByIdDesc(idRol, nombre, email, pageable);
