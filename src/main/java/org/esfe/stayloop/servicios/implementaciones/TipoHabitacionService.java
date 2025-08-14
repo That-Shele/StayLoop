@@ -4,8 +4,7 @@ import org.esfe.stayloop.modelos.TipoHabitacion;
 import org.esfe.stayloop.repositorios.ITipoHabitacionRepository;
 import org.esfe.stayloop.servicios.interfaces.ITipoHabitacionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -28,12 +27,12 @@ public class TipoHabitacionService implements ITipoHabitacionService {
     }
 
     @Override
-    public List<TipoHabitacion> buscarPorCantidadPersona(byte cantPersonas) {
+    public List<TipoHabitacion> buscarPorCantidadPersona (byte cantPersonas) {
         return tipoHabitacionRepository.findByCantPersonasGreaterThanEqual(cantPersonas);
     }
 
     @Override
-    public List<TipoHabitacion> buscarPorCosto(BigDecimal costo) {
+    public List<TipoHabitacion> buscarPorCosto (BigDecimal costo) {
         return tipoHabitacionRepository.findByCostoGreaterThan(costo);
     }
 
@@ -44,12 +43,12 @@ public class TipoHabitacionService implements ITipoHabitacionService {
     }
 
     @Override
-    public TipoHabitacion crearOEditar(TipoHabitacion tipoHabitacion) {
+    public  TipoHabitacion crearOEditar (TipoHabitacion tipoHabitacion) {
         return tipoHabitacionRepository.save(tipoHabitacion);
     }
 
     @Override
-    public void eliminarPorId(Integer id) {
+    public void eliminarPorId (Integer id) {
         tipoHabitacionRepository.deleteById(id);
     }
 }
