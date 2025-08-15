@@ -6,14 +6,14 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
-public interface IHotelService {
-    List<Hotel> obtenerTodos();
+ public interface IHotelService {
+     List<Hotel> obtenerTodos();
 
-    Page<Hotel> buscarPaginados(Pageable pageable,Integer zona, String nombre);
+     Page<Hotel> buscarPaginados(Pageable pageable,Integer zona, String nombre);
 
-    Hotel buscarPorId(Integer id);
+     Hotel buscarPorId(Integer id);
 
-    Hotel crearOEditar(Hotel hotel);
+     Hotel crearOEditar(Hotel hotel);
 
-    void eliminarPorId(Integer id);
+     void eliminarPorId(Integer id);
 }

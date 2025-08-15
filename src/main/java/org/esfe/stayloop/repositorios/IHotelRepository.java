@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
 
-public interface IHotelRepository extends JpaRepository<Hotel, Integer> {
+ public interface IHotelRepository extends JpaRepository<Hotel, Integer> {
 
-    Page<Hotel> findByIdZonaAndNombreContainingIgnoreCaseOrderByIdDesc(Integer idZona, String nombre, Pageable pageable);
+    Page<Hotel>  findByIdZonaAndNombreContainingIgnoreCaseOrderByIdDesc(Integer idZona, String nombre, Pageable pageable);
 
 }

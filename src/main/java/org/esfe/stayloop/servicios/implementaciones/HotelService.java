@@ -9,33 +9,33 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
-public class HotelService implements IHotelService {
+public class  HotelService implements IHotelService {
 
-    @Autowired
-    private IHotelRepository hotelRepository;
+     @Autowired
+    private  IHotelRepository hotelRepository;
 
-    @Override
-    public List<Hotel> obtenerTodos() {
+     @Override
+     public List<Hotel> obtenerTodos() {
         return hotelRepository.findAll();
     }
 
-    @Override
-    public Page<Hotel> buscarPaginados(Pageable pageable, Integer zona, String nombre) {
+     @Override
+     public Page<Hotel> buscarPaginados(Pageable pageable, Integer zona, String nombre) {
         return hotelRepository.findByIdZonaAndNombreContainingIgnoreCaseOrderByIdDesc(zona, nombre, pageable);
     }
 
-    @Override
-    public Hotel buscarPorId(Integer id) {
+     @Override
+     public Hotel buscarPorId(Integer id) {
         return hotelRepository.findById(id).get();
     }
 
-    @Override
-    public Hotel crearOEditar(Hotel hotel) {
+     @Override
+     public Hotel crearOEditar(Hotel hotel) {
         return hotelRepository.save(hotel);
     }
 
-    @Override
-    public void eliminarPorId(Integer id) {
+     @Override
+     public void eliminarPorId(Integer id) {
         hotelRepository.deleteById(id);
     }
 }
