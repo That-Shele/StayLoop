@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html  lang="es"
+
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       layout:decorate="/layouts/_mainLayout">
+<div layout:fragment="content" class="flex-1 px-4 sm:px-6 lg:px-24 py-8">
+    <div class="max-w-7xl mx-auto">
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-8">
+            <h1 class="text-3xl font-bold tracking-tight">Gestion de usuarios</h1>
+            <a th:href="@{/usuarioControl/create}" class="flex items-center justify-center gap-2 h-10 px-6 bg-[var(--primary-color)] text-white text-sm font-bold rounded-full shadow-md hover:bg-orange-600 transition-all">
+                <svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"></path>
+                </svg>
+                <span>Nuevo Usuario</span>
+            </a>
+        </div>
+        <div class="bg-white rounded-2xl shadow-sm p-4">
+            <div class="flex flex-wrap items-center gap-4 mb-4">
+                <div class="relative w-full md:w-auto md:flex-1">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-[var(--text-secondary)]">
+                        <svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
+                        </svg>
+                    </div>
+                    <input class="w-full pl-10 pr-4 py-2 h-10 border border-[var(--border-color)] rounded-full bg-[var(--secondary-color)] focus:ring-2 focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] transition-colors" placeholder="Buscar por nombre." type="search"/>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-sm font-medium text-[var(--text-secondary)]">Filtrar por:</span>
+                    <div class="relative">
+                        <select class="appearance-none h-10 pl-4 pr-8 bg-[var(--secondary-color)] border border-[var(--border-color)] rounded-full text-sm font-medium focus:ring-2 focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] transition-colors">
+                            <option>Todos los roles</option>
+                            <option th:each="rol : ${roles}" th:value="${rol.id}" th:text="${rol.nombre}"></option>
+                        </select>
+                        <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-[var(--text-secondary)]">
+                            <svg fill="currentColor" height="16px" viewBox="0 0 256 256" width="16px" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="overflow-x-auto @container">
+                <table class="w-full text-left">
+                    <thead>
+                    <tr  class="border-b border-[var(--border-color)]">
+                        <th class="table-column-name px-4 py-3 text-sm font-semibold uppercase tracking-wider text-[var(--text-secondary)]">Nombre</th>
+                        <th class="table-column-email px-4 py-3 text-sm font-semibold uppercase tracking-wider text-[var(--text-secondary)]">Email</th>
+                        <th class="table-column-role px-4 py-3 text-sm font-semibold uppercase tracking-wider text-[var(--text-secondary)]">Rol</th>
+                        <th class="table-column-actions px-4 py-3 text-sm font-semibold uppercase tracking-wider text-right text-[var(--text-secondary)]">Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="item : ${usuarios}" class="border-b border-[var(--border-color)] hover:bg-[var(--secondary-color)] transition-colors">
+                        <td class="table-column-name px-4 py-3 align-middle">
+                            <div class="flex items-center gap-3">
+                               <!-- <img alt="Sophia Clark avatar" class="w-10 h-10 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0hVUx2uqrFkv2hjTiY53vVC2j3aMZftmmYtgwQfuNe4UyeQ_o24t_C_SGK_79iPpOvbwkNNrzlDy9hWD9cngStdRdk1T1t8JxvREnv7U-ysXPPQOqKJFt-SWnI_O9C1UcHscewD9J4TIx2FEsEtVhu6SEETYT8xC6JNCJUqo0NOIR8tqFi-2oPHYq_UTlXRLd9E_HqzV9t4KkBAstBccaoaDQECChqYrYT5VvgiMUepFhZRu4Z9HselHP2kMZrQzJW0HLuTs"/> -->
+                                <span th:text="${item.nombre}" class="font-medium"></span>
+                            </div>
+                        </td>
+                        <td th:text="${item.email}" class="table-column-email px-4 py-3 text-[var(--text-secondary)] align-middle"></td>
+                        <td th:switch="${item.rol.nombre}" class="table-column-role px-4 py-3 align-middle">
+                            <span th:case="'admin'" class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">Administrador</span>
+                            <span th:case="'hotel'" class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">Cadena Hotelera</span>
+                            <span th:case="*" class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">Usuario</span>
+                        </td>
+                        <td class="table-column-actions px-4 py-3 text-right align-middle">
+                            <div class="inline-flex rounded-full bg-white shadow-sm border border-stone-200">
+                                <a class="p-2 rounded-l-full hover:bg-stone-100 transition-colors"><svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px" xmlns="http://www.w3.org/2000/svg"><path d="M227.31,73.37,182.63,28.68a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H92.69A15.86,15.86,0,0,0,104,219.31L227.31,96a16,16,0,0,0,0-22.63ZM92.69,208H48V163.31l88-88L180.69,120ZM192,108.68,147.31,64l24-24L216,84.68Z"></path></svg></a>
+                                <a class="p-2 hover:bg-stone-100 transition-colors border-l border-stone-200"><svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px" xmlns="http://www.w3.org/2000/svg"><path d="M216,48H176V40a24,24,0,0,0-24-24H104A24,24,0,0,0,80,40v8H40a8,8,0,0,0,0,16h8V208a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V64h8a8,8,0,0,0,0-16ZM96,40a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96ZM200,208H56V64H200Z"></path></svg></a>
+                                <a class="p-2 rounded-r-full hover:bg-stone-100 transition-colors border-l border-stone-200"><svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px" xmlns="http://www.w3.org/2000/svg"><path d="M247.31,124.69l-40-40a8,8,0,0,0-11.32,11.32L224,124H128a8,8,0,0,0-8,8v96a8,8,0,0,0,16,0V140h88.69l-28.69,28.69a8,8,0,0,0,11.32,11.32l40-40A8,8,0,0,0,247.31,124.69ZM120,32H40A16,16,0,0,0,24,48V208a16,16,0,0,0,16,16h88a8,8,0,0,0,0-16H40V48h80a8,8,0,0,0,0-16Z"></path></svg></a>
+                            </div>
+                        </td>
+                    </tbody>
+                </table>
+            </div>
+            <style>
+                @container (max-width: 640px) {
+                  .table-column-email,
+                  .table-column-role {
+                    display: none;
+                  }
+                  .table-column-actions {
+                    text-align: left;
+                    padding-left: 58px;}
+                }
+            </style>
+        </div>
+    </div>
+</div>

@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface IUsuarioService {
-    List<Usuario> obtenerTodos();
+    Page<Usuario> obtenerTodos(Pageable pageable);
 
     Page<Usuario> buscarPaginados(Pageable pageable, Integer idRol, String nombre, String email);
 

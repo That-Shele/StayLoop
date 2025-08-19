@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IUsuarioRepository extends JpaRepository<Usuario, Integer> {
-    Page<Usuario> findByIdRolAndNombreContainingIgnoreCaseAndEmailContainingIgnoreCaseOrderByIdDesc(
+    Page<Usuario> findByIdRolOrNombreContainingIgnoreCaseOrEmailContainingIgnoreCaseOrderByIdDesc(
             Integer idRol,
             String nombre,
             String email,

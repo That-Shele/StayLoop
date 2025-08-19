@@ -1,0 +1,117 @@
+package org.esfe.stayloop.controladores;
+
+import org.esfe.stayloop.modelos.Rol;
+import org.esfe.stayloop.modelos.Usuario;
+import org.esfe.stayloop.servicios.interfaces.IRolService;
+import org.esfe.stayloop.servicios.interfaces.IUsuarioService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+@Controller
+@RequestMapping("/usuarioControl")
+public class UsuarioController {
+
+    @Autowired
+    private IUsuarioService usuarioService;
+
+    @Autowired
+    private IRolService rolService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @GetMapping
+    public String index(Model model,
+                        @RequestParam("page") Optional<Integer> page,
+                        @RequestParam("size") Optional<Integer> size,
+                        @RequestParam(value = "rol", required = false) Integer idRol,
+                        @RequestParam(value = "nombre", required = false) String nombre,
+                        @RequestParam(value = "email", required = false) String email)
+    {
+        int currentPage = page.orElse(1) - 1;
+        int pageSize = size.orElse(5);
+        Pageable pageable = PageRequest.of(currentPage, pageSize);
+
+        String filtroNombre = (nombre == null) ? "" : nombre;
+        String filtroEmail = (email == null) ? "" : email;
+
+        Page<Usuario> usuarios = usuarioService.buscarPaginados(pageable, idRol, nombre, email);
+        List<Rol> roles = rolService.obtenerTodos();
+
+        if(usuarios.getTotalElements() < 1){
+            usuarios = usuarioService.obtenerTodos(pageable);
+        }
+
+        for(Usuario usuario : usuarios){
+            usuario.setRol(rolService.buscarPorId(usuario.getIdRol()));
+        }
+
+        model.addAttribute("usuarios", usuarios);
+        model.addAttribute("roles", roles);
+
+
+        int totalPages = usuarios.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                    .boxed()
+                    .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+
+        model.addAttribute("rol", idRol);
+        model.addAttribute("email", filtroEmail);
+        model.addAttribute("nombre", filtroNombre);
+
+        return "admin/usersList";
+    }
+
+    @GetMapping("/create")
+    public String create(Model model, Usuario usuario){
+        model.addAttribute("roles", rolService.obtenerTodos());
+        return "admin/create";
+    }
+
+    @PostMapping("/save")
+    public String save(@RequestParam Integer idRol, Usuario usuario, BindingResult bindingResult, Model model){
+        if(bindingResult.hasErrors()){
+            model.addAttribute(usuario);
+            return "admin/create";
+        }
+        String password = passwordEncoder.encode(usuario.getPassword());
+        usuario.setPassword(password);
+        usuario.setIdRol(idRol);
+        usuario.setStatus((byte) 1);
+        usuarioService.crearOEditar(usuario);
+        return "redirect:/usuarioControl";
+    }
+
+    @GetMapping("/details/{id}")
+    public String details(@PathVariable("id") Integer id, Model model){
+        Usuario usuario = usuarioService.buscarPorId(id);
+        Rol rol = rolService.buscarPorId(usuario.getIdRol());
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("rol", rol);
+        return "admin/details";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable("id") Integer id, Model model){
+        Usuario usuario = usuarioService.buscarPorId(id);
+        Rol rol = rolService.buscarPorId(usuario.getIdRol());
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("rol", rol);
+        return "admin/edit";
+    }
+}
