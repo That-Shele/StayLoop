@@ -18,14 +18,14 @@ public class UsuarioService implements IUsuarioService {
     private IUsuarioRepository usuarioRepository;
 
     @Override
-    public List<Usuario> obtenerTodos() {
-        return usuarioRepository.findAll();
+    public Page<Usuario> obtenerTodos(Pageable pageable) {
+        return usuarioRepository.findAll(pageable);
     }
 
     @Override
     public Page<Usuario> buscarPaginados(Pageable pageable, Integer idRol, String nombre, String email) {
         return usuarioRepository
-                .findByIdRolAndNombreContainingIgnoreCaseAndEmailContainingIgnoreCaseOrderByIdDesc(idRol, nombre, email, pageable);
+                .findByIdRolOrNombreContainingIgnoreCaseOrEmailContainingIgnoreCaseOrderByIdDesc(idRol, nombre, email, pageable);
     }
 
     @Override
