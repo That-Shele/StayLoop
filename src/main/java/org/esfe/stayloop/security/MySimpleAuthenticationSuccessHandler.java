@@ -3,6 +3,7 @@ package org.esfe.stayloop.security;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.DefaultRedirectStrategy;
@@ -19,6 +20,7 @@ import static sun.misc.Signal.handle;
 
 public class MySimpleAuthenticationSuccessHandler
         implements AuthenticationSuccessHandler {
+
 
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
@@ -45,9 +47,9 @@ public class MySimpleAuthenticationSuccessHandler
     protected String determineTargetUrl(final Authentication authentication) {
 
         Map<String, String> roleTargetUrlMap = new HashMap<>();
-        roleTargetUrlMap.put("admin", "/home/index.html");
-        roleTargetUrlMap.put("hotel", "/home/index.html");
-        roleTargetUrlMap.put("usuario", "/usuario/index.html");
+        roleTargetUrlMap.put("admin", "/");
+        roleTargetUrlMap.put("hotel", "/");
+        roleTargetUrlMap.put("usuario", "/");
 
 
         final Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
