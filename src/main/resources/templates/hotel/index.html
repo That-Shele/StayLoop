@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html  lang="es"
+
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       layout:decorate="/layouts/_mainLayout">
+
+<div layout:fragment="content" class="flex-1 px-10 sm:px-20 md:px-40 py-8">
+    <div class="layout-content-container flex flex-col max-w-5xl mx-auto">
+        <div class="mb-8">
+            <h1 class="text-[var(--secondary-color)] text-4xl font-bold tracking-tight">Welcome back, Olivia</h1>
+            <p class="text-[var(--text-color)] mt-2">Here's a snapshot of your hotel's performance.</p>
+        </div>
+        <section class="mb-12">
+            <h2 class="text-[var(--secondary-color)] text-2xl font-bold tracking-tight mb-4">Performance Overview</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="kpi-card">
+                    <div class="flex items-center justify-between">
+                        <p class="text-[var(--text-color)] text-base font-medium">Total Bookings</p>
+                        <div class="w-8 h-8 rounded-full bg-[var(--primary-color-light)] flex items-center justify-center text-[var(--primary-color)]">
+                            <svg fill="currentColor" height="20" viewBox="0 0 256 256" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M208,80H176V56a48,48,0,0,0-96,0V80H48A16,16,0,0,0,32,96v96a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V96A16,16,0,0,0,208,80ZM96,56a32,32,0,0,1,64,0V80H96ZM208,192H48V96H80v16a8,8,0,0,0,16,0V96h64v16a8,8,0,0,0,16,0V96h32Z"></path></svg>
+                        </div>
+                    </div>
+                    <p class="text-[var(--secondary-color)] text-4xl font-bold">120</p>
+                    <p class="text-green-600 text-sm font-medium">+10% from last month</p>
+                </div>
+                <div class="kpi-card">
+                    <div class="flex items-center justify-between">
+                        <p class="text-[var(--text-color)] text-base font-medium">Revenue</p>
+                        <div class="w-8 h-8 rounded-full bg-[var(--primary-color-light)] flex items-center justify-center text-[var(--primary-color)]">
+                            <svg fill="currentColor" height="20" viewBox="0 0 256 256" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M221.66,133.66l-72,72A8,8,0,0,1,144,208V160H104a72.08,72.08,0,0,1-72-72V48a8,8,0,0,1,16,0v40a56.06,56.06,0,0,0,56,56h40V96a8,8,0,0,1,13.66-5.66l72,72A8,8,0,0,1,221.66,133.66Z"></path></svg>
+                        </div>
+                    </div>
+                    <p class="text-[var(--secondary-color)] text-4xl font-bold">$15,000</p>
+                    <p class="text-green-600 text-sm font-medium">+15% from last month</p>
+                </div>
+                <div class="kpi-card">
+                    <div class="flex items-center justify-between">
+                        <p class="text-[var(--text-color)] text-base font-medium">Occupancy Rate</p>
+                        <div class="w-8 h-8 rounded-full bg-[var(--primary-color-light)] flex items-center justify-center text-[var(--primary-color)]">
+                            <svg fill="currentColor" height="20" viewBox="0 0 256 256" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M248,128a88.1,88.1,0,0,1-88,88H88a8,8,0,0,1,0-16h72a72,72,0,1,0-72-72,8,8,0,0,1-16,0A88,88,0,1,1,248,128ZM88,112H40a8,8,0,0,0,0,16H88a8,8,0,0,0,0-16Z"></path></svg>
+                        </div>
+                    </div>
+                    <p class="text-[var(--secondary-color)] text-4xl font-bold">75%</p>
+                    <p class="text-red-600 text-sm font-medium">-5% from last month</p>
+                </div>
+                <div class="kpi-card">
+                    <div class="flex items-center justify-between">
+                        <p class="text-[var(--text-color)] text-base font-medium">Average Rating</p>
+                        <div class="w-8 h-8 rounded-full bg-[var(--primary-color-light)] flex items-center justify-center text-[var(--primary-color)]">
+                            <svg fill="currentColor" height="20" viewBox="0 0 256 256" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M239.2,97.41a16,16,0,0,0-13.81-11L161.47,78.89,133.32,23.11a16,16,0,0,0-29.32,0L76.53,78.89,12.61,86.37a16,16,0,0,0-9,27.87l46.22,45.05L38.4,223.36a16,16,0,0,0,23.23,16.89L128,209.11l66.37,31.14a16,16,0,0,0,23.23-16.89l-11.43-64.13,46.22-45.05A16,16,0,0,0,239.2,97.41Z"></path></svg>
+                        </div>
+                    </div>
+                    <p class="text-[var(--secondary-color)] text-4xl font-bold">4.6</p>
+                    <p class="text-green-600 text-sm font-medium">+0.2 from last month</p>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-[var(--secondary-color)] text-2xl font-bold tracking-tight">Your Properties</h2>
+                <button class="flex items-center justify-center gap-2 h-10 px-5 bg-[var(--primary-color)] text-white rounded-full text-sm font-bold tracking-wide hover:bg-orange-600 transition-colors">
+                    <svg fill="currentColor" height="16" viewBox="0 0 256 256" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"></path></svg>
+                    <span class="truncate">Add New Property</span>
+                </button>
+            </div>
+            <div class="bg-white rounded-xl border border-[var(--border-color)] overflow-hidden">
+                <div class="property-item">
+                    <div class="flex items-center gap-4">
+                        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-16" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA5cvAIit9Qml7i-JoCLRbb0fVcTvOtcUysw5lEZj23-YANY30wjhljMLy8XntRLV4hcfvHvN9STcAtSFwYM7dTUDo_muF1NA11YvjSadfRQJJ5JUvHTgpJsE9l5ymyt9EZyK96MNEQzN0lW0Apgs77WCeXUAEbIHuFYoSj32Gm62B4n_lEpL4cbDLooiOYLnBY-XehS_nyaeOGac0NwDsMOwFoqdfxp4usM5LcJanFEeV99Ckh9NJK-QLKa9xM_iiiFJVm7Xo");'></div>
+                        <div class="flex flex-col justify-center">
+                            <p class="text-[var(--secondary-color)] text-lg font-semibold line-clamp-1">Golden Gate Inn</p>
+                            <p class="text-[var(--text-color)] text-sm line-clamp-2">San Francisco, CA • ★ 4.8 (212 reviews)</p>
+                        </div>
+                    </div>
+                    <div class="shrink-0">
+                        <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-9 px-4 bg-gray-100 text-[var(--secondary-color)] text-sm font-medium hover:bg-gray-200 transition-colors w-fit">
+                            <span class="truncate">Manage</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="property-item">
+                    <div class="flex items-center gap-4">
+                        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-16" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCVNZ8Vn7KyO3YbrBsYm04gwaCbnZTnu5FhhO4Yz371NnVr4rf08SEOxKXOr2MgZUakMPsgF0MNZqv1ieiKiLKUnZIEAQT5n0z0KvpZSggIBEvQ6J2XSRGp1A35GgRtI9a_umIFDC6QWZJMAihwkFPekEzdYst16wuAagabUVgdmMMdz5cMV_a-PxRFJAc2E0aLjXceb8uDoB1E_NSxf8GNyBVep8PtwN8SSossdPQWm3i7OvsWEmkmmWwyqMXzthKP9hlKx-E");'></div>
+                        <div class="flex flex-col justify-center">
+                            <p class="text-[var(--secondary-color)] text-lg font-semibold line-clamp-1">Sunset View Resort</p>
+                            <p class="text-[var(--text-color)] text-sm line-clamp-2">Los Angeles, CA • ★ 4.5 (189 reviews)</p>
+                        </div>
+                    </div>
+                    <div class="shrink-0">
+                        <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-9 px-4 bg-gray-100 text-[var(--secondary-color)] text-sm font-medium hover:bg-gray-200 transition-colors w-fit">
+                            <span class="truncate">Manage</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="property-item border-b-0">
+                    <div class="flex items-center gap-4">
+                        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-16" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC_Du-UWi0oFHcM2RrlkKdTgwJxaruq_0FW3OnhGu7ogq_4Or9uJcfCC1GZsYDlJc1eCpmIGXFZdr2qEuJfJPCevF7PvwnDtp9wLp16xw0LkxHce-07pecnOeqAbZ4a7uCJgrZuKdlj9D8GSsYnugb1Qpx-q8bYw0mJu_J9POiR9dn6COQ3DqB9gGwxvkDkbs_vAKjiSYifP5cg3mysYguMM2BzSiYQRJXvdUHEVG2oBteKOXrsY2nhoOOzB8qZs89xsk8lpgI");'></div>
+                        <div class="flex flex-col justify-center">
+                            <p class="text-[var(--secondary-color)] text-lg font-semibold line-clamp-1">Ocean Breeze Suites</p>
+                            <p class="text-[var(--text-color)] text-sm line-clamp-2">San Diego, CA • ★ 4.7 (304 reviews)</p>
+                        </div>
+                    </div>
+                    <div class="shrink-0">
+                        <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-9 px-4 bg-gray-100 text-[var(--secondary-color)] text-sm font-medium hover:bg-gray-200 transition-colors w-fit">
+                            <span class="truncate">Manage</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
