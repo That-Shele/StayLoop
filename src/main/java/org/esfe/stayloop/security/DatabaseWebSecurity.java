@@ -1,5 +1,6 @@
 package org.esfe.stayloop.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,17 +10,24 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
 public class DatabaseWebSecurity {
+
+    @Bean
+    public AuthenticationSuccessHandler myAuthenticationSuccessHandler(){
+        return new MySimpleAuthenticationSuccessHandler();
+    }
+
     @Bean
     public UserDetailsManager customUsers(DataSource dataSource){
         JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
         users.setUsersByUsernameQuery("select email, password, status from usuarios where email = ?");
-        users.setAuthoritiesByUsernameQuery("select u.nombre, u.email from usuarios u " +
+        users.setAuthoritiesByUsernameQuery("select u.email, r.nombre from usuarios u " +
                 "inner join roles r on r.id = u.id_rol " +
                 "where email = ?");
         return users;
@@ -41,7 +49,9 @@ public class DatabaseWebSecurity {
 
                 // todas las demás vistas requieren autenticación
                 .anyRequest().authenticated());
-        http.formLogin(form -> form.loginPage("/login").permitAll());
+        http.formLogin(form -> form.loginPage("/login").permitAll()
+                .successHandler(myAuthenticationSuccessHandler()));
+
 
         return http.build();
     }
