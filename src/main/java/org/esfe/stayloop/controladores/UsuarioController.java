@@ -36,23 +36,22 @@ public class UsuarioController {
     public String index(Model model,
                         @RequestParam("page") Optional<Integer> page,
                         @RequestParam("size") Optional<Integer> size,
-                        @RequestParam(value = "rol", required = false) Integer idRol,
-                        @RequestParam(value = "nombre", required = false) String nombre,
-                        @RequestParam(value = "email", required = false) String email)
+                        @RequestParam("idRol") Optional<Integer> idRol,
+                        @RequestParam("nombre") Optional<String> nombre,
+                        @RequestParam("email") Optional<String> email)
     {
         int currentPage = page.orElse(1) - 1;
         int pageSize = size.orElse(5);
         Pageable pageable = PageRequest.of(currentPage, pageSize);
 
-        String filtroNombre = (nombre == null) ? "" : nombre;
-        String filtroEmail = (email == null) ? "" : email;
+        String filtroNombre = nombre.orElse("");
+        String filtroEmail = email.orElse("");
+        Integer filtroRol = idRol.orElse(null);
 
-        Page<Usuario> usuarios = usuarioService.buscarPaginados(pageable, idRol, nombre, email);
+        Page<Usuario> usuarios = usuarioService.buscarPaginados(filtroRol, filtroNombre, filtroEmail, pageable);
         List<Rol> roles = rolService.obtenerTodos();
 
-        if(usuarios.getTotalElements() < 1){
-            usuarios = usuarioService.obtenerTodos(pageable);
-        }
+
 
         for(Usuario usuario : usuarios){
             usuario.setRol(rolService.buscarPorId(usuario.getIdRol()));
@@ -89,8 +88,15 @@ public class UsuarioController {
             model.addAttribute(usuario);
             return "admin/create";
         }
-        String password = passwordEncoder.encode(usuario.getPassword());
-        usuario.setPassword(password);
+        if(usuario.getPassword() != null) {
+            String password = passwordEncoder.encode(usuario.getPassword());
+            usuario.setPassword(password);
+        }
+        else {
+            Usuario user = usuarioService.buscarPorId(usuario.getId());
+            usuario.setPassword(user.getPassword());
+        }
+
         usuario.setIdRol(idRol);
         usuario.setStatus((byte) 1);
         usuarioService.crearOEditar(usuario);
@@ -109,9 +115,8 @@ public class UsuarioController {
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Integer id, Model model){
         Usuario usuario = usuarioService.buscarPorId(id);
-        Rol rol = rolService.buscarPorId(usuario.getIdRol());
+        model.addAttribute("roles", rolService.obtenerTodos());
         model.addAttribute("usuario", usuario);
-        model.addAttribute("rol", rol);
         return "admin/edit";
     }
 }

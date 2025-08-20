@@ -7,7 +7,7 @@
     <div class="max-w-7xl mx-auto">
         <div class="flex flex-wrap items-center justify-between gap-4 mb-8">
             <h1 class="text-3xl font-bold tracking-tight">Gestion de usuarios</h1>
-            <a th:href="@{/usuarioControl/create}" class="flex items-center justify-center gap-2 h-10 px-6 bg-[var(--primary-color)] text-white text-sm font-bold rounded-full shadow-md hover:bg-orange-600 transition-all">
+            <a th:href="@{/usuarioControl/create}" class="flex items-center justify-center gap-2 h-10 px-6 bg-[var(--primary-color)] text-white text-sm font-bold rounded-full shadow-md hover:bg-green-600 transition-all">
                 <svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px" xmlns="http://www.w3.org/2000/svg">
                     <path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"></path>
                 </svg>
@@ -15,30 +15,26 @@
             </a>
         </div>
         <div class="bg-white rounded-2xl shadow-sm p-4">
-            <div class="flex flex-wrap items-center gap-4 mb-4">
-                <div class="relative w-full md:w-auto md:flex-1">
-                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-[var(--text-secondary)]">
-                        <svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
-                        </svg>
-                    </div>
-                    <input class="w-full pl-10 pr-4 py-2 h-10 border border-[var(--border-color)] rounded-full bg-[var(--secondary-color)] focus:ring-2 focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] transition-colors" placeholder="Buscar por nombre." type="search"/>
+            <form th:action="@{/usuarioControl}" method="get" class="flex flex-wrap items-center gap-4 mb-4">
+                <div class="relative w-full md:w-auto md:flex-1 m-2">
+                    <input class="w-full pl-10 pr-4 py-2 h-10 border border-[var(--border-color)] rounded-full bg-[var(--secondary-color)] focus:ring-2 focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] transition-colors" placeholder="Buscar por nombre." name="nombre" id="nombre" type="text"/>
+                    <input class="w-full pl-10 pr-4 py-2 h-10 border border-[var(--border-color)] rounded-full bg-[var(--secondary-color)] focus:ring-2 focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] transition-colors" placeholder="Buscar por email." name="email" id="email" type="text"/>
                 </div>
                 <div class="flex items-center gap-2">
                     <span class="text-sm font-medium text-[var(--text-secondary)]">Filtrar por:</span>
                     <div class="relative">
-                        <select class="appearance-none h-10 pl-4 pr-8 bg-[var(--secondary-color)] border border-[var(--border-color)] rounded-full text-sm font-medium focus:ring-2 focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] transition-colors">
-                            <option>Todos los roles</option>
+                        <select class="appearance-none h-10 pl-4 pr-8 bg-[var(--secondary-color)] border border-[var(--border-color)] rounded-full text-sm font-medium focus:ring-2 focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] transition-colors" name="idRol" id="idRol">
+                            <option value="">Todos los roles</option>
                             <option th:each="rol : ${roles}" th:value="${rol.id}" th:text="${rol.nombre}"></option>
                         </select>
-                        <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-[var(--text-secondary)]">
-                            <svg fill="currentColor" height="16px" viewBox="0 0 256 256" width="16px" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"></path>
-                            </svg>
-                        </div>
                     </div>
+                    <button type="submit" class="rounded-full  flex items-center rounded-full bg-white text-slate-900 shadow-sm border border-stone-200">
+                        <svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
+                        </svg>
+                    </button>
                 </div>
-            </div>
+            </form>
             <div class="overflow-x-auto @container">
                 <table class="w-full text-left">
                     <thead>
@@ -65,9 +61,9 @@
                         </td>
                         <td class="table-column-actions px-4 py-3 text-right align-middle">
                             <div class="inline-flex rounded-full bg-white shadow-sm border border-stone-200">
-                                <a class="p-2 rounded-l-full hover:bg-stone-100 transition-colors"><svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px" xmlns="http://www.w3.org/2000/svg"><path d="M227.31,73.37,182.63,28.68a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H92.69A15.86,15.86,0,0,0,104,219.31L227.31,96a16,16,0,0,0,0-22.63ZM92.69,208H48V163.31l88-88L180.69,120ZM192,108.68,147.31,64l24-24L216,84.68Z"></path></svg></a>
-                                <a class="p-2 hover:bg-stone-100 transition-colors border-l border-stone-200"><svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px" xmlns="http://www.w3.org/2000/svg"><path d="M216,48H176V40a24,24,0,0,0-24-24H104A24,24,0,0,0,80,40v8H40a8,8,0,0,0,0,16h8V208a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V64h8a8,8,0,0,0,0-16ZM96,40a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96ZM200,208H56V64H200Z"></path></svg></a>
-                                <a class="p-2 rounded-r-full hover:bg-stone-100 transition-colors border-l border-stone-200"><svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px" xmlns="http://www.w3.org/2000/svg"><path d="M247.31,124.69l-40-40a8,8,0,0,0-11.32,11.32L224,124H128a8,8,0,0,0-8,8v96a8,8,0,0,0,16,0V140h88.69l-28.69,28.69a8,8,0,0,0,11.32,11.32l40-40A8,8,0,0,0,247.31,124.69ZM120,32H40A16,16,0,0,0,24,48V208a16,16,0,0,0,16,16h88a8,8,0,0,0,0-16H40V48h80a8,8,0,0,0,0-16Z"></path></svg></a>
+                                <a th:href="@{/usuarioControl/edit/{id} (id = ${item.id})}" class="group p-2 rounded-l-full hover:bg-yellow-400 transition-colors "><i class="bi bi-pen-fill  text-gray-400 group-hover:text-slate-900"></i></a>
+                                <a class="group p-2 hover:bg-red-600 transition-colors border-l border-stone-200 "><i class="bi bi-trash-fill  text-gray-400 group-hover:text-white"></i></a>
+                                <a th:href="@{/usuarioControl/details/{id} (id = ${item.id})}" class="group p-2 rounded-r-full hover:bg-sky-600 transition-colors border-l border-stone-200 "><i class="bi bi-eye-fill  text-gray-400 group-hover:text-white"></i></a>
                             </div>
                         </td>
                     </tbody>

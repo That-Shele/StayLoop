@@ -23,9 +23,9 @@ public class UsuarioService implements IUsuarioService {
     }
 
     @Override
-    public Page<Usuario> buscarPaginados(Pageable pageable, Integer idRol, String nombre, String email) {
+    public Page<Usuario> buscarPaginados(Integer idRol, String nombre, String email, Pageable pageable) {
         return usuarioRepository
-                .findByIdRolOrNombreContainingIgnoreCaseOrEmailContainingIgnoreCaseOrderByIdDesc(idRol, nombre, email, pageable);
+                .findByNombreContainingIgnoreCaseAndEmailContainingIgnoreCaseAndIdRolOrderByIdDesc(nombre, email, idRol, pageable);
     }
 
     @Override

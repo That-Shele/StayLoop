@@ -10,7 +10,7 @@ import java.util.List;
 public interface IUsuarioService {
     Page<Usuario> obtenerTodos(Pageable pageable);
 
-    Page<Usuario> buscarPaginados(Pageable pageable, Integer idRol, String nombre, String email);
+    Page<Usuario> buscarPaginados( Integer idRol, String nombre, String email, Pageable pageable);
 
     Usuario buscarPorId(Integer id);
 
