@@ -7,9 +7,11 @@
     <div class="w-full max-w-md space-y-8 rounded-2xl bg-[var(--surface-primary)] p-10 shadow-lg">
             <h2 class="text-center text-3xl font-bold tracking-tight text-[var(--text-primary)]">Crea una nueva cuenta</h2>
         <form th:action="@{/usuarioControl/save}" method="post" th:object="${usuario}" class="space-y-6" enctype="multipart/form-data">
-            <input type="hidden" id="idRol" value=3 th:field="*{idRol}">
+            <select name="idRol" id="idRol" hidden="" >
+                <option value=3>Usuariol</option>
+            </select>
             <input type="hidden" name="authCheck" value="anon">
-            <input type="hidden" id="imgUsuario" value="" th:field="*{idRol}">
+            <input type="hidden" id="imgUsuario" value="" th:field="*{imgUsuario}">
             <div class="space-y-4">
                 <div>
                     <label class="block text-sm font-medium text-[var(--text-primary)]" for="nombre">Nombre</label>

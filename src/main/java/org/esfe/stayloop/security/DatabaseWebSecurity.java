@@ -3,6 +3,7 @@ package org.esfe.stayloop.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -39,12 +40,16 @@ public class DatabaseWebSecurity {
                 // aperturar el acceso a los recursos estáticos
                 //.requestMatchers("/assets/**", "/css/**", "/js/**").permitAll()
                 // las vistas públicas no requieren autenticación
-                .requestMatchers("/register", "/", "/login", "/usuarioControl/save").permitAll()
+                .requestMatchers("/register", "/", "/login","/usuarioControl/save", "/error").permitAll()
+
+
 
                 // Asignar permisos a URLs por ROLES
-//                .requestMatchers("/grupos/**").hasAnyAuthority("admin")
-//                .requestMatchers("/docentes/**").hasAnyAuthority("admin")
-//                .requestMatchers("/asignaciones/**").hasAnyAuthority("admin")
+                .requestMatchers("/usuarioControl/imagen/**").authenticated()
+                .requestMatchers("/usuarioControl/**").hasAnyAuthority("admin")
+
+//                .requestMatchers("/hotel/**").hasAnyAuthority("admin", "hotel")
+//                .requestMatchers("/admin/**").hasAnyAuthority("admin")
 //                .requestMatchers("/alumnos/**").hasAnyAuthority("admin", "docente")
 
                 // todas las demás vistas requieren autenticación

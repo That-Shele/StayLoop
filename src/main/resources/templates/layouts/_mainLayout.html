@@ -43,7 +43,7 @@
     <!-- Header -->
     <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f4f2f0] px-10 py-4">
         <a th:href="@{/}">
-        <div class="flex items-center gap-4 text-[var(--primary-text-color)]">
+        <div class="flex items-center gap-4 text-[var(--primary-text-color)] ">
 
             <div class="h-8 w-8 text-[var(--primary-color)]">
                 <svg fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
@@ -51,14 +51,15 @@
                 </svg>
             </div>
             <h2 class="text-2xl font-bold leading-tight tracking-[-0.015em]">StayLoop</h2>
-            <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-[var(--text-secondary)]">
-                <a class="hover:text-[var(--primary-color)] transition-colors hover:font-semibold hover:border-b-2 hover:border-[var(--primary-color)] hover:pb-1" href="#">Stays</a>
-                <a class="hover:text-[var(--primary-color)] transition-colors hover:font-semibold hover:border-b-2 hover:border-[var(--primary-color)] hover:pb-1" href="#">Flights</a>
-                <a class="hover:text-[var(--primary-color)] transition-colors hover:font-semibold hover:border-b-2 hover:border-[var(--primary-color)] hover:pb-1" href="#">Car rentals</a>
-                <a class="hover:text-[var(--primary-color)] transition-colors hover:font-semibold hover:border-b-2 hover:border-[var(--primary-color)] hover:pb-1" href="#">Attractions</a>
-            </nav>
+
         </div>
         </a>
+        <nav sec:authorize="isAuthenticated()" class="hidden md:flex items-center gap-6 text-sm font-medium text-[var(--text-secondary)] mx-4">
+            <a class="hover:text-[var(--primary-color)] transition-colors hover:font-semibold hover:border-b-2 hover:border-[var(--primary-color)] hover:pb-1" href="#">Stays</a>
+            <a class="hover:text-[var(--primary-color)] transition-colors hover:font-semibold hover:border-b-2 hover:border-[var(--primary-color)] hover:pb-1" href="#">Flights</a>
+            <a class="hover:text-[var(--primary-color)] transition-colors hover:font-semibold hover:border-b-2 hover:border-[var(--primary-color)] hover:pb-1" href="#">Car rentals</a>
+            <a class="hover:text-[var(--primary-color)] transition-colors hover:font-semibold hover:border-b-2 hover:border-[var(--primary-color)] hover:pb-1" href="#">Attractions</a>
+        </nav>
         <nav class="flex flex-1 justify-end gap-4">
             <button sec:authorize="isAnonymous()" class="flex items-center justify-center rounded-full h-12 px-6 bg-[var(--primary-color)] text-white font-bold hover:bg-green-500 transition-colors">
                 <a th:href="@{/login}"><span>Iniciar Sesión</span></a>
@@ -72,8 +73,8 @@
             <button sec:authorize="isAuthenticated()" class="flex items-center justify-center rounded-full h-12 px-6 bg-[var(--primary-color)] text-white font-bold hover:bg-red-500 transition-colors">
                 <a th:href="@{/logout}"><span>Cerrar Sesión</span></a>
             </button>
-            <button>
-                <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-11 border-2 border-transparent hover:border-[var(--primary-color)] transition-all" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBDIaOO7F9UxKBuEYJd6yBR_whwPa55Yn3pwShvP0i6TR9fNjMpXW09g5EHE-LFZzn927JSCr8X17vqpWnvLcCcKPjMvg5MHgrXGKcu3dYtSqGSGc2FlAIgA0gDh6oCJ16rYT-DX9LRXnZfGeFZ-Zna9lP1B-R8ONxzny9sqOFx8wlQYgfvRDf9sU1CGhPfzpcxLugymvyfZNVrRKTqaIYdA7aRSjm0WyYULpQ7LRTXt1BvUl1_sCH8hiLDsamwsQpgOZhqtOI");'></div>
+            <button sec:authorize="isAuthenticated()">
+                <img class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-11 border-2 border-transparent hover:border-[var(--primary-color)] transition-all" style='max-width: 44px; max-height: 44px;' alt="test" th:src="@{'/usuarioControl/imagen/' + ${#authentication.getName()}}"/>
             </button>
         </nav>
     </header>
