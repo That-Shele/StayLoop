@@ -62,7 +62,7 @@
                         <td class="table-column-actions px-4 py-3 text-right align-middle">
                             <div class="inline-flex rounded-full bg-white shadow-sm border border-stone-200">
                                 <a th:href="@{/usuarioControl/edit/{id} (id = ${item.id})}" class="group p-2 rounded-l-full hover:bg-yellow-400 transition-colors "><i class="bi bi-pen-fill  text-gray-400 group-hover:text-slate-900"></i></a>
-                                <a class="group p-2 hover:bg-red-600 transition-colors border-l border-stone-200 "><i class="bi bi-trash-fill  text-gray-400 group-hover:text-white"></i></a>
+                                <a th:href="@{/usuarioControl/delete/{id} (id = ${item.id})}" class="group p-2 hover:bg-red-600 transition-colors border-l border-stone-200 "><i class="bi bi-trash-fill  text-gray-400 group-hover:text-white"></i></a>
                                 <a th:href="@{/usuarioControl/details/{id} (id = ${item.id})}" class="group p-2 rounded-r-full hover:bg-sky-600 transition-colors border-l border-stone-200 "><i class="bi bi-eye-fill  text-gray-400 group-hover:text-white"></i></a>
                             </div>
                         </td>

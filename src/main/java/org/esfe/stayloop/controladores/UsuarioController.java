@@ -1,5 +1,6 @@
 package org.esfe.stayloop.controladores;
 
+import jakarta.validation.Valid;
 import org.esfe.stayloop.modelos.Rol;
 import org.esfe.stayloop.modelos.Usuario;
 import org.esfe.stayloop.servicios.interfaces.IRolService;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,13 +44,14 @@ public class UsuarioController {
     {
         int currentPage = page.orElse(1) - 1;
         int pageSize = size.orElse(5);
-        Pageable pageable = PageRequest.of(currentPage, pageSize);
+        Sort ordenamiento = Sort.by(Sort.Direction.DESC,"id");
+        Pageable pageable = PageRequest.of(currentPage, pageSize, ordenamiento);
 
         String filtroNombre = nombre.orElse("");
         String filtroEmail = email.orElse("");
         Integer filtroRol = idRol.orElse(null);
 
-        Page<Usuario> usuarios = usuarioService.buscarPaginados(filtroRol, filtroNombre, filtroEmail, pageable);
+        Page<Usuario> usuarios = usuarioService.buscarPaginados(filtroNombre, filtroEmail, filtroRol, pageable);
         List<Rol> roles = rolService.obtenerTodos();
 
 
@@ -83,9 +86,10 @@ public class UsuarioController {
     }
 
     @PostMapping("/save")
-    public String save(@RequestParam Integer idRol, Usuario usuario, BindingResult bindingResult, Model model){
+    public String save( @RequestParam Integer idRol, @Valid @ModelAttribute("usuario")Usuario usuario, BindingResult bindingResult,  Model model ){
         if(bindingResult.hasErrors()){
             model.addAttribute(usuario);
+            model.addAttribute("roles", rolService.obtenerTodos());
             return "admin/create";
         }
         if(usuario.getPassword() != null) {
@@ -118,5 +122,20 @@ public class UsuarioController {
         model.addAttribute("roles", rolService.obtenerTodos());
         model.addAttribute("usuario", usuario);
         return "admin/edit";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Integer id, Model model){
+        Usuario usuario = usuarioService.buscarPorId(id);
+        Rol rol = rolService.buscarPorId(usuario.getIdRol());
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("rol", rol);
+        return "admin/delete";
+    }
+
+    @PostMapping("/delete")
+    public String remove(Usuario usuario){
+        usuarioService.eliminarPorId(usuario.getId());
+        return "redirect:/usuarioControl";
     }
 }

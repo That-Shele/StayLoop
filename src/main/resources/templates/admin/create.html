@@ -12,27 +12,31 @@
         <form th:action="@{/usuarioControl/save}" method="post" th:object="${usuario}" class="mt-8 space-y-6 bg-white p-8 shadow-sm sm:rounded-2xl">
             <div>
                 <label class="block text-sm font-medium text-[var(--text-primary)]" for="nombre">Nombre</label>
+                <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="error"></span>
                 <div class="mt-1">
-                    <input th:field="*{nombre}" class="form-input block w-full rounded-xl border-secondary-100 bg-secondary-50 placeholder:text-[var(--text-secondary)] focus:border-primary-500 focus:ring-primary-500 sm:text-sm py-3 px-4" id="nombre" placeholder="Ingrese el nombre" required="" type="text"/>
+                    <input th:field="*{nombre}" class="form-input block w-full rounded-xl border-secondary-100 bg-secondary-50 placeholder:text-[var(--text-secondary)] focus:border-primary-500 focus:ring-primary-500 sm:text-sm py-3 px-4" id="nombre" placeholder="Ingrese el nombre"  type="text"/>
                 </div>
             </div>
             <div>
                 <label class="block text-sm font-medium text-[var(--text-primary)]" for="email">Email</label>
+                <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error"></span>
                 <div class="mt-1">
-                    <input th:field="*{email}" class="form-input block w-full rounded-xl border-secondary-100 bg-secondary-50 placeholder:text-[var(--text-secondary)] focus:border-primary-500 focus:ring-primary-500 sm:text-sm py-3 px-4" id="email" placeholder="Ingrese su email" required="" type="email"/>
+                    <input th:field="*{email}" class="form-input block w-full rounded-xl border-secondary-100 bg-secondary-50 placeholder:text-[var(--text-secondary)] focus:border-primary-500 focus:ring-primary-500 sm:text-sm py-3 px-4" id="email" placeholder="Ingrese su email"  type="email"/>
                 </div>
             </div>
             <div>
                 <label class="block text-sm font-medium text-[var(--text-primary)]" for="password">Contraseña</label>
+                <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"></span>
                 <div class="mt-1">
-                    <input th:field="*{password}" class="form-input block w-full rounded-xl border-secondary-100 bg-secondary-50 placeholder:text-[var(--text-secondary)] focus:border-primary-500 focus:ring-primary-500 sm:text-sm py-3 px-4" id="password"  placeholder="Ingrese una contraseña segura" required="" type="password"/>
+                    <input th:field="*{password}" class="form-input block w-full rounded-xl border-secondary-100 bg-secondary-50 placeholder:text-[var(--text-secondary)] focus:border-primary-500 focus:ring-primary-500 sm:text-sm py-3 px-4" id="password"  placeholder="Ingrese una contraseña segura" type="password"/>
                 </div>
             </div>
             <div>
                 <label class="block text-sm font-medium text-[var(--text-primary)]" for="idRol">Rol</label>
                 <div class="mt-1">
-                    <select class="form-select block w-full rounded-xl border-secondary-100 bg-secondary-50 text-[var(--text-secondary)] focus:border-primary-500 focus:ring-primary-500 sm:text-sm py-3 px-4" name="idRol" id="idRol" required="">
-                        <option>Selecciona Rol</option>
+                    <span th:if="${#fields.hasErrors('idRol')}" th:errors="*{idRol}" class="error"></span>
+                    <select class="form-select block w-full rounded-xl border-secondary-100 bg-secondary-50 text-[var(--text-secondary)] focus:border-primary-500 focus:ring-primary-500 sm:text-sm py-3 px-4" name="idRol" id="idRol" >
+                        <option value=-1>Selecciona Rol</option>
                         <option th:each="rol : ${roles}" th:value="${rol.id}" th:text="${rol.nombre}"></option>
                     </select>
                 </div>

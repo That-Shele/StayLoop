@@ -27,10 +27,17 @@ public class Hotel {
     
     @Column(name = "idZona")
     private Integer idZona;
+
+    @Column(name = "idUsuario")
+    private Integer idUsuario;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idZona", insertable = false, updatable = false)
     private Zona zona;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idUsuario", insertable = false, updatable = false)
+    private  Usuario usuario;
     
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
     private List<TipoHabitacion> tiposHabitacion;
