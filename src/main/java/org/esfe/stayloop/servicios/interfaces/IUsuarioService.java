@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IUsuarioService {
-    Page<Usuario> obtenerTodos(Pageable pageable);
+    List<Usuario> obtenerTodos();
 
     Page<Usuario> buscarPaginados( String nombre, String email, Integer idRol, Pageable pageable);
 

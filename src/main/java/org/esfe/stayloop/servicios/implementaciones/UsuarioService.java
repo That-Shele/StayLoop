@@ -19,8 +19,8 @@ public class UsuarioService implements IUsuarioService {
     private IUsuarioRepository usuarioRepository;
 
     @Override
-    public Page<Usuario> obtenerTodos(Pageable pageable) {
-        return usuarioRepository.findAll(pageable);
+    public List<Usuario> obtenerTodos() {
+        return usuarioRepository.findAll();
     }
 
     @Override

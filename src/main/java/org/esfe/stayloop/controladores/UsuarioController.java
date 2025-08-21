@@ -17,6 +17,16 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+
+import org.esfe.stayloop.servicios.utilerias.PdfGeneratorService;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+
+import java.io.IOException;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -35,6 +45,9 @@ public class UsuarioController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private PdfGeneratorService pdfGeneratorService;
 
     @GetMapping
     public String index(Model model,
@@ -193,4 +206,27 @@ public class UsuarioController {
                 .map(Usuario::getImgUsuario)
                 .orElse(null);
     }
+
+    @GetMapping("/reportegeneral/{visualizacion}")
+    public ResponseEntity<byte[]> ReporteGeneral(@PathVariable("visualizacion") String visualizacion) {
+
+        try {
+            List<Usuario> usuarios = usuarioService.obtenerTodos();
+
+            // Genera el PDF. Si hay un error aquí, la excepción será capturada.
+            byte[] pdfBytes = pdfGeneratorService.generatePdfFromHtml("reportes/rpUsuarios", "usuarios", usuarios);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+
+            // inline= vista previa, attachment=descarga el archivo
+            headers.add("Content-Disposition", visualizacion+"; filename=reporte_general.pdf");
+
+            return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
+
+        } catch (IOException e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
