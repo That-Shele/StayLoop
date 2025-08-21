@@ -13,6 +13,8 @@ public interface IUsuarioService {
 
     Page<Usuario> buscarPaginados( String nombre, String email, Integer idRol, Pageable pageable);
 
+    Optional<Usuario> buscarPorEmail(String email);
+
     Optional<Usuario> buscarPorId(Integer id);
 
     Usuario crearOEditar(Usuario usuario);

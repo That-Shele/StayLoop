@@ -22,6 +22,7 @@ public interface IUsuarioRepository extends JpaRepository<Usuario, Integer> {
             Pageable pageable
     );
 
+    public Usuario findByEmail(String email);
 
 
 }

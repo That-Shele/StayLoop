@@ -88,7 +88,7 @@ public class UsuarioController {
     }
 
     @PostMapping("/save")
-    public String save( @RequestParam Integer idRol,
+    public String save( @RequestParam("idRol") Integer idRol,
                         @RequestParam("img") MultipartFile imgUsuario,
                         @RequestParam("authCheck") String authCheck,
                         @Valid @ModelAttribute("usuario") Usuario usuario,
@@ -186,10 +186,10 @@ public class UsuarioController {
         return "redirect:/usuarioControl";
     }
 
-    @GetMapping("/imagen/{id}")
+    @GetMapping("/imagen/{email}")
     @ResponseBody
-    public byte[] mostrarImagen(@PathVariable Integer id) {
-        return usuarioService.buscarPorId(id)
+    public byte[] mostrarImagen(@PathVariable String email) {
+        return usuarioService.buscarPorEmail(email)
                 .map(Usuario::getImgUsuario)
                 .orElse(null);
     }

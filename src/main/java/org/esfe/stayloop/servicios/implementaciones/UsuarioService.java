@@ -30,6 +30,11 @@ public class UsuarioService implements IUsuarioService {
     }
 
     @Override
+    public Optional<Usuario> buscarPorEmail(String email) {
+        return Optional.ofNullable(usuarioRepository.findByEmail(email));
+    }
+
+    @Override
     public Optional<Usuario> buscarPorId(Integer id) {
         return usuarioRepository.findById(id);
     }
