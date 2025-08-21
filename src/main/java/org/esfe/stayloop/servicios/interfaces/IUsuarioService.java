@@ -6,13 +6,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IUsuarioService {
     Page<Usuario> obtenerTodos(Pageable pageable);
 
     Page<Usuario> buscarPaginados( String nombre, String email, Integer idRol, Pageable pageable);
 
-    Usuario buscarPorId(Integer id);
+    Optional<Usuario> buscarPorId(Integer id);
 
     Usuario crearOEditar(Usuario usuario);
 

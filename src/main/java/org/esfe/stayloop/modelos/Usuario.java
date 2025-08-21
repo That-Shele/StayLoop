@@ -2,10 +2,8 @@ package org.esfe.stayloop.modelos;
 
 import jakarta.persistence.*;
 import java.util.List;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -38,6 +36,11 @@ public class Usuario {
 
     @Column(nullable = false)
     private byte status;
+
+    @Size(max = 2097152, message = "Máximo 2MiB de archivo")
+    @Lob
+    @Column(columnDefinition="LONGBLOB", nullable = false)
+    private byte[] imgUsuario;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idRol", insertable = false, updatable = false)
@@ -111,5 +114,21 @@ public class Usuario {
 
     public void setReservas(List<Reserva> reservas) {
         this.reservas = reservas;
+    }
+
+    public byte[] getImgUsuario() {
+        return imgUsuario;
+    }
+
+    public void setImgUsuario(byte[] imgUsuario) {
+        this.imgUsuario = imgUsuario;
+    }
+
+    public List<Hotel> getHoteles() {
+        return hoteles;
+    }
+
+    public void setHoteles(List<Hotel> hoteles) {
+        this.hoteles = hoteles;
     }
 }

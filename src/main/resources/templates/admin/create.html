@@ -9,7 +9,8 @@
             <h2 class="text-3xl font-bold tracking-tight text-[var(--text-primary)] sm:text-4xl">Crear Usuario</h2>
             <p class="mt-4 text-lg leading-6 text-[var(--text-secondary)]">Llena el siguiente formulario para crear un nuevo usuario</p>
         </div>
-        <form th:action="@{/usuarioControl/save}" method="post" th:object="${usuario}" class="mt-8 space-y-6 bg-white p-8 shadow-sm sm:rounded-2xl">
+        <form th:action="@{/usuarioControl/save}" method="post" th:object="${usuario}" class="mt-8 space-y-6 bg-white p-8 shadow-sm sm:rounded-2xl" enctype="multipart/form-data">
+            <input type="hidden" name="authCheck" value="authCreate">
             <div>
                 <label class="block text-sm font-medium text-[var(--text-primary)]" for="nombre">Nombre</label>
                 <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="error"></span>
@@ -32,6 +33,25 @@
                 </div>
             </div>
             <div>
+                <label class="block text-sm font-medium text-[var(--text-primary)]" for="imgUsuario">Foto de Perfil</label>
+                <span th:if="${#fields.hasErrors('imgUsuario')}" th:errors="*{imgUsuario}" class="error"></span>
+                <div class="mt-1 flex items-center gap-4">
+                        <span class="inline-block h-16 w-16 overflow-hidden rounded-full bg-gray-300)]">
+                            <svg id="default" class="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M24 20.993V24H0v-2.993A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                            </svg>
+                            <img id="preview" src="#" alt="Vista previa de la imagen" style="max-width: 64px; max-height: 64px; display: none;">
+                        </span>
+                    <div class="flex-1">
+                        <label class="group relative cursor-pointer rounded-md border border-dashed border-gray-300 bg-neutral-300 px-3 py-2 text-sm font-medium text-[var(--text-secondary)] hover:border-[var(--brand-color)] hover:text-[var(--brand-color)]">
+                            <span>Subir Foto</span>
+                            <input  class="sr-only" id="img" name="img" type="file" accept="image/*"/>
+                        </label>
+                        <p class="mt-1 text-xs text-[var(--text-secondary)]">Tamaño Máximo: 2MiB</p>
+                    </div>
+                </div>
+            </div>
+            <div>
                 <label class="block text-sm font-medium text-[var(--text-primary)]" for="idRol">Rol</label>
                 <div class="mt-1">
                     <span th:if="${#fields.hasErrors('idRol')}" th:errors="*{idRol}" class="error"></span>
@@ -50,5 +70,29 @@
                 </a>
             </div>
         </form>
+        <script>
+            const imagenInput = document.getElementById('img');
+            const vistaPrevia = document.getElementById('preview');
+            const svg = document.getElementById('default');
+            imagenInput.addEventListener('change', function (event) {
+                const archivo = event.target.files[0];
+                if (archivo) {
+                    const lector = new FileReader();
+
+                    lector.onload = function (e) {
+                        vistaPrevia.src = e.target.result;
+                        vistaPrevia.style.display = 'block';
+                        svg.style.display = 'none';
+                    };
+
+                    lector.readAsDataURL(archivo);
+                } else {
+                    vistaPrevia.src = '#';
+                    vistaPrevia.style.display = 'none';
+                    svg.style.display = 'block';
+
+                }
+            });
+        </script>
     </div>
 </div>

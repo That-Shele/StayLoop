@@ -15,8 +15,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -86,30 +88,75 @@ public class UsuarioController {
     }
 
     @PostMapping("/save")
-    public String save( @RequestParam Integer idRol, @Valid @ModelAttribute("usuario")Usuario usuario, BindingResult bindingResult,  Model model ){
+    public String save( @RequestParam Integer idRol,
+                        @RequestParam("img") MultipartFile imgUsuario,
+                        @RequestParam("authCheck") String authCheck,
+                        @Valid @ModelAttribute("usuario") Usuario usuario,
+                        BindingResult bindingResult, Model model
+                        ){
         if(bindingResult.hasErrors()){
             model.addAttribute(usuario);
             model.addAttribute("roles", rolService.obtenerTodos());
-            return "admin/create";
+            if(Objects.equals(authCheck, "authCreate")) {
+                return "admin/create";
+            }
+          else if (Objects.equals(authCheck, "authEdit")) {
+            return "admin/edit";
+         }
+        else {
+                return "home/formRegister";
+            }
         }
-        if(usuario.getPassword() != null) {
+        if (imgUsuario != null && !imgUsuario.isEmpty()) {
+            try{
+                usuario.setImgUsuario(imgUsuario.getBytes());
+
+            }
+            catch (Exception e){
+                model.addAttribute(usuario);
+                model.addAttribute("roles", rolService.obtenerTodos());
+                if(Objects.equals(authCheck, "authCreate")) {
+                    return "admin/create";
+                } else if (Objects.equals(authCheck, "authEdit")) {
+                    return "admin/edit";
+                } else {
+                    return "home/formRegister";
+                }
+            }
+        }
+        else {
+            Usuario user = usuarioService.buscarPorId(usuario.getId()).get();
+            usuario.setImgUsuario(user.getImgUsuario());
+        }
+
+
+
+        if(usuario.getPassword() != null &&Objects.equals(authCheck, "authEdit") ) {
+            Usuario user = usuarioService.buscarPorId(usuario.getId()).get();
+            usuario.setPassword(user.getPassword());
+        }
+        else {
             String password = passwordEncoder.encode(usuario.getPassword());
             usuario.setPassword(password);
         }
-        else {
-            Usuario user = usuarioService.buscarPorId(usuario.getId());
-            usuario.setPassword(user.getPassword());
-        }
+
+
 
         usuario.setIdRol(idRol);
         usuario.setStatus((byte) 1);
         usuarioService.crearOEditar(usuario);
-        return "redirect:/usuarioControl";
+        if(Objects.equals(authCheck, "anon")) {
+            return "redirect:/";
+        }
+        else {
+
+            return "redirect:/usuarioControl";
+        }
     }
 
     @GetMapping("/details/{id}")
     public String details(@PathVariable("id") Integer id, Model model){
-        Usuario usuario = usuarioService.buscarPorId(id);
+        Usuario usuario = usuarioService.buscarPorId(id).get();
         Rol rol = rolService.buscarPorId(usuario.getIdRol());
         model.addAttribute("usuario", usuario);
         model.addAttribute("rol", rol);
@@ -118,7 +165,7 @@ public class UsuarioController {
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Integer id, Model model){
-        Usuario usuario = usuarioService.buscarPorId(id);
+        Usuario usuario = usuarioService.buscarPorId(id).get();
         model.addAttribute("roles", rolService.obtenerTodos());
         model.addAttribute("usuario", usuario);
         return "admin/edit";
@@ -126,7 +173,7 @@ public class UsuarioController {
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") Integer id, Model model){
-        Usuario usuario = usuarioService.buscarPorId(id);
+        Usuario usuario = usuarioService.buscarPorId(id).get();
         Rol rol = rolService.buscarPorId(usuario.getIdRol());
         model.addAttribute("usuario", usuario);
         model.addAttribute("rol", rol);
@@ -137,5 +184,13 @@ public class UsuarioController {
     public String remove(Usuario usuario){
         usuarioService.eliminarPorId(usuario.getId());
         return "redirect:/usuarioControl";
+    }
+
+    @GetMapping("/imagen/{id}")
+    @ResponseBody
+    public byte[] mostrarImagen(@PathVariable Integer id) {
+        return usuarioService.buscarPorId(id)
+                .map(Usuario::getImgUsuario)
+                .orElse(null);
     }
 }

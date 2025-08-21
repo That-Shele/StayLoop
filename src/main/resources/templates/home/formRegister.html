@@ -6,24 +6,49 @@
 <div layout:fragment="content" class="flex flex-1 items-center justify-center py-12 sm:px-6 lg:px-8">
     <div class="w-full max-w-md space-y-8 rounded-2xl bg-[var(--surface-primary)] p-10 shadow-lg">
             <h2 class="text-center text-3xl font-bold tracking-tight text-[var(--text-primary)]">Crea una nueva cuenta</h2>
-        <form action="#" class="space-y-6" method="post">
+        <form th:action="@{/usuarioControl/save}" method="post" th:object="${usuario}" class="space-y-6" enctype="multipart/form-data">
+            <input type="hidden" id="idRol" value=3 th:field="*{idRol}">
+            <input type="hidden" name="authCheck" value="anon">
+            <input type="hidden" id="imgUsuario" value="" th:field="*{idRol}">
             <div class="space-y-4">
                 <div>
-                    <label class="block text-sm font-medium text-[var(--text-primary)]" for="full-name">Nombre</label>
+                    <label class="block text-sm font-medium text-[var(--text-primary)]" for="nombre">Nombre</label>
+                    <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="error"></span>
                     <div class="mt-1">
-                        <input autocomplete="name" class="input-field" id="full-name" name="full-name" placeholder="Nombre de usuario" required="" type="text"/>
+                        <input th:field="*{nombre}" class="input-field" id="nombre" placeholder="Ingrese el nombre" type="text"/>
                     </div>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-[var(--text-primary)]" for="email-address">Email</label>
+                    <label class="block text-sm font-medium text-[var(--text-primary)]" for="email">Email</label>
+                    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error"></span>
                     <div class="mt-1">
-                        <input autocomplete="email" class="input-field" id="email-address" name="email" placeholder="email@ejemplo.com" required="" type="email"/>
+                        <input th:field="*{email}" class="input-field" id="email" placeholder="Ingrese su email" type="email"/>
                     </div>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-[var(--text-primary)]" for="password">Contraseña</label>
+                    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"></span>
                     <div class="mt-1">
-                        <input autocomplete="new-password" class="input-field" id="password" name="password" placeholder="Contraseña" required="" type="password"/>
+                        <input th:field="*{password}" class="input-field" id="password"  placeholder="Ingrese una contraseña segura" type="password"/>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-[var(--text-primary)]" for="imgUsuario">Foto de Perfil</label>
+                    <span th:if="${#fields.hasErrors('imgUsuario')}" th:errors="*{imgUsuario}" class="error"></span>
+                    <div class="mt-1 flex items-center gap-4">
+                        <span class="inline-block h-16 w-16 overflow-hidden rounded-full bg-gray-300)]">
+                            <svg id="default" class="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M24 20.993V24H0v-2.993A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                            </svg>
+                            <img id="preview" src="#" alt="Vista previa de la imagen" style="max-width: 64px; max-height: 64px; display: none;">
+                        </span>
+                        <div class="flex-1">
+                            <label class="group relative cursor-pointer rounded-md border border-dashed border-gray-300 bg-neutral-300 px-3 py-2 text-sm font-medium text-[var(--text-secondary)] hover:border-[var(--brand-color)] hover:text-[var(--brand-color)]">
+                                <span>Subir Foto</span>
+                                <input class="sr-only" id="img" name="img" type="file" accept="image/*"/>
+                            </label>
+                                <p class="mt-1 text-xs text-[var(--text-secondary)]">Tamaño Máximo: 2MiB</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -33,9 +58,37 @@
                 </button>
             </div>
         </form>
+        <script>
+            const imagenInput = document.getElementById('img');
+            const vistaPrevia = document.getElementById('preview');
+            const svg = document.getElementById('default');
+            const multipart = document.getElementById('imgUsuario');
+
+            imagenInput.addEventListener('change', function (event) {
+                const archivo = event.target.files[0];
+                if (archivo) {
+                    const lector = new FileReader();
+
+                    lector.onload = function (e) {
+                        vistaPrevia.src = e.target.result;
+                        vistaPrevia.style.display = 'block';
+                        svg.style.display = 'none';
+                        multipart.value = "em1"
+                    };
+
+                    lector.readAsDataURL(archivo);
+                } else {
+                    vistaPrevia.src = '#';
+                    vistaPrevia.style.display = 'none';
+                    svg.style.display = 'block';
+
+                }
+            });
+        </script>
         <p class="mt-6 text-center text-xs text-[var(--text-secondary)]">
             Al crear una cuenta, aceptas seguir nuestros
             <a class="font-medium underline hover:text-green-500 transition-colors" href="/terms">Terminos y Condiciones</a>
         </p>
     </div>
+
 </div>

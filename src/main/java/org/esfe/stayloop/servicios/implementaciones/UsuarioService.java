@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsuarioService implements IUsuarioService {
@@ -29,8 +30,8 @@ public class UsuarioService implements IUsuarioService {
     }
 
     @Override
-    public Usuario buscarPorId(Integer id) {
-        return usuarioRepository.findById(id).get();
+    public Optional<Usuario> buscarPorId(Integer id) {
+        return usuarioRepository.findById(id);
     }
 
     @Override

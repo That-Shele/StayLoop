@@ -14,7 +14,7 @@
         :root {
             --primary-color: #3b82f6;--secondary-color: #f3f4f6;--text-primary: #1e3a8a;--text-secondary: #6b7280;--white: #ffffff;
             --border-color: #e5e7eb;--accent-green: #34d399;--background-light: #eff6ff; --background-color: #ffffff;
-            --card-background-color: #f4f2f0;
+            --card-background-color: #f4f2f0; --brand-color: #e88030;
         }
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -51,7 +51,12 @@
                 </svg>
             </div>
             <h2 class="text-2xl font-bold leading-tight tracking-[-0.015em]">StayLoop</h2>
-
+            <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-[var(--text-secondary)]">
+                <a class="hover:text-[var(--primary-color)] transition-colors hover:font-semibold hover:border-b-2 hover:border-[var(--primary-color)] hover:pb-1" href="#">Stays</a>
+                <a class="hover:text-[var(--primary-color)] transition-colors hover:font-semibold hover:border-b-2 hover:border-[var(--primary-color)] hover:pb-1" href="#">Flights</a>
+                <a class="hover:text-[var(--primary-color)] transition-colors hover:font-semibold hover:border-b-2 hover:border-[var(--primary-color)] hover:pb-1" href="#">Car rentals</a>
+                <a class="hover:text-[var(--primary-color)] transition-colors hover:font-semibold hover:border-b-2 hover:border-[var(--primary-color)] hover:pb-1" href="#">Attractions</a>
+            </nav>
         </div>
         </a>
         <nav class="flex flex-1 justify-end gap-4">
@@ -61,15 +66,14 @@
             <button sec:authorize="isAnonymous()" class="flex items-center justify-center rounded-full h-12 px-6 bg-[var(--card-background-color)] text-[var(--text-primary)] font-bold hover:bg-gray-200 transition-colors">
                 <a th:href="@{/register}"><span>Registrarse</span></a>
             </button>
-            <button sec:authorize="isAuthenticated()"   class="flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-[var(--accent-blue)]">
-                <a th:href="@{/admin}">
-                <svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24ZM101.63,168h52.74C149,186.34,140,202.87,128,215.89,116,202.87,107,186.34,101.63,168ZM98,152a145.72,145.72,0,0,1,0-48h60a145.72,145.72,0,0,1,0,48ZM40,128a87.61,87.61,0,0,1,3.33-24H81.79a161.79,161.79,0,0,0,0,48H43.33A87.61,87.61,0,0,1,40,128ZM154.37,88H101.63C107,69.66,116,53.13,128,40.11,140,53.13,149,69.66,154.37,88Zm19.84,16h38.46a88.15,88.15,0,0,1,0,48H174.21a161.79,161.79,0,0,0,0-48Zm32.16-16H170.94a142.39,142.39,0,0,0-20.26-45A88.37,88.37,0,0,1,206.37,88ZM105.32,43A142.39,142.39,0,0,0,85.06,88H49.63A88.37,88.37,0,0,1,105.32,43ZM49.63,168H85.06a142.39,142.39,0,0,0,20.26,45A88.37,88.37,0,0,1,49.63,168Zm101.05,45a142.39,142.39,0,0,0,20.26-45h35.43A88.37,88.37,0,0,1,150.68,213Z"></path>
-                </svg>
-                </a>
-            </button>
+            <a th:href="@{/admin}" sec:authorize="hasAnyAuthority('admin')"  class="group flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-[var(--accent-blue)]">
+                <i class="bi bi-ui-radios-grid text-gray-400 group-hover:text-slate-900"></i>
+            </a>
             <button sec:authorize="isAuthenticated()" class="flex items-center justify-center rounded-full h-12 px-6 bg-[var(--primary-color)] text-white font-bold hover:bg-red-500 transition-colors">
                 <a th:href="@{/logout}"><span>Cerrar Sesión</span></a>
+            </button>
+            <button>
+                <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-11 border-2 border-transparent hover:border-[var(--primary-color)] transition-all" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBDIaOO7F9UxKBuEYJd6yBR_whwPa55Yn3pwShvP0i6TR9fNjMpXW09g5EHE-LFZzn927JSCr8X17vqpWnvLcCcKPjMvg5MHgrXGKcu3dYtSqGSGc2FlAIgA0gDh6oCJ16rYT-DX9LRXnZfGeFZ-Zna9lP1B-R8ONxzny9sqOFx8wlQYgfvRDf9sU1CGhPfzpcxLugymvyfZNVrRKTqaIYdA7aRSjm0WyYULpQ7LRTXt1BvUl1_sCH8hiLDsamwsQpgOZhqtOI");'></div>
             </button>
         </nav>
     </header>
