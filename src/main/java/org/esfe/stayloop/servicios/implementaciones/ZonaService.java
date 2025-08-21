@@ -23,8 +23,8 @@ public class ZonaService implements IZonaService {
     }
 
     @Override
-    public Page<Zona> buscarPaginados(Pageable pageable, Integer zona) {
-        return zonaRepository.findByNombreContainingIgnoreCaseOrderByIdDesc(zona, pageable);
+    public Page<Zona> buscarPaginados(Pageable pageable, String nombre) {
+        return zonaRepository.findByNombreContainsIgnoreCaseOrderByIdDesc(nombre, pageable);
     }
 
     @Override

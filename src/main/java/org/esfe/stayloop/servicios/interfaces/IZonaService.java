@@ -9,7 +9,7 @@ import java.util.List;
 public interface IZonaService {
     List<Zona> obtenerTodos();
 
-    Page<Zona> buscarPaginados(Pageable pageable, Integer zona);
+    Page<Zona> buscarPaginados(Pageable pageable, String nombre);
 
     Zona buscarPorId(Integer id);
 
