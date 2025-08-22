@@ -1,10 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html lang="es"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+<div layout:fragment="content" class="flex flex-1 justify-center py-10 px-4 sm:px-6 lg:px-8">
+    <div class="w-full max-w-lg">
+        <!-- Título -->
+        <div class="text-center">
+            <h2 class="text-3xl font-bold tracking-tight text-[var(--text-primary)] sm:text-4xl">Crear Zona</h2>
+            <p class="mt-4 text-lg leading-6 text-[var(--text-secondary)]">
+                Llena el siguiente formulario para crear una nueva zona
+            </p>
+        </div>
 
-</body>
+        <!-- Formulario -->
+        <form th:action="@{/zonas/save}" method="post" th:object="${zona}"
+              class="mt-8 space-y-6 bg-white p-8 shadow-sm sm:rounded-2xl">
+
+            <!-- Nombre -->
+            <div>
+                <label class="block text-sm font-medium text-[var(--text-primary)]" for="nombre">Nombre</label>
+                <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="error"></span>
+                <div class="mt-1">
+                    <input th:field="*{nombre}"
+                           id="nombre"
+                           placeholder="Ingrese el nombre de la zona"
+                           type="text"
+                           class="form-input block w-full rounded-xl border-secondary-100 bg-secondary-50
+                                  placeholder:text-[var(--text-secondary)] focus:border-primary-500
+                                  focus:ring-primary-500 sm:text-sm py-3 px-4"/>
+                </div>
+            </div>
+
+            <!-- Descripción -->
+            <div>
+                <label class="block text-sm font-medium text-[var(--text-primary)]" for="descripcion">Descripción</label>
+                <span th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}" class="error"></span>
+                <div class="mt-1">
+                    <textarea th:field="*{descripcion}"
+                              id="descripcion"
+                              placeholder="Ingrese una breve descripción"
+                              rows="4"
+                              class="form-input block w-full rounded-xl border-secondary-100 bg-secondary-50
+                                     placeholder:text-[var(--text-secondary)] focus:border-primary-500
+                                     focus:ring-primary-500 sm:text-sm py-3 px-4"></textarea>
+                </div>
+            </div>
+
+            <!-- Botones -->
+            <div class="flex flex-col sm:flex-row-reverse gap-4 pt-4">
+                <button type="submit"
+                        class="flex w-full justify-center rounded-full border border-transparent
+                               bg-[var(--primary-color)] py-3 px-4 text-sm font-bold text-white
+                               shadow-sm hover:bg-green-600 transition-colors focus:outline-none
+                               focus:ring-2 focus:ring-primary-500 focus:ring-offset-2">
+                    Crear
+                </button>
+                <a th:href="@{/zonas}" type="button"
+                   class="flex w-full justify-center rounded-full border border-secondary-100
+                          bg-gray-100 text-slate-950 py-3 px-4 text-sm font-bold shadow-sm
+                          hover:bg-red-500 hover:text-white transition-colors focus:outline-none
+                          focus:ring-2 focus:ring-primary-500 focus:ring-offset-2">
+                    Cancelar
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
 </html>
