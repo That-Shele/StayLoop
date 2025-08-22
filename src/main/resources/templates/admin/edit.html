@@ -15,19 +15,21 @@
             <input type="hidden" th:field="*{password}">
             <div>
                 <label class="block text-sm font-medium text-[var(--text-primary)]" for="nombre">Nombre</label>
+                <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="text-red-400"></span>
                 <div class="mt-1">
                     <input th:field="*{nombre}" class="form-input block w-full rounded-xl border-secondary-100 bg-secondary-50 placeholder:text-[var(--text-secondary)] focus:border-primary-500 focus:ring-primary-500 sm:text-sm py-3 px-4" id="nombre" placeholder="Ingrese el nombre" required="" type="text"/>
                 </div>
             </div>
             <div>
                 <label class="block text-sm font-medium text-[var(--text-primary)]" for="email">Email</label>
+                <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-red-400"></span>
                 <div class="mt-1">
                     <input th:field="*{email}" class="form-input block w-full rounded-xl border-secondary-100 bg-secondary-50 placeholder:text-[var(--text-secondary)] focus:border-primary-500 focus:ring-primary-500 sm:text-sm py-3 px-4" id="email" placeholder="Ingrese su email" required="" type="email"/>
                 </div>
             </div>
             <div>
-                <label class="block text-sm font-medium text-[var(--text-primary)]" for="imgUsuario">Foto de Perfil</label>
-                <span th:if="${#fields.hasErrors('imgUsuario')}" th:errors="*{imgUsuario}" class="error"></span>
+                <label class="block text-sm font-medium text-[var(--text-primary)]" for="img">Foto de Perfil</label>
+                <span th:if="${#fields.hasErrors('img')}" th:errors="*{imgUsuario}" class="text-red-400"></span>
                 <div class="mt-1 flex items-center gap-4">
                         <span class="inline-block h-16 w-16 overflow-hidden rounded-full bg-gray-300)]">
                             <img th:if="${usuario.imgUsuario != null}" th:src="@{'/usuarioControl/imagen/' + ${usuario.id}}" id="preview" src="#" alt="Vista previa de la imagen" style="max-width: 64px; max-height: 64px;">
@@ -44,6 +46,7 @@
             <div>
                 <label class="block text-sm font-medium text-[var(--text-primary)]" for="idRol">Rol</label>
                 <div class="mt-1">
+                    <span th:if="${#fields.hasErrors('idRol')}" th:errors="*{idRol}" class="text-red-400"></span>
                     <select class="form-select block w-full rounded-xl border-secondary-100 bg-secondary-50 text-[var(--text-secondary)] focus:border-primary-500 focus:ring-primary-500 sm:text-sm py-3 px-4" name="idRol" id="idRol" required="">
                         <option>Selecciona Rol</option>
                         <option th:each="rol : ${roles}" th:value="${rol.id}" th:text="${rol.nombre}" th:selected="${rol.id} == ${usuario.idRol}"></option>

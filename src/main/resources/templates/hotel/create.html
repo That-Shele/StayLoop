@@ -1,110 +1,240 @@
 <!DOCTYPE html>
-<html  lang="es"
+<html lang="es"
 
-       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-       layout:decorate="/layouts/_mainLayout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout" xmlns="http://www.w3.org/1999/html">
 
-<div layout:fragment="content" class="flex-grow bg-[var(--background-color)]">
+<div layout:fragment="content" class="flex-grow bg-[var(--background-color)] items-center">
   <div class="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
     <div class="space-y-12">
       <header>
-        <h1 class="text-4xl font-extrabold tracking-tight text-[var(--text-primary)]">Create a New Hotel Listing</h1>
-        <p class="mt-2 text-lg text-[var(--text-secondary)]">Fill in the details below to get started.</p>
+        <h1 class="text-4xl font-extrabold tracking-tight text-[var(--text-primary)]">Crea un Nuevo Hotel</h1>
+        <p class="mt-2 text-lg text-[var(--text-secondary)]">Rellena los campos del formulario</p>
       </header>
-      <div class="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-3">
-        <aside>
-          <h2 class="text-lg font-bold text-[var(--text-primary)]">Quick Navigation</h2>
-          <nav class="mt-4 flex flex-col space-y-2">
-            <a class="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--primary-color)]" href="#basic-info">Basic Information</a>
-            <a class="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--primary-color)]" href="#location">Location</a>
-            <a class="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--primary-color)]" href="#description">Description</a>
-            <a class="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--primary-color)]" href="#amenities">Amenities</a>
-            <a class="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--primary-color)]" href="#photos">Photos</a>
-            <a class="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--primary-color)]" href="#room-types">Room Types</a>
-          </nav>
-        </aside>
-        <form class="space-y-12 md:col-span-2">
+      <div >
+        <form th:action="@{/hotel/save}" th:object="${hotelForm}" class="space-y-12 md:col-span-2" method="post" enctype="multipart/form-data">
+          <input type="hidden" name="authCheck" value="authCreate">
           <section class="space-y-6 rounded-2xl border border-[var(--border-color)] bg-white p-6 shadow-sm" id="basic-info">
-            <h3 class="text-xl font-bold text-[var(--text-primary)]">Basic Information</h3>
+            <h3 class="text-xl font-bold text-[var(--text-primary)]">Información Básica</h3>
+
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-              <label class="flex flex-col"><span class="mb-1 text-sm font-medium">Hotel Name</span><input class="form-input h-12 rounded-xl border-[var(--border-color)] bg-white placeholder:text-[var(--text-secondary)] focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]" placeholder="e.g., The Grand Budapest Hotel" type="text"/></label>
-              <label class="flex flex-col"><span class="mb-1 text-sm font-medium">Star Rating</span>
-                <select class="form-select h-12 rounded-xl border-[var(--border-color)] bg-white text-[var(--text-secondary)] focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]">
-                  <option>Select a rating</option>
-                  <option value="1">⭐</option>
-                  <option value="2">⭐⭐</option>
-                  <option value="3">⭐⭐⭐</option>
-                  <option value="4">⭐⭐⭐⭐</option>
-                  <option value="5">⭐⭐⭐⭐⭐</option>
+              <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="text-red-400 flex flex-col"></span>
+              <span th:if="${#fields.hasErrors('idZona')}" th:errors="*{idZona}" class="text-red-400 flex flex-col"></span>
+            </div>
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+              <label class="flex flex-col"><span class="mb-1 text-sm font-medium">Nombre del Hotel</span><input class="form-input h-12 rounded-xl border-[var(--border-color)] bg-white placeholder:text-[var(--text-secondary)] focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]" placeholder="e.g., The Grand Budapest Hotel" type="text" th:field="*{nombre}" id="nombre"/></label>
+              <label class="flex flex-col"><span class="mb-1 text-sm font-medium">Zona</span>
+                <select class="form-select h-12 rounded-xl border-[var(--border-color)] bg-white text-[var(--text-secondary)] focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]" name="idZona" id="idZona">
+                  <option value=-1>Seleccione una zona</option>
+                  <option th:each="zona : ${zonas}" th:value="${zona.id}" th:text="${zona.nombre}"></option>
                 </select></label>
-              <label class="flex flex-col"><span class="mb-1 text-sm font-medium">Contact Email</span><input class="form-input h-12 rounded-xl border-[var(--border-color)] bg-white placeholder:text-[var(--text-secondary)] focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]" placeholder="e.g., contact@hotel.com" type="email"/></label>
-              <label class="flex flex-col"><span class="mb-1 text-sm font-medium">Phone Number</span><input class="form-input h-12 rounded-xl border-[var(--border-color)] bg-white placeholder:text-[var(--text-secondary)] focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]" placeholder="e.g., +1 234 567 890" type="tel"/></label>
             </div>
           </section>
           <section class="space-y-6 rounded-2xl border border-[var(--border-color)] bg-white p-6 shadow-sm" id="location">
-            <h3 class="text-xl font-bold text-[var(--text-primary)]">Location</h3>
+            <h3 class="text-xl font-bold text-[var(--text-primary)]">Direccion</h3>
+            <span th:if="${#fields.hasErrors('direccion')}" th:errors="*{direccion}" class="text-red-400"></span>
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-              <label class="flex flex-col sm:col-span-2"><span class="mb-1 text-sm font-medium">Address</span><input class="form-input h-12 rounded-xl border-[var(--border-color)] bg-white placeholder:text-[var(--text-secondary)] focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]" placeholder="Enter full address" type="text"/></label>
-              <label class="flex flex-col"><span class="mb-1 text-sm font-medium">City</span><input class="form-input h-12 rounded-xl border-[var(--border-color)] bg-white placeholder:text-[var(--text-secondary)] focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]" placeholder="e.g., Zubrowka" type="text"/></label>
-              <label class="flex flex-col"><span class="mb-1 text-sm font-medium">Country</span><input class="form-input h-12 rounded-xl border-[var(--border-color)] bg-white placeholder:text-[var(--text-secondary)] focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]" placeholder="e.g., Republic of Zubrowka" type="text"/></label>
+              <label class="flex flex-col sm:col-span-2"><span class="mb-1 text-sm font-medium">Direccion completa</span><input class="form-input h-12 rounded-xl border-[var(--border-color)] bg-white placeholder:text-[var(--text-secondary)] focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]" placeholder="Direccion aquí..." th:field="*{direccion}" type="text" id="direccion"/></label>
             </div>
-            <div class="aspect-video w-full rounded-xl bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCCzLkwiLySjMjG40K-eD-kCXIfL1_kmRokA2jazCfvNkKJPH9SI8Fy_F6VvAwFYCu07DRnrekHULuaHGcEbcXbrVm_7E2HcPqrXJlytOx42xclGdRfyncaCcsG_hz_QvfgVf2_b9vlzxF-43NOFucR9if0oISaRA4odiz6e9ol8TU1rZcfqtGr_o2aLlkiu7ulmSmVYUrUFZU-9_3_BnqrVDCIndT9QgU73ZVxhsKE-7EjJN_XZgDhNm24hqZYSpsZNl4FzpQ");'></div>
           </section>
           <section class="space-y-6 rounded-2xl border border-[var(--border-color)] bg-white p-6 shadow-sm" id="description">
-            <h3 class="text-xl font-bold text-[var(--text-primary)]">Description</h3>
+            <h3 class="text-xl font-bold text-[var(--text-primary)]">Descripción</h3>
+            <span th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}" class="text-red-400"></span>
             <div class="space-y-4">
-              <label class="flex flex-col"><span class="mb-1 text-sm font-medium">Overview</span><textarea class="form-textarea min-h-32 rounded-xl border-[var(--border-color)] bg-white placeholder:text-[var(--text-secondary)] focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]" placeholder="Provide a captivating overview of your hotel. What makes it special?"></textarea></label>
-              <label class="flex flex-col"><span class="mb-1 text-sm font-medium">Unique Features</span><textarea class="form-textarea min-h-32 rounded-xl border-[var(--border-color)] bg-white placeholder:text-[var(--text-secondary)] focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]" placeholder="List unique amenities, services, or experiences offered."></textarea></label>
-              <label class="flex flex-col"><span class="mb-1 text-sm font-medium">Nearby Attractions</span><textarea class="form-textarea min-h-32 rounded-xl border-[var(--border-color)] bg-white placeholder:text-[var(--text-secondary)] focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]" placeholder="Mention key landmarks, restaurants, or points of interest nearby."></textarea></label>
+              <label class="flex flex-col"><span class="mb-1 text-sm font-medium">Describa su hotel</span><textarea class="form-textarea min-h-32 rounded-xl border-[var(--border-color)] bg-white placeholder:text-[var(--text-secondary)] focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]" placeholder="Que hace a nuestro hotel tan especial?" th:field="*{descripcion}" id="descripcion"></textarea></label>
             </div>
           </section>
-          <section class="space-y-6 rounded-2xl border border-[var(--border-color)] bg-white p-6 shadow-sm" id="amenities">
-            <h3 class="text-xl font-bold text-[var(--text-primary)]">Amenities</h3>
-            <p class="text-sm text-[var(--text-secondary)]">Select all amenities available at your hotel.</p>
-            <div class="flex flex-wrap gap-3">
-              <label class="flex cursor-pointer items-center gap-2 rounded-full border border-[var(--border-color)] px-4 py-2 text-sm font-medium has-[:checked]:border-[var(--primary-color)] has-[:checked]:bg-[var(--primary-color)] has-[:checked]:text-white"><input class="form-checkbox h-4 w-4 rounded-full border-[var(--border-color)] text-[var(--primary-color)] focus:ring-[var(--primary-color)]" type="checkbox"/><span>Wi-Fi</span></label>
-              <label class="flex cursor-pointer items-center gap-2 rounded-full border border-[var(--border-color)] px-4 py-2 text-sm font-medium has-[:checked]:border-[var(--primary-color)] has-[:checked]:bg-[var(--primary-color)] has-[:checked]:text-white"><input class="form-checkbox h-4 w-4 rounded-full border-[var(--border-color)] text-[var(--primary-color)] focus:ring-[var(--primary-color)]" type="checkbox"/><span>Pool</span></label>
-              <label class="flex cursor-pointer items-center gap-2 rounded-full border border-[var(--border-color)] px-4 py-2 text-sm font-medium has-[:checked]:border-[var(--primary-color)] has-[:checked]:bg-[var(--primary-color)] has-[:checked]:text-white"><input class="form-checkbox h-4 w-4 rounded-full border-[var(--border-color)] text-[var(--primary-color)] focus:ring-[var(--primary-color)]" type="checkbox"/><span>Parking</span></label>
-              <label class="flex cursor-pointer items-center gap-2 rounded-full border border-[var(--border-color)] px-4 py-2 text-sm font-medium has-[:checked]:border-[var(--primary-color)] has-[:checked]:bg-[var(--primary-color)] has-[:checked]:text-white"><input class="form-checkbox h-4 w-4 rounded-full border-[var(--border-color)] text-[var(--primary-color)] focus:ring-[var(--primary-color)]" type="checkbox"/><span>Gym</span></label>
-              <label class="flex cursor-pointer items-center gap-2 rounded-full border border-[var(--border-color)] px-4 py-2 text-sm font-medium has-[:checked]:border-[var(--primary-color)] has-[:checked]:bg-[var(--primary-color)] has-[:checked]:text-white"><input class="form-checkbox h-4 w-4 rounded-full border-[var(--border-color)] text-[var(--primary-color)] focus:ring-[var(--primary-color)]" type="checkbox"/><span>Spa</span></label>
-              <label class="flex cursor-pointer items-center gap-2 rounded-full border border-[var(--border-color)] px-4 py-2 text-sm font-medium has-[:checked]:border-[var(--primary-color)] has-[:checked]:bg-[var(--primary-color)] has-[:checked]:text-white"><input class="form-checkbox h-4 w-4 rounded-full border-[var(--border-color)] text-[var(--primary-color)] focus:ring-[var(--primary-color)]" type="checkbox"/><span>Restaurant</span></label>
-              <label class="flex cursor-pointer items-center gap-2 rounded-full border border-[var(--border-color)] px-4 py-2 text-sm font-medium has-[:checked]:border-[var(--primary-color)] has-[:checked]:bg-[var(--primary-color)] has-[:checked]:text-white"><input class="form-checkbox h-4 w-4 rounded-full border-[var(--border-color)] text-[var(--primary-color)] focus:ring-[var(--primary-color)]" type="checkbox"/><span>Bar</span></label>
-              <label class="flex cursor-pointer items-center gap-2 rounded-full border border-[var(--border-color)] px-4 py-2 text-sm font-medium has-[:checked]:border-[var(--primary-color)] has-[:checked]:bg-[var(--primary-color)] has-[:checked]:text-white"><input class="form-checkbox h-4 w-4 rounded-full border-[var(--border-color)] text-[var(--primary-color)] focus:ring-[var(--primary-color)]" type="checkbox"/><span>Room Service</span></label>
-            </div>
-          </section>
-          <section class="space-y-6 rounded-2xl border border-[var(--border-color)] bg-white p-6 shadow-sm" id="photos">
-            <h3 class="text-xl font-bold text-[var(--text-primary)]">Photos</h3>
-            <div class="flex flex-col items-center justify-center gap-4 rounded-xl border-2 border-dashed border-[var(--border-color)] p-12 text-center">
-              <svg class="h-12 w-12 text-[var(--text-secondary)]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" stroke-linecap="round" stroke-linejoin="round"></path>
-              </svg>
-              <h4 class="font-bold text-[var(--text-primary)]">Upload Photos</h4>
-              <p class="text-sm text-[var(--text-secondary)]">Drag &amp; drop or click to upload. Recommended size: 1200x800px.</p>
-              <button class="mt-2 rounded-full bg-[var(--secondary-color)] px-5 py-2.5 text-sm font-bold text-[var(--text-primary)] hover:bg-[var(--border-color)]" type="button">Browse Files</button>
-            </div>
-          </section>
-          <section class="space-y-6 rounded-2xl border border-[var(--border-color)] bg-white p-6 shadow-sm" id="room-types">
-            <h3 class="text-xl font-bold text-[var(--text-primary)]">Room Types</h3>
-            <div class="space-y-8">
-              <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                <label class="flex flex-col"><span class="mb-1 text-sm font-medium">Room Type Name</span><input class="form-input h-12 rounded-xl border-[var(--border-color)] bg-white placeholder:text-[var(--text-secondary)] focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]" placeholder="e.g., Standard Queen" type="text"/></label>
-                <label class="flex flex-col sm:col-span-2"><span class="mb-1 text-sm font-medium">Room Description</span><textarea class="form-textarea min-h-24 rounded-xl border-[var(--border-color)] bg-white placeholder:text-[var(--text-secondary)] focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]" placeholder="Describe this room's features and amenities."></textarea></label>
-                <label class="flex flex-col"><span class="mb-1 text-sm font-medium">Price per Night ($)</span><input class="form-input h-12 rounded-xl border-[var(--border-color)] bg-white placeholder:text-[var(--text-secondary)] focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]" placeholder="Enter price" type="number"/></label>
-                <label class="flex flex-col"><span class="mb-1 text-sm font-medium">Number of Rooms</span><input class="form-input h-12 rounded-xl border-[var(--border-color)] bg-white placeholder:text-[var(--text-secondary)] focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]" placeholder="Enter quantity" type="number"/></label>
+          <section class="space-y-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+            <h3 class="text-xl font-bold text-gray-800">Fotos del Hotel</h3>
+
+            <div id="image-upload-container" class="flex flex-wrap gap-4">
+
+              <div id="image-preview-container" class="flex flex-wrap gap-4">
               </div>
+
+              <div id="add-new-button-container">
+                <label for="file-input-0" class="flex h-32 w-32 cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 text-center hover:bg-gray-100">
+                  <svg class="h-10 w-10 text-gray-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                  </svg>
+                  <span class="text-sm font-medium text-gray-500">Añadir foto</span>
+                  <span th:if="${#fields.hasErrors('imagenes')}" th:errors="*{imagenes}" class="text-red-400"></span>
+                  <input type="file" id="file-input-0" name="images" accept="image/*" class="hidden" onchange="handleImageUpload(event)">
+                </label>
+              </div>
+
             </div>
-            <button class="flex items-center gap-2 rounded-full bg-[var(--secondary-color)] px-5 py-2.5 text-sm font-bold text-[var(--text-primary)] hover:bg-[var(--border-color)]" type="button">
-              <svg fill="currentColor" height="16" viewBox="0 0 256 256" width="16" xmlns="http://www.w3.org/2000/svg">
-                <path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"></path>
-              </svg>
-              <span>Add Another Room Type</span>
-            </button>
+          </section>
+          <section class="space-y-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+            <h3 class="text-xl font-bold text-gray-800">Tipos de Habitación</h3>
+
+            <div id="room-types-container" class="space-y-8">
+
+              <div class="room-type-block relative rounded-lg border border-gray-200 p-4 pt-8">
+                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+
+                  <label class="flex flex-col">
+                    <span class="mb-1 text-sm font-medium">Nombre del Tipo de Habitación</span>
+
+                    <input type="text" th:field="*{tiposHabitacion[0].nombre}" class="form-input" placeholder="Ej: Suite Deluxe">
+                  </label>
+
+                  <label class="flex flex-col">
+                    <span class="mb-1 text-sm font-medium">Capacidad de Personas</span>
+                    <input type="number" th:field="*{tiposHabitacion[0].cantPersonas}" class="form-input" placeholder="Ej: 2">
+                  </label>
+
+                  <label class="flex flex-col">
+                    <span class="mb-1 text-sm font-medium">Precio por Noche ($)</span>
+                    <input type="number" step="0.01" th:field="*{tiposHabitacion[0].costo}" class="form-input" placeholder="Ej: 150.00">
+                  </label>
+
+                  <label class="flex flex-col">
+                    <span class="mb-1 text-sm font-medium">Cantidad de Habitaciones</span>
+                    <input type="number" th:field="*{tiposHabitacion[0].cantHab}" class="form-input" placeholder="Ej: 10">
+                  </label>
+
+                </div>
+              </div>
+            </div> <button id="add-room-type-btn" type="button" class="mt-4 flex items-center gap-2 rounded-full bg-gray-100 px-5 py-2.5 text-sm font-bold text-gray-800 hover:bg-gray-200">
+            <svg fill="currentColor" height="16" viewBox="0 0 256 256" width="16" xmlns="http://www.w.org/2000/svg">
+              <path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"></path>
+            </svg>
+            <span>Añadir otro Tipo de Habitación</span>
+          </button>
           </section>
           <div class="flex items-center justify-end gap-4 pt-6">
-            <button class="rounded-full bg-[var(--secondary-color)] px-6 py-3 text-base font-bold text-[var(--text-primary)] hover:bg-[var(--border-color)]" type="button">Save Draft</button>
-            <button class="rounded-full bg-[var(--primary-color)] px-6 py-3 text-base font-bold text-white shadow-lg hover:bg-opacity-90" type="submit">Create Hotel</button>
+            <a class="rounded-full bg-[var(--secondary-color)] px-6 py-3 text-base font-bold text-[var(--text-primary)] hover:bg-red-500 hover:text-white transition-colors" type="button">Cancelar</a>
+            <button class="rounded-full bg-[var(--primary-color)] px-6 py-3 text-base font-bold text-white shadow-lg hover:bg-green-600 transition-colors" type="submit">Create Hotel</button>
           </div>
         </form>
+        <script>
+          // Variable para llevar la cuenta de los inputs de archivo y asignarles un ID único
+let fileInputCounter = 0;
+
+function handleImageUpload(event) {
+    const input = event.target;
+    if (!input.files || !input.files[0]) return;
+
+    const file = input.files[0];
+    const previewContainer = document.getElementById('image-preview-container');
+    const newButtonContainer = document.getElementById('add-new-button-container');
+
+    // 1. Crear la vista previa de la imagen
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        // Contenedor para la imagen y el botón de eliminar
+        const imageWrapper = document.createElement('div');
+        imageWrapper.classList.add('relative', 'h-32', 'w-32');
+
+        // La imagen de previsualización
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        img.classList.add('h-full', 'w-full', 'rounded-xl', 'object-cover');
+        imageWrapper.appendChild(img);
+
+        // Botón para eliminar la imagen
+        const deleteButton = document.createElement('button');
+        deleteButton.innerHTML = '&times;'; // '×' character
+        deleteButton.classList.add('absolute', 'top-1', 'right-1', 'flex', 'h-6', 'w-6', 'items-center', 'justify-center', 'rounded-full', 'bg-red-600', 'text-white', 'font-bold', 'text-lg', 'hover:bg-red-700');
+        deleteButton.onclick = function() {
+            // Al hacer clic, eliminamos el contenedor de la imagen y el input de archivo asociado
+            imageWrapper.remove();
+            input.remove(); // Asegura que el archivo no se envíe
+        };
+        imageWrapper.appendChild(deleteButton);
+
+        // Añadir la vista previa al contenedor
+        previewContainer.appendChild(imageWrapper);
+    };
+    reader.readAsDataURL(file);
+
+    // 2. Ocultar el label del input que acabamos de usar
+    const label = input.parentElement;
+    label.style.display = 'none';
+
+    // 3. Crear y añadir dinámicamente un nuevo botón de subida
+    fileInputCounter++;
+    const newFileInputId = `file-input-${fileInputCounter}`;
+
+    const newLabel = document.createElement('label');
+    newLabel.setAttribute('for', newFileInputId);
+    newLabel.className = 'flex h-32 w-32 cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 text-center hover:bg-gray-100';
+
+    newLabel.innerHTML = `
+        <svg class="h-10 w-10 text-gray-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+        </svg>
+        <span class="text-sm font-medium text-gray-500">Añadir foto</span>
+        <input type="file" id="${newFileInputId}" name="images" accept="image/*" class="hidden" onchange="handleImageUpload(event)">
+    `;
+
+    newButtonContainer.appendChild(newLabel);
+}
+
+
+          document.addEventListener('DOMContentLoaded', function() {
+
+    // El índice comienza en 1 porque el primer elemento (índice 0) ya está en el HTML.
+    let roomTypeIndex = 1;
+
+    const addRoomBtn = document.getElementById('add-room-type-btn');
+    const container = document.getElementById('room-types-container');
+
+    // Función para añadir un nuevo bloque de tipo de habitación
+    addRoomBtn.addEventListener('click', function() {
+        // Creamos un nuevo div que contendrá el formulario
+        const newRoomTypeBlock = document.createElement('div');
+        newRoomTypeBlock.classList.add('room-type-block', 'relative', 'rounded-lg', 'border', 'border-gray-200', 'p-4', 'pt-8', 'mt-8');
+
+        // Usamos una plantilla de texto para generar el HTML interno del nuevo bloque
+        // Fíjate cómo usamos `roomTypeIndex` para los atributos 'name' e 'id'
+        const blockHTML = `
+            <button type="button" class="remove-room-type-btn absolute top-2 right-2 flex h-6 w-6 items-center justify-center rounded-full bg-red-100 text-red-600 hover:bg-red-200" title="Eliminar este tipo de habitación">
+                &times;
+            </button>
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                <label class="flex flex-col">
+                    <span class="mb-1 text-sm font-medium">Nombre del Tipo de Habitación</span>
+                    <input type="text" name="tiposHabitacion[${roomTypeIndex}].nombre" class="form-input" placeholder="Ej: Suite Deluxe">
+                </label>
+
+                <label class="flex flex-col">
+                    <span class="mb-1 text-sm font-medium">Capacidad de Personas</span>
+                    <input type="number" name="tiposHabitacion[${roomTypeIndex}].cantPersonas" class="form-input" placeholder="Ej: 2">
+                </label>
+
+                <label class="flex flex-col">
+                    <span class="mb-1 text-sm font-medium">Precio por Noche ($)</span>
+                    <input type="number" step="0.01" name="tiposHabitacion[${roomTypeIndex}].costo" class="form-input" placeholder="Ej: 150.00">
+                </label>
+
+                <label class="flex flex-col">
+                    <span class="mb-1 text-sm font-medium">Cantidad de Habitaciones</span>
+                    <input type="number" name="tiposHabitacion[${roomTypeIndex}].cantHab" class="form-input" placeholder="Ej: 10">
+                </label>
+            </div>
+        `;
+
+        newRoomTypeBlock.innerHTML = blockHTML;
+        container.appendChild(newRoomTypeBlock);
+
+        // Incrementamos el índice para el próximo elemento que se añada
+        roomTypeIndex++;
+    });
+
+    // Delegación de eventos para manejar la eliminación de bloques
+    container.addEventListener('click', function(event) {
+        // Verificamos si el clic fue en un botón de eliminar
+        if (event.target && event.target.classList.contains('remove-room-type-btn')) {
+            // Buscamos el div padre (.room-type-block) y lo eliminamos del DOM
+            event.target.closest('.room-type-block').remove();
+        }
+    });
+
+});
+        </script>
+
       </div>
     </div>
   </div>

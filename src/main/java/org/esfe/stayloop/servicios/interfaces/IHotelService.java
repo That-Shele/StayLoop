@@ -11,6 +11,8 @@ import java.util.List;
 
      Page<Hotel> buscarPaginados(Pageable pageable,Integer zona, String nombre);
 
+     Hotel buscarPorDireccion(String direccion);
+
      Hotel buscarPorId(Integer id);
 
      Hotel crearOEditar(Hotel hotel);

@@ -15,28 +15,28 @@
             <div class="space-y-4">
                 <div>
                     <label class="block text-sm font-medium text-[var(--text-primary)]" for="nombre">Nombre</label>
-                    <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="error"></span>
+                    <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="text-red-400"></span>
                     <div class="mt-1">
                         <input th:field="*{nombre}" class="input-field" id="nombre" placeholder="Ingrese el nombre" type="text"/>
                     </div>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-[var(--text-primary)]" for="email">Email</label>
-                    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error"></span>
+                    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-red-400"></span>
                     <div class="mt-1">
                         <input th:field="*{email}" class="input-field" id="email" placeholder="Ingrese su email" type="email"/>
                     </div>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-[var(--text-primary)]" for="password">Contraseña</label>
-                    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"></span>
+                    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-red-400"></span>
                     <div class="mt-1">
                         <input th:field="*{password}" class="input-field" id="password"  placeholder="Ingrese una contraseña segura" type="password"/>
                     </div>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-[var(--text-primary)]" for="imgUsuario">Foto de Perfil</label>
-                    <span th:if="${#fields.hasErrors('imgUsuario')}" th:errors="*{imgUsuario}" class="error"></span>
+                    <span th:if="${#fields.hasErrors('imgUsuario')}" th:errors="*{imgUsuario}" class="text-red-400"></span>
                     <div class="mt-1 flex items-center gap-4">
                         <span class="inline-block h-16 w-16 overflow-hidden rounded-full bg-gray-300)]">
                             <svg id="default" class="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">

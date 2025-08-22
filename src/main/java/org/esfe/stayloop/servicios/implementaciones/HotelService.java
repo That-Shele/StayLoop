@@ -23,10 +23,15 @@ public class  HotelService implements IHotelService {
 
      @Override
      public Page<Hotel> buscarPaginados(Pageable pageable, Integer zona, String nombre) {
-        return hotelRepository.findByIdZonaAndNombreContainingIgnoreCaseOrderByIdDesc(zona, nombre, pageable);
+        return hotelRepository.findPaginated(zona, nombre, pageable);
     }
 
-     @Override
+    @Override
+    public Hotel buscarPorDireccion(String direccion) {
+        return hotelRepository.findByDireccion(direccion);
+    }
+
+    @Override
      public Hotel buscarPorId(Integer id) {
         return hotelRepository.findById(id).get();
     }

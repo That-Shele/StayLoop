@@ -13,28 +13,28 @@
             <input type="hidden" name="authCheck" value="authCreate">
             <div>
                 <label class="block text-sm font-medium text-[var(--text-primary)]" for="nombre">Nombre</label>
-                <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="error"></span>
+                <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="text-red-400"></span>
                 <div class="mt-1">
                     <input th:field="*{nombre}" class="form-input block w-full rounded-xl border-secondary-100 bg-secondary-50 placeholder:text-[var(--text-secondary)] focus:border-primary-500 focus:ring-primary-500 sm:text-sm py-3 px-4" id="nombre" placeholder="Ingrese el nombre"  type="text"/>
                 </div>
             </div>
             <div>
                 <label class="block text-sm font-medium text-[var(--text-primary)]" for="email">Email</label>
-                <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error"></span>
+                <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-red-400"></span>
                 <div class="mt-1">
                     <input th:field="*{email}" class="form-input block w-full rounded-xl border-secondary-100 bg-secondary-50 placeholder:text-[var(--text-secondary)] focus:border-primary-500 focus:ring-primary-500 sm:text-sm py-3 px-4" id="email" placeholder="Ingrese su email"  type="email"/>
                 </div>
             </div>
             <div>
                 <label class="block text-sm font-medium text-[var(--text-primary)]" for="password">Contraseña</label>
-                <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"></span>
+                <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-red-400"></span>
                 <div class="mt-1">
                     <input th:field="*{password}" class="form-input block w-full rounded-xl border-secondary-100 bg-secondary-50 placeholder:text-[var(--text-secondary)] focus:border-primary-500 focus:ring-primary-500 sm:text-sm py-3 px-4" id="password"  placeholder="Ingrese una contraseña segura" type="password"/>
                 </div>
             </div>
             <div>
-                <label class="block text-sm font-medium text-[var(--text-primary)]" for="imgUsuario">Foto de Perfil</label>
-                <span th:if="${#fields.hasErrors('imgUsuario')}" th:errors="*{imgUsuario}" class="error"></span>
+                <label class="block text-sm font-medium text-[var(--text-primary)]" for="img">Foto de Perfil</label>
+                <span th:if="${#fields.hasErrors('img')}" th:errors="*{imgUsuario}" class="text-red-400"></span>
                 <div class="mt-1 flex items-center gap-4">
                         <span class="inline-block h-16 w-16 overflow-hidden rounded-full bg-gray-300)]">
                             <svg id="default" class="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
@@ -54,7 +54,7 @@
             <div>
                 <label class="block text-sm font-medium text-[var(--text-primary)]" for="idRol">Rol</label>
                 <div class="mt-1">
-                    <span th:if="${#fields.hasErrors('idRol')}" th:errors="*{idRol}" class="error"></span>
+                    <span th:if="${#fields.hasErrors('idRol')}" th:errors="*{idRol}" class="text-red-400"></span>
                     <select class="form-select block w-full rounded-xl border-secondary-100 bg-secondary-50 text-[var(--text-secondary)] focus:border-primary-500 focus:ring-primary-500 sm:text-sm py-3 px-4" name="idRol" id="idRol" >
                         <option value=-1>Selecciona Rol</option>
                         <option th:each="rol : ${roles}" th:value="${rol.id}" th:text="${rol.nombre}"></option>
