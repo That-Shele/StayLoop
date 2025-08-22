@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ImagenService implements IImagenService {
@@ -23,6 +24,17 @@ public class ImagenService implements IImagenService {
     public List<Imagen> buscarPorIdHotel(Integer idHotel) {
         return imagenRepository.findByIdHotel(idHotel);
     }
+
+    @Override
+    public Optional<Imagen> obtenerUnaPorIdHotel(Integer idHotel) {
+        return imagenRepository.findFirstByIdHotel(idHotel);
+    }
+
+    @Override
+    public Optional<Imagen> obtenerPorId(Integer id) {
+        return imagenRepository.findById(id);
+    }
+
     @Override
     public Imagen crearOEditar(Imagen imagen) {
         return imagenRepository.save(imagen);

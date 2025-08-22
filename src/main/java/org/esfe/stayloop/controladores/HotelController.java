@@ -1,18 +1,14 @@
 package org.esfe.stayloop.controladores;
 
 import jakarta.validation.Valid;
-import org.esfe.stayloop.modelos.Hotel;
-import org.esfe.stayloop.modelos.Imagen;
-import org.esfe.stayloop.modelos.TipoHabitacion;
-import org.esfe.stayloop.modelos.Zona;
-import org.esfe.stayloop.servicios.interfaces.IHotelService;
-import org.esfe.stayloop.servicios.interfaces.IImagenService;
-import org.esfe.stayloop.servicios.interfaces.ITipoHabitacionService;
-import org.esfe.stayloop.servicios.interfaces.IZonaService;
+import org.esfe.stayloop.modelos.*;
+import org.esfe.stayloop.servicios.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -41,6 +37,9 @@ public class HotelController {
 
     @Autowired
     private IImagenService iImagenService;
+
+    @Autowired
+    private IUsuarioService usuarioService;
 
     // Listado de hoteles con paginación + filtros
     @GetMapping
@@ -114,13 +113,22 @@ public class HotelController {
 
         try {
             // Guardar o actualizar el hotel
+            if(hotel.getIdUsuario() == null){
+                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+                String email = authentication.getName();
+
+                Usuario usuarioCreating = usuarioService.buscarPorEmail(email).get();
+
+                hotel.setIdUsuario(usuarioCreating.getId());
+            }
+
             Hotel hotelSaved = hotelService.crearOEditar(hotel);
             Integer hotelId = Objects.equals(authCheck, "authCreate") ? hotelSaved.getId() : hotel.getId();
 
             // Procesar tipos de habitación
             if (hotel.getTiposHabitacion() != null) {
                 for (TipoHabitacion tipo : hotel.getTiposHabitacion()) {
-                    if (tipo.getId() == null) {
+                    if (tipo.getIdHotel() == null) {
                         tipo.setIdHotel(hotelId);
                         tipoHabitacionService.crearOEditar(tipo);
                     }
@@ -182,6 +190,23 @@ public class HotelController {
         return "hotel/edit_reference";
     }
 
+
+
+    @GetMapping("/portada/{id}")
+    @ResponseBody
+    public byte[] mostrarImagen(@PathVariable Integer id) {
+        return iImagenService.obtenerUnaPorIdHotel(id)
+                .map(Imagen::getImagen)
+                .orElse(null);
+    }
+
+    @GetMapping("/imagen/{id}")
+    @ResponseBody
+    public byte[] obtenerParaVista(@PathVariable Integer id) {
+        return iImagenService.obtenerPorId(id)
+                .map(Imagen::getImagen)
+                .orElse(null);
+    }
 
 
 }

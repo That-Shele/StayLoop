@@ -68,52 +68,22 @@
             </a>
         </div>
 
-            <div class="bg-white rounded-xl border border-[var(--border-color)] overflow-hidden">
-                <div class="property-item">
+            <div  class="bg-white rounded-xl border border-[var(--border-color)] overflow-hidden">
+                <div th:each="item : ${hoteles}" class="property-item">
                     <div class="flex items-center gap-4">
-                        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-16" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA5cvAIit9Qml7i-JoCLRbb0fVcTvOtcUysw5lEZj23-YANY30wjhljMLy8XntRLV4hcfvHvN9STcAtSFwYM7dTUDo_muF1NA11YvjSadfRQJJ5JUvHTgpJsE9l5ymyt9EZyK96MNEQzN0lW0Apgs77WCeXUAEbIHuFYoSj32Gm62B4n_lEpL4cbDLooiOYLnBY-XehS_nyaeOGac0NwDsMOwFoqdfxp4usM5LcJanFEeV99Ckh9NJK-QLKa9xM_iiiFJVm7Xo");'></div>
+                        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-16"><img th:src="@{'/hotel/portada/' + ${item.id}}"></div>
                         <div class="flex flex-col justify-center">
-                            <p class="text-[var(--text-secondary)] text-lg font-semibold line-clamp-1">Golden Gate Inn</p>
-                            <p class="text-[var(--text-primary)] text-sm line-clamp-2">San Francisco, CA • ★ 4.8 (212 reviews)</p>
+                            <p th:text="${item.nombre}" class="text-[var(--text-secondary)] text-lg font-semibold line-clamp-1"></p>
+                            <p th:text="${item.direccion}" class="text-[var(--text-primary)] text-sm line-clamp-2"></p>
                         </div>
                     </div>
                     <div class="shrink-0">
-                        <button class="flex min-w-[84px] max-w-[480px] bg-[var(--primary-color)] cursor-pointer items-center justify-center overflow-hidden rounded-full h-9 px-4 text-white text-sm font-medium hover:bg-green-600 transition-colors w-fit">
-                            <span class="truncate">Manage</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="property-item">
-                    <div class="flex items-center gap-4">
-                        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-16" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCVNZ8Vn7KyO3YbrBsYm04gwaCbnZTnu5FhhO4Yz371NnVr4rf08SEOxKXOr2MgZUakMPsgF0MNZqv1ieiKiLKUnZIEAQT5n0z0KvpZSggIBEvQ6J2XSRGp1A35GgRtI9a_umIFDC6QWZJMAihwkFPekEzdYst16wuAagabUVgdmMMdz5cMV_a-PxRFJAc2E0aLjXceb8uDoB1E_NSxf8GNyBVep8PtwN8SSossdPQWm3i7OvsWEmkmmWwyqMXzthKP9hlKx-E");'></div>
-                        <div class="flex flex-col justify-center">
-                            <p class="text-[var(--secondary-color)] text-lg font-semibold line-clamp-1">Sunset View Resort</p>
-                            <p class="text-[var(--text-color)] text-sm line-clamp-2">Los Angeles, CA • ★ 4.5 (189 reviews)</p>
-                        </div>
-                    </div>
-                    <div class="shrink-0">
-                        <button class="flex min-w-[84px] max-w-[480px] bg-[var(--primary-color)] cursor-pointer items-center justify-center overflow-hidden rounded-full h-9 px-4 text-white text-sm font-medium hover:bg-green-600 transition-colors w-fit">
-                            <span class="truncate">Manage</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="property-item border-b-0">
-                    <div class="flex items-center gap-4">
-                        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-16" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC_Du-UWi0oFHcM2RrlkKdTgwJxaruq_0FW3OnhGu7ogq_4Or9uJcfCC1GZsYDlJc1eCpmIGXFZdr2qEuJfJPCevF7PvwnDtp9wLp16xw0LkxHce-07pecnOeqAbZ4a7uCJgrZuKdlj9D8GSsYnugb1Qpx-q8bYw0mJu_J9POiR9dn6COQ3DqB9gGwxvkDkbs_vAKjiSYifP5cg3mysYguMM2BzSiYQRJXvdUHEVG2oBteKOXrsY2nhoOOzB8qZs89xsk8lpgI");'></div>
-                        <div class="flex flex-col justify-center">
-                            <p class="text-[var(--secondary-color)] text-lg font-semibold line-clamp-1">Ocean Breeze Suites</p>
-                            <p class="text-[var(--text-color)] text-sm line-clamp-2">San Diego, CA • ★ 4.7 (304 reviews)</p>
-                        </div>
-                    </div>
-                    <div class="shrink-0">
-                        <button class="flex min-w-[84px] max-w-[480px] bg-[var(--primary-color)] cursor-pointer items-center justify-center overflow-hidden rounded-full h-9 px-4 text-white text-sm font-medium hover:bg-green-600 transition-colors w-fit">
-                            <span class="truncate">Manage</span>
-                        </button>
+                        <a th:href="@{/hotel/edit/{id} (id = ${item.id})}" class="flex min-w-[84px] max-w-[480px] bg-[var(--primary-color)] cursor-pointer items-center justify-center overflow-hidden rounded-full h-9 px-4 text-white text-sm font-medium hover:bg-green-600 transition-colors w-fit">
+                            <span class="truncate">Editar</span>
+                        </a>
                     </div>
                 </div>
             </div>
-
-
         </section>
     </div>
 </div>

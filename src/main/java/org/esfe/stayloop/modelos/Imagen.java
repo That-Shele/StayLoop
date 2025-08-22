@@ -20,7 +20,7 @@ public class Imagen {
     
     @NotNull(message = "La imagen es obligatoria")
     @Lob
-    @Column(nullable = false)
+    @Column(columnDefinition="LONGBLOB", nullable = false)
     private byte[] imagen;
     
     @ManyToOne(fetch = FetchType.LAZY)

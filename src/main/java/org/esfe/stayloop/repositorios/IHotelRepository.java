@@ -25,4 +25,5 @@ import java.util.List;
 
      Hotel findByDireccion (String direccion);
 
+
 }
