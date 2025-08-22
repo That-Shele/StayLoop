@@ -1,10 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html lang="es"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout"
+      xmlns:th="http://www.w3.org/1999/xhtml">
 
-</body>
+<div layout:fragment="content"
+     class="px-10 lg:px-40 flex flex-1 justify-center py-8"
+     style="background: radial-gradient(circle, rgba(247,243,240,0.5) 0%, rgba(255,255,255,1) 60%);">
+
+    <div class="layout-content-container flex flex-col w-full max-w-5xl">
+        <!-- Título -->
+        <h2 class="text-[var(--text-primary)] text-3xl font-bold tracking-tight mb-6">Gestión de Zonas</h2>
+
+        <!-- Buscador -->
+        <form th:action="@{/zonas}" method="get"
+              class="flex w-full items-center rounded-full bg-white shadow-lg border border-gray-100 h-14 mb-8">
+            <div class="pl-6 pr-3 text-[var(--text-secondary)]">
+                <svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path
+                            d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
+                </svg>
+            </div>
+            <input name="nombre" th:value="${nombre}" placeholder="Buscar zona..."
+                   class="form-input flex-grow w-full h-full text-[var(--text-primary)] focus:outline-none border-none bg-transparent placeholder:text-gray-400 text-base"/>
+            <button type="submit"
+                    class="btn-primary font-bold rounded-full h-10 px-6 mr-2">Buscar
+            </button>
+        </form>
+
+        <!-- Botón crear -->
+        <div class="mb-6">
+            <a th:href="@{/zonas/create}"
+               class="btn-primary rounded-full px-6 py-2 font-bold text-sm">+ Nueva Zona</a>
+        </div>
+
+        <!-- Tabla de zonas -->
+        <div class="overflow-x-auto bg-white rounded-2xl shadow-lg border border-gray-100">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600">ID</th>
+                    <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600">Nombre</th>
+                    <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600">Descripción</th>
+                    <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600">Hoteles</th>
+                    <th class="px-6 py-3 text-center text-xs font-semibold text-gray-600">Acciones</th>
+                </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100" th:if="${zonas.content.size() > 0}">
+                <tr th:each="zona : ${zonas}">
+                    <td class="px-6 py-4 text-sm text-gray-700" th:text="${zona.id}"></td>
+                    <td class="px-6 py-4 text-sm font-bold text-[var(--text-primary)]" th:text="${zona.nombre}"></td>
+                    <td class="px-6 py-4 text-sm text-gray-600" th:text="${zona.descripcion}"></td>
+                    <td class="px-6 py-4 text-sm text-gray-600" th:text="${#lists.size(zona.hoteles)}"></td>
+                    <td class="px-6 py-4 text-center">
+                        <a th:href="@{'/zonas/edit/' + ${zona.id}}"
+                           class="text-blue-600 hover:text-blue-800 font-medium mr-4">Editar</a>
+                        <a th:href="@{'/zonas/delete/' + ${zona.id}}"
+                           onclick="return confirm('¿Estás seguro de eliminar esta zona?');"
+                           class="text-red-600 hover:text-red-800 font-medium">Eliminar</a>
+                    </td>
+                </tr>
+                </tbody>
+                <tbody th:if="${zonas.content.size() == 0}">
+                <tr>
+                    <td colspan="5" class="px-6 py-4 text-center text-gray-500">No se encontraron zonas.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Paginación -->
+        <div class="flex justify-center mt-6" th:if="${pageNumbers != null}">
+            <ul class="inline-flex -space-x-px">
+                <li th:each="pageNum : ${pageNumbers}">
+                    <a th:href="@{'/zonas?page=' + ${pageNum} + '&nombre=' + ${nombre}}"
+                       th:text="${pageNum}"
+                       th:classappend="${pageNum == zonas.number + 1} ? 'bg-[var(--primary-color)] text-white' : 'bg-white text-gray-600 hover:bg-gray-100'"
+                       class="px-4 py-2 border border-gray-300 rounded-lg mx-1 text-sm font-medium transition">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
 </html>
