@@ -41,6 +41,9 @@ public class HotelController {
     @Autowired
     private IUsuarioService usuarioService;
 
+    @Autowired
+    private IReservaService reservaService;
+
     // Listado de hoteles con paginación + filtros
     @GetMapping
     public String index(Model model,
@@ -190,6 +193,40 @@ public class HotelController {
         return "hotel/edit_reference";
     }
 
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Integer id, Model model){
+        Hotel hotel = hotelService.buscarPorId(id);
+        List<Zona> zonas = zonaService.obtenerTodos();
+
+        model.addAttribute("hotelForm", hotel);
+        model.addAttribute("zonas", zonas);
+        return "hotel/delete";
+    }
+
+    @PostMapping("/delete")
+    public String remove(Hotel hotel){
+        List<Imagen> imgs = iImagenService.buscarPorIdHotel(hotel.getId());
+        List<TipoHabitacion> types = tipoHabitacionService.buscarPorIdHotel(hotel.getId());
+        List<Reserva> reservas = reservaService.buscarPorIdHotel(hotel.getId());
+
+        for (Imagen img : imgs){
+            iImagenService.eliminarPorId(img.getId());
+        }
+
+        for(TipoHabitacion tipo : types){
+            tipoHabitacionService.eliminarPorId(tipo.getId());
+        }
+
+        for (Reserva reserva : reservas){
+            reservaService.eliminarPorId(reserva.getId());
+        }
+
+        hotelService.eliminarPorId(hotel.getId());
+
+
+        return "redirect:/hotel";
+    }
+
 
 
     @GetMapping("/portada/{id}")
@@ -207,6 +244,8 @@ public class HotelController {
                 .map(Imagen::getImagen)
                 .orElse(null);
     }
+
+
 
 
 }

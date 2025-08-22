@@ -25,6 +25,8 @@ public interface IReservaService {
             Pageable pageable
     );
 
+    List<Reserva> buscarPorIdHotel(Integer idHotel);
+
 
     Reserva buscarPorId(Integer id);
 

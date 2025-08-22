@@ -36,6 +36,11 @@ import java.util.List;
          return  tipoHabitacionRepository.findByCostoGreaterThan(costo);
      }
 
+     @Override
+     public List<TipoHabitacion> buscarPorIdHotel(Integer idHotel) {
+         return  tipoHabitacionRepository.findByIdHotel(idHotel);
+     }
+
 
      @Override
      public  TipoHabitacion buscarPorId(Integer id) {

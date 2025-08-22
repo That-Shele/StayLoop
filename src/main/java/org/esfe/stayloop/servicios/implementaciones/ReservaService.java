@@ -48,6 +48,11 @@ public class ReservaService implements IReservaService {
     }
 
     @Override
+    public List<Reserva> buscarPorIdHotel(Integer idHotel) {
+        return reservaRepository.findByIdHotel(idHotel);
+    }
+
+    @Override
     public Reserva buscarPorId(Integer id) {
         Optional<Reserva> reserva = reservaRepository.findById(id);
         return reserva.orElse(null);

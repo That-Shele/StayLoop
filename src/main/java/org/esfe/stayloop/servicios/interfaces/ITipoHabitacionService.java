@@ -12,6 +12,7 @@
     List<TipoHabitacion>  buscarPorCantidadHabitacion  (byte cantHab);
     List<TipoHabitacion>  buscarPorCantidadPersona  (byte cantPersonas);
     List<TipoHabitacion>  buscarPorCosto  (BigDecimal costo);
+    List<TipoHabitacion>  buscarPorIdHotel (Integer idHotel);
 
     TipoHabitacion  buscarPorId (Integer id);
 

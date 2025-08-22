@@ -10,5 +10,6 @@ public interface ITipoHabitacionRepository extends JpaRepository<TipoHabitacion,
     List<TipoHabitacion> findByCantHabGreaterThanEqual (byte cantHab);
     List<TipoHabitacion> findByCantPersonasGreaterThanEqual(Byte cantPersonas);
     List<TipoHabitacion> findByCostoGreaterThan(BigDecimal costo);
+    List<TipoHabitacion> findByIdHotel(Integer idHotel);
 
 }

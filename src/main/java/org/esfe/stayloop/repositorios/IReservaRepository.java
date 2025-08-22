@@ -20,4 +20,6 @@ public interface IReservaRepository extends JpaRepository<Reserva, Integer> {
             BigDecimal total,
             Pageable pageable
     );
+
+    List<Reserva> findByIdHotel(Integer idHotel);
 }

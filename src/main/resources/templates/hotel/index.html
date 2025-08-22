@@ -81,6 +81,9 @@
                         <a th:href="@{/hotel/edit/{id} (id = ${item.id})}" class="flex min-w-[84px] max-w-[480px] bg-[var(--primary-color)] cursor-pointer items-center justify-center overflow-hidden rounded-full h-9 px-4 text-white text-sm font-medium hover:bg-green-600 transition-colors w-fit">
                             <span class="truncate">Editar</span>
                         </a>
+                        <a th:href="@{/hotel/delete/{id} (id = ${item.id})}" class="flex min-w-[84px] max-w-[480px] bg-[var(--primary-color)] cursor-pointer items-center justify-center overflow-hidden rounded-full h-9 px-4 text-white text-sm font-medium hover:bg-red-500 transition-colors w-fit">
+                            <span class="truncate">Eliminar</span>
+                        </a>
                     </div>
                 </div>
             </div>
