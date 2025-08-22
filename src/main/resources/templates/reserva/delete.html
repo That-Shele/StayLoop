@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+
+<div layout:fragment="content" class="flex flex-1 justify-center py-10 px-4 sm:px-6 lg:px-8">
+
+  <div class="max-w-md w-full space-y-6">
+    <h2 class="text-center text-2xl font-bold text-red-600">Eliminar Reserva</h2>
+
+    <div class="bg-white shadow rounded p-6">
+      <p class="mb-4">¿Estás seguro que deseas eliminar la siguiente reserva?</p>
+
+      <ul class="mb-4">
+        <li><strong>ID:</strong> <span th:text="${reserva.id}"></span></li>
+        <li><strong>Usuario:</strong> <span th:text="${reserva.idUsuario}"></span></li>
+        <li><strong>Hotel:</strong> <span th:text="${reserva.idHotel}"></span></li>
+        <li><strong>Tipo de habitación:</strong> <span th:text="${reserva.idTipoHabitacion}"></span></li>
+        <li><strong>Fecha realizado:</strong> <span th:text="${#dates.format(reserva.fechaRealizado, 'yyyy-MM-dd HH:mm')}"></span></li>
+        <li><strong>Fecha inicio:</strong> <span th:text="${#dates.format(reserva.fechaInicio, 'yyyy-MM-dd HH:mm')}"></span></li>
+        <li><strong>Fecha fin:</strong> <span th:text="${#dates.format(reserva.fechaFin, 'yyyy-MM-dd HH:mm')}"></span></li>
+        <li><strong>Total:</strong> $<span th:text="${reserva.total}"></span></li>
+      </ul>
+
+      <form th:action="@{/reservas/delete}" method="post">
+        <input type="hidden" name="id" th:value="${reserva.id}"/>
+        <div class="flex justify-between">
+          <a th:href="@{/reservas}" class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500">
+            Cancelar
+          </a>
+          <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+            Eliminar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+
+<div layout:fragment="content" class="flex flex-1 justify-center py-10 px-4 sm:px-6 lg:px-8">
+
+  <div class="max-w-md w-full space-y-6">
+    <h2 class="text-center text-2xl font-bold">Crear Reserva</h2>
+
+    <form th:action="@{/reservas/save}" th:object="${reserva}" method="post" class="mt-8 space-y-6">
+
+
+      <div>
+        <label for="usuario" class="block text-sm font-medium">Usuario</label>
+        <select th:field="*{idUsuario}" id="usuario" class="mt-1 block w-full border rounded-md p-2">
+          <option th:each="u : ${usuarios}" th:value="${u.id}" th:text="${u.nombre}"></option>
+        </select>
+        <p th:if="${#fields.hasErrors('idUsuario')}" th:errors="*{idUsuario}" class="text-red-500 text-sm"></p>
+      </div>
+
+      <div>
+        <label for="hotel" class="block text-sm font-medium">Hotel</label>
+        <select th:field="*{hotel}" id="hotel" class="mt-1 block w-full border rounded-md p-2">
+          <option th:each="h : ${hoteles}" th:value="${h}" th:text="${h.nombre}"></option>
+        </select>
+        <p th:if="${#fields.hasErrors('hotel')}" th:errors="*{hotel}" class="text-red-500 text-sm"></p>
+      </div>
+
+      <!-- Tipo de habitación (dropdown por nombre) -->
+      <div>
+        <label for="tipoHabitacion" class="block text-sm font-medium">Tipo de habitación</label>
+        <select th:field="*{tipoHabitacion}" id="tipoHabitacion" class="mt-1 block w-full border rounded-md p-2">
+          <option th:each="t : ${tiposHabitacion}" th:value="${t}" th:text="${t.nombre}"></option>
+        </select>
+        <p th:if="${#fields.hasErrors('tipoHabitacion')}" th:errors="*{tipoHabitacion}" class="text-red-500 text-sm"></p>
+      </div>
+
+      <!-- Fecha realizado -->
+      <div>
+        <label for="fechaRealizado" class="block text-sm font-medium">Fecha realizado</label>
+        <input type="datetime-local" th:field="*{fechaRealizado}" id="fechaRealizado"
+               class="mt-1 block w-full border rounded-md p-2"/>
+        <p th:if="${#fields.hasErrors('fechaRealizado')}" th:errors="*{fechaRealizado}" class="text-red-500 text-sm"></p>
+      </div>
+
+      <!-- Fecha inicio -->
+      <div>
+        <label for="fechaInicio" class="block text-sm font-medium">Fecha inicio</label>
+        <input type="datetime-local" th:field="*{fechaInicio}" id="fechaInicio"
+               class="mt-1 block w-full border rounded-md p-2"/>
+        <p th:if="${#fields.hasErrors('fechaInicio')}" th:errors="*{fechaInicio}" class="text-red-500 text-sm"></p>
+      </div>
+
+      <!-- Fecha fin -->
+      <div>
+        <label for="fechaFin" class="block text-sm font-medium">Fecha fin</label>
+        <input type="datetime-local" th:field="*{fechaFin}" id="fechaFin"
+               class="mt-1 block w-full border rounded-md p-2"/>
+        <p th:if="${#fields.hasErrors('fechaFin')}" th:errors="*{fechaFin}" class="text-red-500 text-sm"></p>
+      </div>
+
+      <!-- Total -->
+      <div>
+        <label for="total" class="block text-sm font-medium">Total</label>
+        <input type="number" step="0.01" th:field="*{total}" id="total" placeholder="Total"
+               class="mt-1 block w-full border rounded-md p-2"/>
+        <p th:if="${#fields.hasErrors('total')}" th:errors="*{total}" class="text-red-500 text-sm"></p>
+      </div>
+
+      <div class="flex flex-col sm:flex-row-reverse gap-4 pt-4">
+        <!-- Botón Crear -->
+        <button type="submit"
+                class="flex w-full justify-center rounded-full border border-transparent
+                   bg-[var(--primary-color)] py-3 px-4 text-sm font-bold text-white
+                   shadow-sm hover:bg-green-600 transition-colors focus:outline-none
+                   focus:ring-2 focus:ring-primary-500 focus:ring-offset-2">
+          Crear
+        </button>
+        <!-- Botón Cancelar -->
+        <a th:href="@{/reservas}" type="button"
+           class="flex w-full justify-center rounded-full border border-secondary-100
+              bg-gray-100 text-slate-950 py-3 px-4 text-sm font-bold shadow-sm
+              hover:bg-red-500 hover:text-white transition-colors focus:outline-none
+              focus:ring-2 focus:ring-primary-500 focus:ring-offset-2">
+          Cancelar
+        </a>
+      </div>
+
+</div>
+</html>

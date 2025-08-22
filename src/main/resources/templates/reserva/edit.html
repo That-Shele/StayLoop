@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+
+<div layout:fragment="content" class="flex flex-1 justify-center py-10 px-4 sm:px-6 lg:px-8">
+
+  <div class="max-w-md w-full space-y-6">
+    <h2 class="text-center text-2xl font-bold">Editar Reserva</h2>
+
+    <form th:action="@{/reservas/save}" th:object="${reserva}" method="post" class="mt-8 space-y-6">
+
+      <input type="hidden" th:field="*{id}"/>
+
+      <!-- Usuario -->
+      <div>
+        <label for="idUsuario" class="block text-sm font-medium">Usuario</label>
+        <input type="number" th:field="*{idUsuario}" id="idUsuario" placeholder="ID del usuario"
+               class="mt-1 block w-full border rounded-md p-2"/>
+        <p th:if="${#fields.hasErrors('idUsuario')}" th:errors="*{idUsuario}" class="text-red-500 text-sm"></p>
+      </div>
+
+      <!-- Hotel -->
+      <div>
+        <label for="idHotel" class="block text-sm font-medium">Hotel</label>
+        <input type="number" th:field="*{idHotel}" id="idHotel" placeholder="ID del hotel"
+               class="mt-1 block w-full border rounded-md p-2"/>
+        <p th:if="${#fields.hasErrors('idHotel')}" th:errors="*{idHotel}" class="text-red-500 text-sm"></p>
+      </div>
+
+      <!-- Tipo de habitación -->
+      <div>
+        <label for="idTipoHabitacion" class="block text-sm font-medium">Tipo de habitación</label>
+        <input type="number" th:field="*{idTipoHabitacion}" id="idTipoHabitacion" placeholder="ID del tipo de habitación"
+               class="mt-1 block w-full border rounded-md p-2"/>
+        <p th:if="${#fields.hasErrors('idTipoHabitacion')}" th:errors="*{idTipoHabitacion}" class="text-red-500 text-sm"></p>
+      </div>
+
+      <!-- Fecha realizado -->
+      <div>
+        <label for="fechaRealizado" class="block text-sm font-medium">Fecha realizado</label>
+        <input type="datetime-local" th:field="*{fechaRealizado}" id="fechaRealizado"
+               class="mt-1 block w-full border rounded-md p-2"/>
+        <p th:if="${#fields.hasErrors('fechaRealizado')}" th:errors="*{fechaRealizado}" class="text-red-500 text-sm"></p>
+      </div>
+
+      <!-- Fecha inicio -->
+      <div>
+        <label for="fechaInicio" class="block text-sm font-medium">Fecha inicio</label>
+        <input type="datetime-local" th:field="*{fechaInicio}" id="fechaInicio"
+               class="mt-1 block w-full border rounded-md p-2"/>
+        <p th:if="${#fields.hasErrors('fechaInicio')}" th:errors="*{fechaInicio}" class="text-red-500 text-sm"></p>
+      </div>
+
+      <!-- Fecha fin -->
+      <div>
+        <label for="fechaFin" class="block text-sm font-medium">Fecha fin</label>
+        <input type="datetime-local" th:field="*{fechaFin}" id="fechaFin"
+               class="mt-1 block w-full border rounded-md p-2"/>
+        <p th:if="${#fields.hasErrors('fechaFin')}" th:errors="*{fechaFin}" class="text-red-500 text-sm"></p>
+      </div>
+
+      <!-- Total -->
+      <div>
+        <label for="total" class="block text-sm font-medium">Total</label>
+        <input type="number" step="0.01" th:field="*{total}" id="total" placeholder="Total"
+               class="mt-1 block w-full border rounded-md p-2"/>
+        <p th:if="${#fields.hasErrors('total')}" th:errors="*{total}" class="text-red-500 text-sm"></p>
+      </div>
+
+      <!-- Botón Guardar -->
+      <div class="flex justify-end">
+        <button type="submit"
+                class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+          Guardar Cambios
+        </button>
+      </div>
+    </form>
+  </div>
+
+</div>
+</html>
