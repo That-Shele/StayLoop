@@ -47,30 +47,18 @@ public class ReservaController {
             @RequestParam(value = "size", required = false) Optional<Integer> size,
             @RequestParam(value = "idUsuario", required = false) Optional<Integer> idUsuario,
             @RequestParam(value = "idHotel", required = false) Optional<Integer> idHotel,
-            @RequestParam(value = "fechaInicioStart", required = false) Optional<String> fechaInicioStart,
-            @RequestParam(value = "fechaInicioEnd", required = false) Optional<String> fechaInicioEnd,
-            @RequestParam(value = "fechaFinStart", required = false) Optional<String> fechaFinStart,
-            @RequestParam(value = "fechaFinEnd", required = false) Optional<String> fechaFinEnd,
             @RequestParam(value = "totalMin", required = false) Optional<BigDecimal> totalMin
     ) {
         int currentPage = page.orElse(1) - 1;
         int pageSize = size.orElse(5);
         Pageable pageable = PageRequest.of(currentPage, pageSize, Sort.by(Sort.Direction.DESC, "id"));
 
-        LocalDateTime fechaInicioStartValue = fechaInicioStart.map(LocalDateTime::parse).orElse(LocalDateTime.MIN);
-        LocalDateTime fechaInicioEndValue = fechaInicioEnd.map(LocalDateTime::parse).orElse(LocalDateTime.MAX);
-        LocalDateTime fechaFinStartValue = fechaFinStart.map(LocalDateTime::parse).orElse(LocalDateTime.MIN);
-        LocalDateTime fechaFinEndValue = fechaFinEnd.map(LocalDateTime::parse).orElse(LocalDateTime.MAX);
 
-        Integer idUsuarioValue = idUsuario.orElse(0);
-        Integer idHotelValue = idHotel.orElse(0);
-        BigDecimal totalMinValue = totalMin.orElse(BigDecimal.ZERO);
+        Integer idUsuarioValue = idUsuario.orElse(null);
+        Integer idHotelValue = idHotel.orElse(null);
+        BigDecimal totalMinValue = totalMin.orElse(null);
 
         Page<Reserva> reservas = reservaService.buscarPaginados(
-                fechaInicioStartValue,
-                fechaInicioEndValue,
-                fechaFinStartValue,
-                fechaFinEndValue,
                 idUsuarioValue,
                 idHotelValue,
                 totalMinValue,
@@ -89,12 +77,6 @@ public class ReservaController {
         model.addAttribute("tiposHabitacion", tipoHabitacionService.obtenerTodos());
         model.addAttribute("usuarios", usuarioService.obtenerTodos());
         model.addAttribute("reservas", reservas);
-        model.addAttribute("idUsuario", idUsuarioValue);
-        model.addAttribute("idHotel", idHotelValue);
-        model.addAttribute("fechaInicioStart", fechaInicioStart.orElse(""));
-        model.addAttribute("fechaInicioEnd", fechaInicioEnd.orElse(""));
-        model.addAttribute("fechaFinStart", fechaFinStart.orElse(""));
-        model.addAttribute("fechaFinEnd", fechaFinEnd.orElse(""));
         model.addAttribute("totalMin", totalMinValue);
 
         return "reserva/index";
@@ -125,6 +107,7 @@ public class ReservaController {
         // Si quieres, puedes asignar el usuario logueado automáticamente
         // Usuario usuarioLogueado = ...;
         // reserva.setUsuario(usuarioLogueado);
+
 
         reservaService.crearOEditar(reserva);
         return "redirect:/reservas";

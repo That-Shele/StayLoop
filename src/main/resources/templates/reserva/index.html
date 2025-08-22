@@ -19,18 +19,6 @@
             <input type="number" name="idHotel" th:value="${idHotel}" placeholder="ID Hotel"
                    class="border rounded p-2"/>
 
-            <input type="datetime-local" name="fechaInicioStart" th:value="${fechaInicioStart}" placeholder="Fecha Inicio Desde"
-                   class="border rounded p-2"/>
-
-            <input type="datetime-local" name="fechaInicioEnd" th:value="${fechaInicioEnd}" placeholder="Fecha Inicio Hasta"
-                   class="border rounded p-2"/>
-
-            <input type="datetime-local" name="fechaFinStart" th:value="${fechaFinStart}" placeholder="Fecha Fin Desde"
-                   class="border rounded p-2"/>
-
-            <input type="datetime-local" name="fechaFinEnd" th:value="${fechaFinEnd}" placeholder="Fecha Fin Hasta"
-                   class="border rounded p-2"/>
-
             <input type="number" step="0.01" name="totalMin" th:value="${totalMin}" placeholder="Total mínimo"
                    class="border rounded p-2"/>
 
@@ -64,8 +52,8 @@
                 <td class="py-2 px-4 border" th:text="${reserva.idUsuario}"></td>
                 <td class="py-2 px-4 border" th:text="${reserva.idHotel}"></td>
                 <td class="py-2 px-4 border" th:text="${reserva.idTipoHabitacion}"></td>
-                <td class="py-2 px-4 border" th:text="${#dates.format(reserva.fechaInicio, 'yyyy-MM-dd HH:mm')}"></td>
-                <td class="py-2 px-4 border" th:text="${#dates.format(reserva.fechaFin, 'yyyy-MM-dd HH:mm')}"></td>
+                    <td class="py-2 px-4 border" th:text="${#temporals.format(reserva.fechaInicio, 'dd-MM-yyyy HH:mm')}"></td>
+                <td class="py-2 px-4 border" th:text="${#temporals.format(reserva.fechaFin, 'dd-MM-yyyy HH:mm')}"></td>
                 <td class="py-2 px-4 border" th:text="${reserva.total}"></td>
                 <td class="py-2 px-4 border flex gap-2">
                     <a th:href="@{/reservas/details/{id}(id=${reserva.id})}" class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600">Ver</a>

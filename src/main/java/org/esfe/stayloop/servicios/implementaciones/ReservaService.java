@@ -26,20 +26,12 @@ public class ReservaService implements IReservaService {
 
     @Override
     public Page<Reserva> buscarPaginados(
-            LocalDateTime fechaInicioStart,
-            LocalDateTime fechaInicioEnd,
-            LocalDateTime fechaFinStart,
-            LocalDateTime fechaFinEnd,
             Integer idUsuario,
             Integer idHotel,
             BigDecimal total,
             Pageable pageable
     ) {
-        return reservaRepository.findByFechaInicioBetweenAndFechaFinBetweenAndIdUsuarioAndIdHotelAndTotalGreaterThanOrderByIdDesc(
-                fechaInicioStart,
-                fechaInicioEnd,
-                fechaFinStart,
-                fechaFinEnd,
+        return reservaRepository.findPaginated(
                 idUsuario,
                 idHotel,
                 total,

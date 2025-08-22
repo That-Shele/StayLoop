@@ -15,10 +15,6 @@ public interface IReservaService {
 
     // Buscar con filtros y paginación
     Page<Reserva> buscarPaginados(
-            LocalDateTime fechaInicioStart,
-            LocalDateTime fechaInicioEnd,
-            LocalDateTime fechaFinStart,
-            LocalDateTime fechaFinEnd,
             Integer idUsuario,
             Integer idHotel,
             BigDecimal total,

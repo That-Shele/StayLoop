@@ -13,28 +13,28 @@
 
 
       <div>
-        <label for="usuario" class="block text-sm font-medium">Usuario</label>
-        <select th:field="*{idUsuario}" id="usuario" class="mt-1 block w-full border rounded-md p-2">
+        <label for="idUsuario" class="block text-sm font-medium">Usuario</label>
+        <select th:field="*{idUsuario}" id="idUsuario" class="mt-1 block w-full border rounded-md p-2">
           <option th:each="u : ${usuarios}" th:value="${u.id}" th:text="${u.nombre}"></option>
         </select>
         <p th:if="${#fields.hasErrors('idUsuario')}" th:errors="*{idUsuario}" class="text-red-500 text-sm"></p>
       </div>
 
       <div>
-        <label for="hotel" class="block text-sm font-medium">Hotel</label>
-        <select th:field="*{hotel}" id="hotel" class="mt-1 block w-full border rounded-md p-2">
-          <option th:each="h : ${hoteles}" th:value="${h}" th:text="${h.nombre}"></option>
+        <label for="idHotel" class="block text-sm font-medium">Hotel</label>
+        <select th:field="*{idHotel}" id="idHotel" class="mt-1 block w-full border rounded-md p-2">
+          <option th:each="h : ${hoteles}" th:value="${h.id}" th:text="${h.nombre}"></option>
         </select>
-        <p th:if="${#fields.hasErrors('hotel')}" th:errors="*{hotel}" class="text-red-500 text-sm"></p>
+        <p th:if="${#fields.hasErrors('idHotel')}" th:errors="*{idHotel}" class="text-red-500 text-sm"></p>
       </div>
 
       <!-- Tipo de habitación (dropdown por nombre) -->
       <div>
-        <label for="tipoHabitacion" class="block text-sm font-medium">Tipo de habitación</label>
-        <select th:field="*{tipoHabitacion}" id="tipoHabitacion" class="mt-1 block w-full border rounded-md p-2">
-          <option th:each="t : ${tiposHabitacion}" th:value="${t}" th:text="${t.nombre}"></option>
+        <label for="idTipoHabitacion" class="block text-sm font-medium">Tipo de habitación</label>
+        <select th:field="*{idTipoHabitacion}" id="idTipoHabitacion" class="mt-1 block w-full border rounded-md p-2">
+          <option th:each="t : ${tiposHabitacion}" th:value="${t.id}" th:text="${t.nombre}"></option>
         </select>
-        <p th:if="${#fields.hasErrors('tipoHabitacion')}" th:errors="*{tipoHabitacion}" class="text-red-500 text-sm"></p>
+        <p th:if="${#fields.hasErrors('idTipoHabitacion')}" th:errors="*{idTipoHabitacion}" class="text-red-500 text-sm"></p>
       </div>
 
       <!-- Fecha realizado -->

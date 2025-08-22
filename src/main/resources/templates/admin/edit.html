@@ -29,7 +29,7 @@
             </div>
             <div>
                 <label class="block text-sm font-medium text-[var(--text-primary)]" for="img">Foto de Perfil</label>
-                <span th:if="${#fields.hasErrors('img')}" th:errors="*{imgUsuario}" class="text-red-400"></span>
+                <span th:if="${#fields.hasErrors('imgUsuario')}" th:errors="*{imgUsuario}" class="text-red-400"></span>
                 <div class="mt-1 flex items-center gap-4">
                         <span class="inline-block h-16 w-16 overflow-hidden rounded-full bg-gray-300)]">
                             <img th:if="${usuario.imgUsuario != null}" th:src="@{'/usuarioControl/imagen/' + ${usuario.id}}" id="preview" src="#" alt="Vista previa de la imagen" style="max-width: 64px; max-height: 64px;">

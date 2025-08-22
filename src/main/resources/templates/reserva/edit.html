@@ -41,7 +41,7 @@
       <div>
         <label for="fechaRealizado" class="block text-sm font-medium">Fecha realizado</label>
         <input type="datetime-local" th:field="*{fechaRealizado}" id="fechaRealizado"
-               class="mt-1 block w-full border rounded-md p-2"/>
+               class="mt-1 block w-full border rounded-md p-2" disabled/>
         <p th:if="${#fields.hasErrors('fechaRealizado')}" th:errors="*{fechaRealizado}" class="text-red-500 text-sm"></p>
       </div>
 
