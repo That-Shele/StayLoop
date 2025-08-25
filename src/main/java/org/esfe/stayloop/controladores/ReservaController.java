@@ -190,12 +190,24 @@ public class ReservaController {
         model.addAttribute("reserva", reserva);
         List<Imagen>Imagenes= imagenService.buscarPorIdHotel(id);
         List<TipoHabitacion>Habitaciones= tipoHabitacionService.buscarPorIdHotel(id);
+        Hotel hotel = hotelService.buscarPorId(id);
 
         model.addAttribute("Imagenes", Imagenes);
+        model.addAttribute("Hotel", hotel);
         model.addAttribute("Habitaciones", Habitaciones);
 
         return "reserva/detallehotel";
     }
+
+    @GetMapping("/imagenesHotel/{id}")
+    @ResponseBody
+    public byte[] getImage(@PathVariable("id") Integer id){
+        return imagenService.obtenerPorId(id)
+                .map(Imagen::getImagen)
+                .orElse(null);
+    }
+
+
 
 
 

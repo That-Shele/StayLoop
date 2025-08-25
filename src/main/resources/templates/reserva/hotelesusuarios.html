@@ -45,14 +45,17 @@
                 <span>5.0</span>
               </div>
             </div>
+
             <div class="p-4">
               <h3 class="text-lg font-bold text-[var(--text-primary)]" th:text="${item.nombre}"></h3>
               <p class="text-sm text-[var(--text-secondary)] mt-1" th:text="${item.direccion}"></p>
               <div class="mt-4 flex justify-between items-center">
                 <p class="text-lg font-bold text-[var(--primary-color)]">$250 <span class="text-sm font-normal text-[var(--text-secondary)]">/ night</span></p>
-                <a class="primary-button px-4 py-2 rounded-lg text-sm font-semibold" href="#">Ver Hoteles</a>
+                <a class="primary-button px-4 py-2 rounded-lg text-sm font-semibold" th:href="@{'/reservas/detallehotel/' + ${item.id}}">Ver Hoteles</a>
               </div>
             </div>
+
+
           </div>
 
           </div>
