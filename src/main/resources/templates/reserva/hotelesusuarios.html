@@ -31,27 +31,21 @@
     </div>
     <div class="flex flex-col lg:flex-row gap-8">
       <section class="w-full lg:w-3/4">
-        <h2 class="text-2xl font-bold mb-6 text-[var(--text-primary)]">Hotels in Paris</h2>
+        <h2 class="text-2xl font-bold mb-6 text-[var(--text-primary)]">Ver Hoteles</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
           <div th:each="item : ${hoteles}">
 
 
-          <div class="bg-white rounded-lg shadow-md overflow-hidden group transform hover:-translate-y-1 transition-transform duration-300">
-            <div class="relative">
-              <div class="w-full h-48 bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAAmhjzaYFNhw6bGVW_lVL8oKrA3RVXdC7UaqYuLZjtTPTUd435CagM51Eon5UFnHl4mk8eSSlEyVL9IXYerRBysIqq3kGcxRSs7-in_RocZEObOJtPYcay4fXM3aGEwdY5l7ifKJre9k30konM5nMZUByID2x_G-vyu7MRQNzfm4WcycCV-s20M1fTtpMOQ2GqRAoiLPyx8RhyMCXdQTaEQISGtEkEMwAW-xAIzSf7uM-7njt9dn8aVtoR18vXx9kso6_hnWc");'></div>
-              <div class="absolute top-2 right-2 bg-white/90 p-1 rounded-full text-yellow-500 flex items-center text-xs font-bold">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118l-3.368-2.448a1 1 0 00-1.176 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.24 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg>
-                <span>5.0</span>
-              </div>
-            </div>
+            <div class="w-[322px] bg-white rounded-lg shadow-md overflow-hidden group transform hover:-translate-y-1 transition-transform duration-300">
+
+              <img class="w-full h-[192px] object-cover" th:src="@{'/hotel/portada/' + ${item.id}}" alt="Portada del hotel">
 
             <div class="p-4">
               <h3 class="text-lg font-bold text-[var(--text-primary)]" th:text="${item.nombre}"></h3>
               <p class="text-sm text-[var(--text-secondary)] mt-1" th:text="${item.direccion}"></p>
               <div class="mt-4 flex justify-between items-center">
-                <p class="text-lg font-bold text-[var(--primary-color)]">$250 <span class="text-sm font-normal text-[var(--text-secondary)]">/ night</span></p>
-                <a class="primary-button px-4 py-2 rounded-lg text-sm font-semibold" th:href="@{'/reservas/detallehotel/' + ${item.id}}">Ver Hoteles</a>
+                <a class="primary-button px-4 py-2 rounded-lg text-sm font-semibold" th:href="@{'/reservas/detallehotel/' + ${item.id}}">Ver Hotel</a>
               </div>
             </div>
 

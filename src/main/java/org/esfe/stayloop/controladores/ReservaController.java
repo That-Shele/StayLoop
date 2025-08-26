@@ -19,8 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -166,7 +165,7 @@ public class ReservaController {
         String filtroNombre = (nombre == null) ? "" : nombre;
 
         Page<Hotel> hoteles = hotelService.buscarPaginados(pageable, zona, filtroNombre);
-        model.addAttribute("hoteles", hoteles);
+
 
         // info para el paginador
         int totalPages = hoteles.getTotalPages();
@@ -177,6 +176,9 @@ public class ReservaController {
             model.addAttribute("pageNumbers", pageNumbers);
         }
 
+
+
+        model.addAttribute("hoteles", hoteles);
         model.addAttribute("zona", zona);
         model.addAttribute("nombre", filtroNombre);
 

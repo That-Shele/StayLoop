@@ -14,6 +14,7 @@
     List<TipoHabitacion>  buscarPorCosto  (BigDecimal costo);
     List<TipoHabitacion>  buscarPorIdHotel (Integer idHotel);
 
+
     TipoHabitacion  buscarPorId (Integer id);
 
     TipoHabitacion crearOEditar (TipoHabitacion tipoHabitacion);

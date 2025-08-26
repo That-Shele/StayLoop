@@ -16,9 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.math.BigDecimal;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -60,7 +59,7 @@ public class HotelController {
         String filtroNombre = (nombre == null) ? "" : nombre;
 
         Page<Hotel> hoteles = hotelService.buscarPaginados(pageable, zona, filtroNombre);
-        model.addAttribute("hoteles", hoteles);
+
 
         // info para el paginador
         int totalPages = hoteles.getTotalPages();
@@ -71,8 +70,13 @@ public class HotelController {
             model.addAttribute("pageNumbers", pageNumbers);
         }
 
+
+
+
+        model.addAttribute("hoteles", hoteles);
         model.addAttribute("zona", zona);
         model.addAttribute("nombre", filtroNombre);
+
 
         return "hotel/index"; // tu dashboard de hoteles
     }

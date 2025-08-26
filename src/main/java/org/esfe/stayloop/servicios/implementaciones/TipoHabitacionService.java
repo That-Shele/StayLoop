@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
- @Service
+@Service
  public class TipoHabitacionService  implements ITipoHabitacionService {
 
      @Autowired
@@ -40,6 +42,7 @@ import java.util.List;
      public List<TipoHabitacion> buscarPorIdHotel(Integer idHotel) {
          return  tipoHabitacionRepository.findByIdHotel(idHotel);
      }
+
 
 
      @Override
