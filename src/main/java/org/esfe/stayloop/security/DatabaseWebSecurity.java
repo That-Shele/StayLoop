@@ -51,7 +51,7 @@ public class DatabaseWebSecurity {
                 .requestMatchers("/admin").hasAnyAuthority("admin")
                 .requestMatchers("/hotel/**").hasAnyAuthority("admin", "hotel")
                 .requestMatchers("/reservas/create", "/reservas/save").hasAnyAuthority("admin", "usuario")
-                .requestMatchers("/reservas/hoteles", "/reservas/detallehotel/**", "imagenesHotel/**").hasAnyAuthority("usuario")
+                .requestMatchers("/reservas/hoteles", "/reservas/detallehotel/**", "/reservas/imagenesHotel/**").hasAnyAuthority("usuario")
                 .requestMatchers("/reservas/**").hasAnyAuthority("admin")
                 .requestMatchers("/zonas/**").hasAnyAuthority("admin")
 
