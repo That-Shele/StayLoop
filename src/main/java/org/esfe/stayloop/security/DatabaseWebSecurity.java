@@ -45,14 +45,15 @@ public class DatabaseWebSecurity {
 
 
                 // Asignar permisos a URLs por ROLES
-                .requestMatchers("/usuarioControl/imagen/**").authenticated()
-                .requestMatchers("/usuarioControl/perfil").authenticated()
+                .requestMatchers("/usuarioControl/imagen/**", "/usuarioControl/perfil").authenticated()
                 .requestMatchers("/hotel/imagen/**").authenticated()
                 .requestMatchers("/usuarioControl/**").hasAnyAuthority("admin")
-
-//                .requestMatchers("/hotel/**").hasAnyAuthority("admin", "hotel")
-//                .requestMatchers("/admin/**").hasAnyAuthority("admin")
-//                .requestMatchers("/alumnos/**").hasAnyAuthority("admin", "docente")
+                .requestMatchers("/admin").hasAnyAuthority("admin")
+                .requestMatchers("/hotel/**").hasAnyAuthority("admin", "hotel")
+                .requestMatchers("/reservas/create", "/reservas/save").hasAnyAuthority("admin", "usuario")
+                .requestMatchers("/reservas/hoteles", "/reservas/detallehotel/**", "imagenesHotel/**").hasAnyAuthority("usuario")
+                .requestMatchers("/reservas/**").hasAnyAuthority("admin")
+                .requestMatchers("/zonas/**").hasAnyAuthority("admin")
 
                 // todas las demás vistas requieren autenticación
                 .anyRequest().authenticated());
