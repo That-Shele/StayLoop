@@ -87,11 +87,24 @@ public class ReservaController {
 
     // FORMULARIO CREAR RESERVA
     @GetMapping("/create")
-    public String createReservaForm(Model model, Reserva reserva) {
+    public String createReservaForm(
+            @RequestParam(value = "idHotel", required = false) Integer idHotel,
+            @RequestParam(value = "idTipoHabitacion", required = false) Integer idTipoHabitacion,
+            Model model,
+            Reserva reserva) {
+
+        if (idHotel != null) {
+            reserva.setIdHotel(idHotel);
+        }
+        if (idTipoHabitacion != null) {
+            reserva.setIdTipoHabitacion(idTipoHabitacion);
+        }
+
         model.addAttribute("reserva", reserva);
         model.addAttribute("hoteles", hotelService.obtenerTodos());
         model.addAttribute("tiposHabitacion", tipoHabitacionService.obtenerTodos());
         model.addAttribute("usuarios", usuarioService.obtenerTodos());
+
         return "reserva/create";
     }
 
