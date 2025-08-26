@@ -35,16 +35,28 @@
             </div>
           </div>
         </div>
-        <div class="grid grid-cols-4 grid-rows-2 gap-2 h-[450px]">
-          <div class="col-span-2 row-span-2 rounded-l-2xl overflow-hidden">
-            <img alt="Main hotel view" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrQzn8F9Fx3MgkBP3OogpG_G1HIgWQMkk4oQbVrxXnB4Np2rJsAUNvvDKGg-ibunsfua7DLJG35FhsIaoy4AWhx8OfXhqnoq4vdLYHpPZpPyBGBsqSrKgtYfuhZpc5NtrJeIqTaY_Y7rroUHtsYDRNm6CPtAa2a0bXfNehh53ywGkCVL5r-oDS-x3lcgF_6dUDbBBuWVAI9dOM-j7Zad7I0l9PXJbCPLO5dkrYLQqJkFc3I4FZxoecadkGiRt4vCr8p0wX3AI"/>
-          </div>
-          <div class="overflow-hidden"><img alt="Hotel room" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlMhZ6JT3xmnmHMkVsl2s-RIBZYB2CnHY9fWJM06-sHRAJeeslAm9c_N0tNqLKFL3_ngtXPt66_dSmsZJHcS4VVNsMjCoANP8VjOE8PPCvSwuMtn9flSIcmcNSjxCe3AXKOMUqF9PxOuJFpsLylYVjupXvSB3NcZk7LW-vg04hr1EgzecPbuuHvvzY1xTiKbfnB9vzOnrdQmGa6oNSj3ecytb9UxcugKEB9ogSQMBL14EPJLe5gzKK2-4a3aaY7O_ldx0dBxQ"/></div>
-          <div class="rounded-tr-2xl overflow-hidden"><img alt="Hotel amenity" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxBwwocmGdiSFyD1yCV8tdNWQlJxA5sMGfqY9cusy2CdFNc9F3wJbVRnxfCgQ1KN9I39TAD_DIEBEJgREJgg4GY5_Nh69w7cDmTsU5W_-YGZnyjUzHh-DxGHkQKjF97tlhc2rDqWBCYdDfmEOzge2BMJAut-uwhTnHd5VYmGaAcJ6OJKCMbHA_nyCUy3BNPwqf9fzYvy_dfZKg_indgNOhAUKJubQuicA-9_af_5ME4-yZFxGNh3ELgklB5b77LvG0J9LLI-g"/></div>
-          <div class="overflow-hidden"><img alt="Hotel exterior" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQuKN-_vVc4sQP29LdIdO9Q7HiDBvTRR9FnOxJ4k7YtFu20pw0XFhMJE3GF6PkRyNjPs1oTXrTflch9oaIq9TW-0ix1jpkKarZMXngDmhvINIEWE6_UHkTb88dNT-Rky0cdPB1wptGl9pXpBc41XqZDSG3deWLp246gRVmcVXuH31nj8PURnR0koLGDfBtrL5HbS7RM-j30NNt4TPtKOOpF4Q99lFdEav1ZBY12qSNOS1Bjuw7GkiRCg2O1wWFPz4NJT2aWbY"/></div>
-          <div class="rounded-br-2xl overflow-hidden relative">
-            <img alt="More photos" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuD2oVcF4UQPS5ycjet2_bSHU_69pFK8NTM2qxYxuGvnY5lFAVoplAGmEVn2sLUrywHpsgiJ4BQ_JmnVmi7w_e05npuGMZ3AbOhGbr1KEBq_NyL2pivh-Vqz1o9FLY3XGtp8nLNEyoj_l_H3LQ63kCEV5BljrAiItEKgncmJwawrvLC3OUbbVv5BbmUeS5x-zzQyVHjy3tC0vHGjFGW3EsjmW7MYJrmn_tEmnU2P7EEZcDsNUvPX4qyTWkWkb8WynhMw3_zo4"/>
-            <button class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center text-white font-bold text-lg hover:bg-opacity-60 transition-opacity">Show all photos</button>
+        <div class="container mx-auto p-4">
+          <div th:if="${not #lists.isEmpty(Imagenes)}">
+
+            <div id="image-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+
+              <div th:each="imagen, iterStat : ${Imagenes}"
+                   th:classappend="${iterStat.count > 6} ? 'hidden extra-image' : ''"
+                   class="w-full max-w-[512px] h-full max-h-[512px] aspect-square rounded-lg shadow-md overflow-hidden">
+
+
+              <img th:src="@{'/reservas/imagenesHotel/' + ${imagen.id}}" alt="Foto de la galería"
+                     class="w-full h-full object-cover rounded-lg shadow-md">
+              </div>
+            </div>
+
+            <div th:if="${#lists.size(Imagenes) > 6}" class="text-center mt-8">
+              <button id="show-more-btn"
+                      class="bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors">
+                Ver más fotos
+              </button>
+            </div>
+
           </div>
         </div>
       </section>
@@ -52,91 +64,12 @@
         <div class="col-span-8">
           <section class="mb-10 bg-white p-8 rounded-2xl shadow-lg">
             <h3 class="text-2xl font-bold mb-4 border-b pb-3 text-[var(--text-primary)]">About this stay</h3>
-            <p class="text-base leading-relaxed text-[var(--text-secondary)]">
-              Hotel Grand Vista, nestled in the heart of San Francisco, offers a blend of historic charm and modern luxury. Originally built in 1920, the hotel has been
-              meticulously restored to its former glory, featuring elegant architecture and sophisticated interiors. Guests can enjoy spacious rooms with stunning city views, a
-              rooftop pool, and a gourmet restaurant serving locally sourced cuisine. The hotel is conveniently located near Union Square, offering easy access to shopping, dining,
-              and cultural attractions. Whether you're here for business or leisure, Hotel Grand Vista provides an unforgettable experience.
-            </p>
+
+            <span th:text="${Hotel.descripcion}"></span>
           </section>
-          <section class="mb-10 bg-white p-8 rounded-2xl shadow-lg">
-            <h3 class="text-2xl font-bold mb-4 border-b pb-3 text-[var(--text-primary)]">What this place offers</h3>
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-6 mt-4">
-              <div class="flex items-center gap-4"><span class="material-icons text-2xl text-[var(--accent-color)]">pool</span><span class="font-medium text-[var(--text-primary)]">Swimming pool</span></div>
-              <div class="flex items-center gap-4"><span class="material-icons text-2xl text-[var(--accent-color)]">wifi</span><span class="font-medium text-[var(--text-primary)]">Wifi</span></div>
-              <div class="flex items-center gap-4"><span class="material-icons text-2xl text-[var(--accent-color)]">local_parking</span><span class="font-medium text-[var(--text-primary)]">Parking</span></div>
-              <div class="flex items-center gap-4"><span class="material-icons text-2xl text-[var(--accent-color)]">pets</span><span class="font-medium text-[var(--text-primary)]">Pets allowed</span></div>
-              <div class="flex items-center gap-4"><span class="material-icons text-2xl text-[var(--accent-color)]">fitness_center</span><span class="font-medium text-[var(--text-primary)]">Gym</span></div>
-              <div class="flex items-center gap-4"><span class="material-icons text-2xl text-[var(--accent-color)]">restaurant</span><span class="font-medium text-[var(--text-primary)]">Restaurant</span></div>
-            </div>
-          </section>
-          <section class="mb-10 bg-white p-8 rounded-2xl shadow-lg">
-            <h3 class="text-2xl font-bold mb-4 border-b pb-3 text-[var(--text-primary)]">Where you'll be</h3>
-            <div class="aspect-video w-full rounded-xl overflow-hidden mt-4">
-              <img alt="Map showing hotel location" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuD2oVcF4UQPS5ycjet2_bSHU_69pFK8NTM2qxYxuGvnY5lFAVoplAGmEVn2sLUrywHpsgiJ4BQ_JmnVmi7w_e05npuGMZ3AbOhGbr1KEBq_NyL2pivh-Vqz1o9FLY3XGtp8nLNEyoj_l_H3LQ63kCEV5BljrAiItEKgncmJwawrvLC3OUbbVv5BbmUeS5x-zzQyVHjy3tC0vHGjFGW3EsjmW7MYJrmn_tEmnU2P7EEZcDsNUvPX4qyTWkWkb8WynhMw3_zo4"/>
-            </div>
-          </section>
-          <section class="bg-white p-8 rounded-2xl shadow-lg">
-            <h3 class="text-2xl font-bold mb-4 border-b pb-3 text-[var(--text-primary)]">Reviews <span class="font-normal text-lg text-[var(--text-secondary)]">(1,200 reviews)</span></h3>
-            <div class="flex items-center gap-12 mb-8">
-              <div class="text-center">
-                <p class="text-6xl font-bold text-[var(--text-primary)]">4.5</p>
-                <div class="flex justify-center gap-0.5 mt-1 star-rating">
-                  <span class="material-icons">star</span>
-                  <span class="material-icons">star</span>
-                  <span class="material-icons">star</span>
-                  <span class="material-icons">star</span>
-                  <span class="material-icons text-gray-300">star_half</span>
-                </div>
-              </div>
-              <div class="flex-1">
-                <div class="grid grid-cols-[auto_1fr_auto] items-center gap-x-3 gap-y-1 text-sm text-[var(--text-primary)]">
-                  <p>5</p><div class="h-2 rounded-full bg-gray-200"><div class="h-full rounded-full bg-yellow-400" style="width: 70%;"></div></div><p class="text-[var(--text-secondary)]">70%</p>
-                  <p>4</p><div class="h-2 rounded-full bg-gray-200"><div class="h-full rounded-full bg-yellow-400" style="width: 20%;"></div></div><p class="text-[var(--text-secondary)]">20%</p>
-                  <p>3</p><div class="h-2 rounded-full bg-gray-200"><div class="h-full rounded-full bg-yellow-400" style="width: 5%;"></div></div><p class="text-[var(--text-secondary)]">5%</p>
-                  <p>2</p><div class="h-2 rounded-full bg-gray-200"><div class="h-full rounded-full bg-yellow-400" style="width: 3%;"></div></div><p class="text-[var(--text-secondary)]">3%</p>
-                  <p>1</p><div class="h-2 rounded-full bg-gray-200"><div class="h-full rounded-full bg-yellow-400" style="width: 2%;"></div></div><p class="text-[var(--text-secondary)]">2%</p>
-                </div>
-              </div>
-            </div>
-            <div class="space-y-8">
-              <div class="flex flex-col gap-3">
-                <div class="flex items-center gap-3">
-                  <img alt="Sophia Carter" class="size-12 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDai0nSVk9HnNjMOAQocIElAA2HFd8EUFy3lwdG-gUjm8QbxZoRRYkaGe-XdFQUutd4dBdP8TLJs8XPDd1bxOrMWT12uDRO7kTMo8L-8HhFPrHDzRuEboVKwkNStEu5jVwQXqF24rEFo7nxd1k1wy8WCr9DHf2_36VYvqbsDTlBpZHBsULZHhjuYuvxuuBRxLwoy8JsLzLHZv85_-CQo6gXh06gDVtWK8aSSPqdIW_8uBH2whxI8KRnit5KdmWyzLWL1dvnd_o"/>
-                  <div>
-                    <p class="font-semibold text-[var(--text-primary)]">Sophia Carter</p>
-                    <p class="text-sm text-[var(--text-secondary)]">May 2023</p>
-                  </div>
-                </div>
-                <div class="flex gap-0.5 star-rating">
-                  <span class="material-icons">star</span><span class="material-icons">star</span><span class="material-icons">star</span><span class="material-icons">star</span><span class="material-icons">star</span>
-                </div>
-                <p class="text-[var(--text-secondary)]">The Hotel Grand Vista exceeded all expectations. The staff was incredibly welcoming, the room was beautifully decorated and spotless, and the amenities were top-notch. The rooftop pool offered breathtaking views of the city, and the restaurant served delicious meals. I highly recommend this hotel for anyone visiting San Francisco.</p>
-                <div class="flex gap-4 text-[var(--text-secondary)]">
-                  <button class="flex items-center gap-2 hover:text-[var(--primary-color)]"><span class="material-icons-outlined text-xl">thumb_up</span><span>15</span></button>
-                  <button class="flex items-center gap-2 hover:text-[var(--primary-color)]"><span class="material-icons-outlined text-xl">thumb_down</span><span>2</span></button>
-                </div>
-              </div>
-              <div class="flex flex-col gap-3">
-                <div class="flex items-center gap-3">
-                  <img alt="Ethan Bennett" class="size-12 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBByL2uiVySfP3wvNMzastcy0MKMa0pZLzxUqECzTlMttQkbatXg_8vcJaw-h2d2ptZxP3eP2YcbceGp77VB7Cy2bmJJlbkjWcUnpKBetFnDGg2IeBKYh13DSFYWO0jeFrF_LTIfGzF8FTxSddQ7jwPakLff3Gkd7yUYzziugEydkVbh_l82mMe89QG3IF64abDo5X0aIs57VZ2eYH0-DSup7Mzx5USyfs6H9AHaBEo8-oyORSVAwA1cmjPN0SBp3nROmSizfE"/>
-                  <div>
-                    <p class="font-semibold text-[var(--text-primary)]">Ethan Bennett</p>
-                    <p class="text-sm text-[var(--text-secondary)]">April 2023</p>
-                  </div>
-                </div>
-                <div class="flex gap-0.5 star-rating">
-                  <span class="material-icons">star</span><span class="material-icons">star</span><span class="material-icons">star</span><span class="material-icons">star</span><span class="material-icons text-gray-300">star_border</span>
-                </div>
-                <p class="text-[var(--text-secondary)]">I had a pleasant stay at the Hotel Grand Vista. The location was perfect, close to all the major attractions. The room was comfortable and well-maintained, although the view wasn't as great as I had hoped. The staff was friendly and helpful, and the overall experience was positive.</p>
-                <div class="flex gap-4 text-[var(--text-secondary)]">
-                  <button class="flex items-center gap-2 hover:text-[var(--primary-color)]"><span class="material-icons-outlined text-xl">thumb_up</span><span>8</span></button>
-                  <button class="flex items-center gap-2 hover:text-[var(--primary-color)]"><span class="material-icons-outlined text-xl">thumb_down</span><span>1</span></button>
-                </div>
-              </div>
-              <button class="font-bold text-[var(--accent-color)] hover:underline">Show all 1,200 reviews</button>
-            </div>
-          </section>
+
+
+
         </div>
         <aside class="col-span-4">
           <div class="sticky top-10 p-6 rounded-2xl shadow-xl border border-[var(--border-color)] bg-white">
@@ -151,18 +84,14 @@
                 <input class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)] sm:text-sm h-12 px-3 text-[var(--text-primary)]" id="checkout" name="checkout" type="date"/>
               </div>
             </div>
-            <div class="mt-4">
-              <label class="block text-sm font-medium text-[var(--text-secondary)]" for="guests">Guests</label>
-              <select class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)] sm:text-sm h-12 px-3 text-[var(--text-primary)]" id="guests" name="guests">
-                <option>1 guest</option>
-                <option>2 guests</option>
-                <option>3 guests</option>
-                <option>4 guests</option>
-              </select>
-            </div>
+
+
+
             <button class="mt-6 w-full bg-[var(--accent-color)] text-white font-bold py-3 px-4 rounded-lg hover:bg-green-500 transition-colors text-lg">
               Book Now
+
             </button>
+
             <div class="mt-6">
               <div class="flex justify-between items-center mb-2">
                 <h4 class="font-semibold text-[var(--text-primary)]">Standard Room</h4>
@@ -171,25 +100,37 @@
               <p class="text-sm text-[var(--text-secondary)] mb-4">A comfortable room with a queen-sized bed, perfect for solo travelers or couples.</p>
               <hr/>
             </div>
-            <div class="mt-4">
-              <div class="flex justify-between items-center mb-2">
-                <h4 class="font-semibold text-[var(--text-primary)]">Deluxe Suite</h4>
-                <p class="font-bold text-lg text-[var(--text-primary)]">$400 <span class="text-sm font-normal text-[var(--text-secondary)]">/ night</span></p>
-              </div>
-              <p class="text-sm text-[var(--text-secondary)] mb-4">A spacious suite with a king-sized bed, separate living area, and city views.</p>
-              <hr/>
-            </div>
-            <div class="mt-4">
-              <div class="flex justify-between items-center mb-2">
-                <h4 class="font-semibold text-[var(--text-primary)]">Penthouse</h4>
-                <p class="font-bold text-lg text-[var(--text-primary)]">$800 <span class="text-sm font-normal text-[var(--text-secondary)]">/ night</span></p>
-              </div>
-              <p class="text-sm text-[var(--text-secondary)]">The ultimate luxury experience with panoramic views, private balcony, and premium amenities.</p>
-            </div>
+
+
+
           </div>
         </aside>
       </div>
     </div>
+    <script>
+      // Nos aseguramos de que el DOM esté completamente cargado
+      document.addEventListener('DOMContentLoaded', function () {
+
+          // 1. Seleccionamos el botón y las imágenes ocultas
+          const showMoreBtn = document.getElementById('show-more-btn');
+          const hiddenImages = document.querySelectorAll('.extra-image');
+
+          // 2. Verificamos si el botón existe en la página
+          if (showMoreBtn) {
+              // 3. Añadimos un "escuchador" de eventos para el clic
+              showMoreBtn.addEventListener('click', function () {
+
+                  // 4. Iteramos sobre cada imagen oculta y le quitamos la clase 'hidden'
+                  hiddenImages.forEach(function (image) {
+                      image.classList.remove('hidden');
+                  });
+
+                  // 5. Ocultamos el botón "Ver más" una vez que ha sido presionado
+                  this.style.display = 'none';
+              });
+          }
+      });
+    </script>
   </main>
 
 </div>

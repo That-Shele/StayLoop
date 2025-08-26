@@ -1,11 +1,12 @@
 package org.esfe.stayloop.controladores;
 
 import jakarta.validation.Valid;
+import org.esfe.stayloop.modelos.Hotel;
+import org.esfe.stayloop.modelos.Imagen;
 import org.esfe.stayloop.modelos.Reserva;
-import org.esfe.stayloop.servicios.interfaces.IHotelService;
-import org.esfe.stayloop.servicios.interfaces.IReservaService;
-import org.esfe.stayloop.servicios.interfaces.ITipoHabitacionService;
-import org.esfe.stayloop.servicios.interfaces.IUsuarioService;
+import org.esfe.stayloop.modelos.TipoHabitacion;
+import org.esfe.stayloop.servicios.implementaciones.ImagenService;
+import org.esfe.stayloop.servicios.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,6 +30,9 @@ public class ReservaController {
 
     @Autowired
     private IReservaService reservaService;
+
+    @Autowired
+    private IImagenService imagenService;
 
     @Autowired
     private IHotelService hotelService;
@@ -145,4 +149,66 @@ public class ReservaController {
         reservaService.eliminarPorId(id);
         return "redirect:/reservas";
     }
+
+
+    @GetMapping("/hoteles")
+    public String index(Model model,
+                        @RequestParam("page") Optional<Integer> page,
+                        @RequestParam("size") Optional<Integer> size,
+                        @RequestParam(value = "zona", required = false) Integer zona,
+                        @RequestParam(value = "nombre", required = false) String nombre) {
+
+        int currentPage = page.orElse(1) - 1;
+        int pageSize = size.orElse(5);
+        Pageable pageable = PageRequest.of(currentPage, pageSize);
+
+        // si nombre viene nulo, se lo pasamos como "" para evitar errores
+        String filtroNombre = (nombre == null) ? "" : nombre;
+
+        Page<Hotel> hoteles = hotelService.buscarPaginados(pageable, zona, filtroNombre);
+        model.addAttribute("hoteles", hoteles);
+
+        // info para el paginador
+        int totalPages = hoteles.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                    .boxed()
+                    .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+
+        model.addAttribute("zona", zona);
+        model.addAttribute("nombre", filtroNombre);
+
+        return "reserva/hotelesusuarios"; // tu dashboard de hoteles
+    }
+
+
+    @GetMapping("/detallehotel/{id}")
+    public String detallehotel(@PathVariable("id") Integer id, Model model) {
+        Reserva reserva = new Reserva();
+        model.addAttribute("reserva", reserva);
+        List<Imagen>Imagenes= imagenService.buscarPorIdHotel(id);
+        List<TipoHabitacion>Habitaciones= tipoHabitacionService.buscarPorIdHotel(id);
+        Hotel hotel = hotelService.buscarPorId(id);
+
+        model.addAttribute("Imagenes", Imagenes);
+        model.addAttribute("Hotel", hotel);
+        model.addAttribute("Habitaciones", Habitaciones);
+
+        return "reserva/detallehotel";
+    }
+
+    @GetMapping("/imagenesHotel/{id}")
+    @ResponseBody
+    public byte[] getImage(@PathVariable("id") Integer id){
+        return imagenService.obtenerPorId(id)
+                .map(Imagen::getImagen)
+                .orElse(null);
+    }
+
+
+
+
+
 }

@@ -30,61 +30,13 @@
       </div>
     </div>
     <div class="flex flex-col lg:flex-row gap-8">
-      <aside class="w-full lg:w-1/4">
-        <div class="bg-[var(--white)] p-6 rounded-lg shadow-md">
-          <h2 class="text-xl font-bold mb-6 text-[var(--text-primary)]">Filters</h2>
-          <div class="space-y-6">
-            <div>
-              <h3 class="font-semibold mb-3 text-[var(--text-primary)]">Price range</h3>
-              <div class="relative pt-1">
-                <input class="w-full h-2 bg-[var(--secondary-color)] rounded-lg appearance-none cursor-pointer" max="500" min="50" style="--thumb-color: var(--primary-color)" type="range"/>
-                <div class="flex justify-between text-sm text-[var(--text-secondary)] mt-2">
-                  <span>$50</span>
-                  <span>$500+</span>
-                </div>
-              </div>
-            </div>
-            <div>
-              <h3 class="font-semibold mb-3 text-[var(--text-primary)]">Star rating</h3>
-              <div class="flex flex-wrap gap-2">
-                {[5, 4, 3, 2, 1].map(star =&gt; (
-                <label class="cursor-pointer" key="{star}">
-                  <input class="sr-only peer" name="star-rating" type="radio"/>
-                  <div class="px-4 py-2 rounded-lg border border-[var(--border-color)] text-sm font-medium text-[var(--text-secondary)] peer-checked:bg-[var(--accent-green)] peer-checked:text-white peer-checked:border-[var(--accent-green)] transition-colors">
-                    {star} star{star &gt; 1 ? 's' : ''}
-                  </div>
-                </label>
-                ))}
-              </div>
-            </div>
-            <div>
-              <h3 class="font-semibold mb-3 text-[var(--text-primary)]">Amenities</h3>
-              <div class="space-y-2">
-                {['Free WiFi', 'Swimming pool', 'Parking', 'Gym', 'Pet-friendly'].map(amenity =&gt; (
-                <label class="flex items-center space-x-3 cursor-pointer" key="{amenity}">
-                  <input class="h-4 w-4 rounded border-[var(--border-color)] text-[var(--primary-color)] focus:ring-[var(--primary-color)]" type="checkbox"/>
-                  <span class="text-sm text-[var(--text-secondary)]">{amenity}</span>
-                </label>
-                ))}
-              </div>
-            </div>
-            <div>
-              <h3 class="font-semibold mb-3 text-[var(--text-primary)]">Hotel type</h3>
-              <div class="space-y-2">
-                {['Hotel', 'Apartment', 'Resort'].map(type =&gt; (
-                <label class="flex items-center space-x-3 cursor-pointer" key="{type}">
-                  <input class="h-4 w-4 rounded border-[var(--border-color)] text-[var(--primary-color)] focus:ring-[var(--primary-color)]" type="checkbox"/>
-                  <span class="text-sm text-[var(--text-secondary)]">{type}</span>
-                </label>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </aside>
       <section class="w-full lg:w-3/4">
         <h2 class="text-2xl font-bold mb-6 text-[var(--text-primary)]">Hotels in Paris</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+          <div th:each="item : ${hoteles}">
+
+
           <div class="bg-white rounded-lg shadow-md overflow-hidden group transform hover:-translate-y-1 transition-transform duration-300">
             <div class="relative">
               <div class="w-full h-48 bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAAmhjzaYFNhw6bGVW_lVL8oKrA3RVXdC7UaqYuLZjtTPTUd435CagM51Eon5UFnHl4mk8eSSlEyVL9IXYerRBysIqq3kGcxRSs7-in_RocZEObOJtPYcay4fXM3aGEwdY5l7ifKJre9k30konM5nMZUByID2x_G-vyu7MRQNzfm4WcycCV-s20M1fTtpMOQ2GqRAoiLPyx8RhyMCXdQTaEQISGtEkEMwAW-xAIzSf7uM-7njt9dn8aVtoR18vXx9kso6_hnWc");'></div>
@@ -93,66 +45,21 @@
                 <span>5.0</span>
               </div>
             </div>
+
             <div class="p-4">
-              <h3 class="text-lg font-bold text-[var(--text-primary)]">The Grand Parisian</h3>
-              <p class="text-sm text-[var(--text-secondary)] mt-1">5-star hotel with Eiffel Tower views</p>
+              <h3 class="text-lg font-bold text-[var(--text-primary)]" th:text="${item.nombre}"></h3>
+              <p class="text-sm text-[var(--text-secondary)] mt-1" th:text="${item.direccion}"></p>
               <div class="mt-4 flex justify-between items-center">
                 <p class="text-lg font-bold text-[var(--primary-color)]">$250 <span class="text-sm font-normal text-[var(--text-secondary)]">/ night</span></p>
-                <a class="primary-button px-4 py-2 rounded-lg text-sm font-semibold" href="#">View Details</a>
+                <a class="primary-button px-4 py-2 rounded-lg text-sm font-semibold" th:href="@{'/reservas/detallehotel/' + ${item.id}}">Ver Hoteles</a>
               </div>
             </div>
+
+
           </div>
-          <div class="bg-white rounded-lg shadow-md overflow-hidden group transform hover:-translate-y-1 transition-transform duration-300">
-            <div class="relative">
-              <div class="w-full h-48 bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCci12i4WVUZ17GGvNVO3UmsQ9U5h317oFbJU3NQxneM53lqgdSWxe3sI-NLfGGXsUV2Y6QscbLpR9OS1Zz1oboXG4VVNIPchVogt9XV62U8MjYss3Yu-KRDm4UWhJnxydb3GeXOxxSowW_UIxxbDLt_Qpnl4q2YUyArqdcdG6LTQmtw_bhA2jdpF4GWUgc573vOQt_SqyfyODHIIiCjqJDh2Vn_8AY7NvX8XnAptGQ8U3gzWm2LJAwROPSnuV8mU4TutpfV10");'></div>
-              <div class="absolute top-2 right-2 bg-white/90 p-1 rounded-full text-yellow-500 flex items-center text-xs font-bold">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118l-3.368-2.448a1 1 0 00-1.176 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.24 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg>
-                <span>4.0</span>
-              </div>
-            </div>
-            <div class="p-4">
-              <h3 class="text-lg font-bold text-[var(--text-primary)]">Hotel Le Marais</h3>
-              <p class="text-sm text-[var(--text-secondary)] mt-1">4-star boutique hotel in the historic district</p>
-              <div class="mt-4 flex justify-between items-center">
-                <p class="text-lg font-bold text-[var(--primary-color)]">$180 <span class="text-sm font-normal text-[var(--text-secondary)]">/ night</span></p>
-                <a class="primary-button px-4 py-2 rounded-lg text-sm font-semibold" href="#">View Details</a>
-              </div>
-            </div>
+
           </div>
-          <div class="bg-white rounded-lg shadow-md overflow-hidden group transform hover:-translate-y-1 transition-transform duration-300">
-            <div class="relative">
-              <div class="w-full h-48 bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAMJURwH9M3wbpEsHWvQCa5cCfV4fOq72LMSDWxYXhNLGegPjKCvUuQ-UOFT-pIMQLES3LHRFT_rDlAahttuKPviBAh8TZb8Q_dHzskVLroLw2ptyT6vTjI9tbKWAGFWk3SXmFQRSk9NFm0c-dR95YYZIgBWS9oZmQ5aN8zzZMJo_h5eSzS3RLvZVEZczXrGJHXuA753g71ouhvZw1hMNgAmMTc7u9r5W7gfy8mLvwUDT4QuT-l7bhz8BTu_cpEnYcg3sHKRok");'></div>
-              <div class="absolute top-2 right-2 bg-white/90 p-1 rounded-full text-yellow-500 flex items-center text-xs font-bold">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118l-3.368-2.448a1 1 0 00-1.176 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.24 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg>
-                <span>3.0</span>
-              </div>
-            </div>
-            <div class="p-4">
-              <h3 class="text-lg font-bold text-[var(--text-primary)]">Hotel Montmartre</h3>
-              <p class="text-sm text-[var(--text-secondary)] mt-1">3-star hotel near Sacré-Cœur Basilica</p>
-              <div class="mt-4 flex justify-between items-center">
-                <p class="text-lg font-bold text-[var(--primary-color)]">$120 <span class="text-sm font-normal text-[var(--text-secondary)]">/ night</span></p>
-                <a class="primary-button px-4 py-2 rounded-lg text-sm font-semibold" href="#">View Details</a>
-              </div>
-            </div>
-          </div>
-          <div class="bg-white rounded-lg shadow-md overflow-hidden group transform hover:-translate-y-1 transition-transform duration-300">
-            <div class="relative">
-              <div class="w-full h-48 bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAbrhUfcPjrnG6Jb6xMmX3nGGM7Dc53yaRxWoZBrL7FnmhiZ8nbzlG74tZGK8fcgxa5oTgGJEWAaGkh71LFmJBcrsIPZUPBDjg4lmtXRSydFJi1lExalaIpd9XdEeGbEszynZJh1Rh3CStBQrpOJw3l_Z-SBeNTnkozIoYPWBZBYSWZsTOtwBlLqNcthiUtQJu-f4Y1-UGCu1B-YTLax87XNCSAiU4xxLq93aCGjKqgYYo5P3xpjqYKx3VGEKuKT5i4WxN9Nz8");'></div>
-              <div class="absolute top-2 right-2 bg-white/90 p-1 rounded-full text-yellow-500 flex items-center text-xs font-bold">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118l-3.368-2.448a1 1 0 00-1.176 0l-3.368 2.448c-.784.57-1.838-.197-1.539-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.24 9.384c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69L9.049 2.927z"></path></svg>
-                <span>4.0</span>
-              </div>
-            </div>
-            <div class="p-4">
-              <h3 class="text-lg font-bold text-[var(--text-primary)]">Hotel Saint-Germain</h3>
-              <p class="text-sm text-[var(--text-secondary)] mt-1">4-star hotel in the heart of Saint-Germain-des-Prés</p>
-              <div class="mt-4 flex justify-between items-center">
-                <p class="text-lg font-bold text-[var(--primary-color)]">$210 <span class="text-sm font-normal text-[var(--text-secondary)]">/ night</span></p>
-                <a class="primary-button px-4 py-2 rounded-lg text-sm font-semibold" href="#">View Details</a>
-              </div>
-            </div>
-          </div>
+
         </div>
       </section>
     </div>

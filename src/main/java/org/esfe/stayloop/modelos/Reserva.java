@@ -15,26 +15,20 @@ public class Reserva {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
-    @NotNull(message = "El usuario es obligatorio")
+
     @Column(name = "idUsuario")
     private Integer idUsuario;
-    
-    @NotNull(message = "El hotel es obligatorio")
+
     @Column(name = "idHotel")
     private Integer idHotel;
-    
-    @NotNull(message = "El tipo de habitación es obligatorio")
+
     @Column(name = "idTipoHabitacion")
     private Integer idTipoHabitacion;
-    
-    @NotNull(message = "La fecha de realización es obligatoria")
-    @PastOrPresent(message = "La fecha de realización no puede ser futura")
+
     @Column(nullable = false)
     private LocalDateTime fechaRealizado;
     
-    @NotNull(message = "El total es obligatorio")
-    @Positive(message = "El total debe ser mayor a 0")
+
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal total;
     
