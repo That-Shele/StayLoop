@@ -40,12 +40,14 @@ public class DatabaseWebSecurity {
                 // aperturar el acceso a los recursos estáticos
                 //.requestMatchers("/assets/**", "/css/**", "/js/**").permitAll()
                 // las vistas públicas no requieren autenticación
-                .requestMatchers("/register", "/", "/login","/usuarioControl/save", "/error").permitAll()
+                .requestMatchers("/register", "/", "/login","/usuarioControl/save", "/error", "/hotel/portada/**").permitAll()
 
 
 
                 // Asignar permisos a URLs por ROLES
                 .requestMatchers("/usuarioControl/imagen/**").authenticated()
+                .requestMatchers("/usuarioControl/perfil").authenticated()
+                .requestMatchers("/hotel/imagen/**").authenticated()
                 .requestMatchers("/usuarioControl/**").hasAnyAuthority("admin")
 
 //                .requestMatchers("/hotel/**").hasAnyAuthority("admin", "hotel")

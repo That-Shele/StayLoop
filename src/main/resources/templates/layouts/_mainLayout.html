@@ -85,9 +85,9 @@
             <button sec:authorize="isAuthenticated()" class="flex items-center justify-center rounded-full h-12 px-6 bg-[var(--primary-color)] text-white font-bold hover:bg-red-500 transition-colors">
                 <a th:href="@{/logout}"><span>Cerrar Sesión</span></a>
             </button>
-            <button sec:authorize="isAuthenticated()">
+            <a sec:authorize="isAuthenticated()" th:href="@{/usuarioControl/perfil}">
                 <img class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-11 border-2 border-transparent hover:border-[var(--primary-color)] transition-all" style='max-width: 44px; max-height: 44px;' alt="test" th:src="@{'/usuarioControl/imagen/' + ${#authentication.getName()}}"/>
-            </button>
+            </a>
         </nav>
     </header>
 

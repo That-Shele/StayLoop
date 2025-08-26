@@ -11,4 +11,5 @@ public interface IImagenRepository extends JpaRepository<Imagen, Integer> {
 
     Optional<Imagen> findFirstByIdHotel(Integer idHotel);
     Optional<Imagen> findById(Integer id);
+
 }
