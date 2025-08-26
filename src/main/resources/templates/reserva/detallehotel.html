@@ -21,18 +21,7 @@
         <div class="flex items-start justify-between mb-4">
           <div>
             <h2 class="text-4xl font-bold tracking-tight text-[var(--text-primary)]">Hotel Grand Vista</h2>
-            <div class="flex items-center gap-2 mt-2 text-[var(--text-secondary)]">
-              <div class="flex items-center gap-1 star-rating">
-                <span class="material-icons text-lg">star</span>
-                <span class="material-icons text-lg">star</span>
-                <span class="material-icons text-lg">star</span>
-                <span class="material-icons text-lg">star</span>
-                <span class="material-icons text-lg text-gray-300">star_border</span>
-              </div>
-              <p class="text-base">4-star hotel</p>
-              <span class="text-base font-semibold text-[var(--text-primary)]">4.5</span>
-              <p class="text-base">(1,200 reviews)</p>
-            </div>
+
           </div>
         </div>
         <div class="container mx-auto p-4">
@@ -45,7 +34,7 @@
                    class="w-full max-w-[512px] h-full max-h-[512px] aspect-square rounded-lg shadow-md overflow-hidden">
 
 
-              <img th:src="@{'/reservas/imagenesHotel/' + ${imagen.id}}" alt="Foto de la galería"
+                <img th:src="@{'/reservas/imagenesHotel/' + ${imagen.id}}" alt="Foto de la galería"
                      class="w-full h-full object-cover rounded-lg shadow-md">
               </div>
             </div>
@@ -60,6 +49,7 @@
           </div>
         </div>
       </section>
+
       <div class="grid grid-cols-12 gap-12">
         <div class="col-span-8">
           <section class="mb-10 bg-white p-8 rounded-2xl shadow-lg">
@@ -67,70 +57,85 @@
 
             <span th:text="${Hotel.descripcion}"></span>
           </section>
-
-
-
         </div>
+
+
+        <!-- Sección Tipos de Habitación -->
         <aside class="col-span-4">
           <div class="sticky top-10 p-6 rounded-2xl shadow-xl border border-[var(--border-color)] bg-white">
-            <p class="text-2xl font-bold mb-4 text-[var(--text-primary)]">Check availability</p>
-            <div class="grid grid-cols-2 gap-4">
-              <div>
-                <label class="block text-sm font-medium text-[var(--text-secondary)]" for="checkin">Check-in</label>
-                <input class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)] sm:text-sm h-12 px-3 text-[var(--text-primary)]" id="checkin" name="checkin" type="date"/>
-              </div>
-              <div>
-                <label class="block text-sm font-medium text-[var(--text-secondary)]" for="checkout">Check-out</label>
-                <input class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)] sm:text-sm h-12 px-3 text-[var(--text-primary)]" id="checkout" name="checkout" type="date"/>
+            <h3 class="text-xl font-bold text-gray-800 mb-6">Tipos de Habitación</h3>
+
+            <!-- Contenedor en Grid -->
+            <div class="grid grid-cols-1 gap-6">
+              <!-- Cada Habitación -->
+              <div th:each="habitacion : ${Habitaciones}"
+                   class="rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition flex flex-col justify-between bg-white">
+
+                <!-- Nombre -->
+                <div class="mb-3">
+                  <p class="text-sm font-semibold text-gray-600">Nombre del Tipo de Habitación</p>
+                  <p class="text-base text-gray-800 font-medium" th:text="${habitacion.nombre}"></p>
+                </div>
+
+                <!-- Capacidad -->
+                <div class="mb-3">
+                  <p class="text-sm font-semibold text-gray-600">Capacidad de Personas</p>
+                  <p class="text-base text-gray-800" th:text="${habitacion.cantPersonas}"></p>
+                </div>
+
+                <!-- Precio -->
+                <div class="mb-3">
+                  <p class="text-sm font-semibold text-gray-600">Precio por Noche ($)</p>
+                  <p class="text-base text-gray-800 font-bold" th:text="${habitacion.costo}"></p>
+                </div>
+
+                <!-- Cantidad -->
+                <div class="mb-6">
+                  <p class="text-sm font-semibold text-gray-600">Cantidad de Habitaciones</p>
+                  <p class="text-base text-gray-800" th:text="${habitacion.cantHab}"></p>
+                </div>
+
+                <!-- Botón Reservar -->
+                <a th:href="@{/reservas/create(idHotel=${Hotel.id}, idTipoHabitacion=${habitacion.id})}"
+                   class="mt-auto w-full bg-green-500 text-white font-bold py-2 px-4 rounded-lg text-center hover:bg-green-600 transition-colors">
+                  Reservar
+                </a>
               </div>
             </div>
-
-
-
-            <button class="mt-6 w-full bg-[var(--accent-color)] text-white font-bold py-3 px-4 rounded-lg hover:bg-green-500 transition-colors text-lg">
-              Book Now
-
-            </button>
-
-            <div class="mt-6">
-              <div class="flex justify-between items-center mb-2">
-                <h4 class="font-semibold text-[var(--text-primary)]">Standard Room</h4>
-                <p class="font-bold text-lg text-[var(--text-primary)]">$250 <span class="text-sm font-normal text-[var(--text-secondary)]">/ night</span></p>
-              </div>
-              <p class="text-sm text-[var(--text-secondary)] mb-4">A comfortable room with a queen-sized bed, perfect for solo travelers or couples.</p>
-              <hr/>
-            </div>
-
-
-
           </div>
         </aside>
+
+
+
       </div>
+
+      </aside>
     </div>
-    <script>
-      // Nos aseguramos de que el DOM esté completamente cargado
-      document.addEventListener('DOMContentLoaded', function () {
+</div>
+<script>
+  // Nos aseguramos de que el DOM esté completamente cargado
+  document.addEventListener('DOMContentLoaded', function () {
 
-          // 1. Seleccionamos el botón y las imágenes ocultas
-          const showMoreBtn = document.getElementById('show-more-btn');
-          const hiddenImages = document.querySelectorAll('.extra-image');
+      // 1. Seleccionamos el botón y las imágenes ocultas
+      const showMoreBtn = document.getElementById('show-more-btn');
+      const hiddenImages = document.querySelectorAll('.extra-image');
 
-          // 2. Verificamos si el botón existe en la página
-          if (showMoreBtn) {
-              // 3. Añadimos un "escuchador" de eventos para el clic
-              showMoreBtn.addEventListener('click', function () {
+      // 2. Verificamos si el botón existe en la página
+      if (showMoreBtn) {
+          // 3. Añadimos un "escuchador" de eventos para el clic
+          showMoreBtn.addEventListener('click', function () {
 
-                  // 4. Iteramos sobre cada imagen oculta y le quitamos la clase 'hidden'
-                  hiddenImages.forEach(function (image) {
-                      image.classList.remove('hidden');
-                  });
-
-                  // 5. Ocultamos el botón "Ver más" una vez que ha sido presionado
-                  this.style.display = 'none';
+              // 4. Iteramos sobre cada imagen oculta y le quitamos la clase 'hidden'
+              hiddenImages.forEach(function (image) {
+                  image.classList.remove('hidden');
               });
-          }
-      });
-    </script>
-  </main>
+
+              // 5. Ocultamos el botón "Ver más" una vez que ha sido presionado
+              this.style.display = 'none';
+          });
+      }
+  });
+</script>
+</html>
 
 </div>

@@ -17,6 +17,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.esfe.stayloop.modelos.Usuario;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -85,15 +89,48 @@ public class ReservaController {
         return "reserva/index";
     }
 
-    // FORMULARIO CREAR RESERVA
     @GetMapping("/create")
-    public String createReservaForm(Model model, Reserva reserva) {
+    public String createReservaForm(
+            @RequestParam(value = "idHotel", required = false) Integer idHotel,
+            @RequestParam(value = "idTipoHabitacion", required = false) Integer idTipoHabitacion,
+            Model model,
+            Reserva reserva) {
+
+        // Hotel fijo
+        if (idHotel != null) {
+            Hotel hotel = hotelService.buscarPorId(idHotel);
+            if (hotel != null) {
+                model.addAttribute("hotelActual", hotel);
+                reserva.setIdHotel(hotel.getId());
+            }
+        }
+
+        // Tipo de habitación fijo
+        if (idTipoHabitacion != null) {
+            TipoHabitacion tipo = tipoHabitacionService.buscarPorId(idTipoHabitacion);
+            if (tipo != null) {
+                model.addAttribute("tipoHabitacionActual", tipo);
+                reserva.setIdTipoHabitacion(tipo.getId());
+            }
+        }
+
+        // Usuario logueado fijo
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName(); // Spring Security guarda aquí el username o email
+
+        usuarioService.buscarPorEmail(email).ifPresent(usuarioLogueado -> {
+            model.addAttribute("usuarioActual", usuarioLogueado);
+            reserva.setIdUsuario(usuarioLogueado.getId());
+        });
+
         model.addAttribute("reserva", reserva);
         model.addAttribute("hoteles", hotelService.obtenerTodos());
         model.addAttribute("tiposHabitacion", tipoHabitacionService.obtenerTodos());
         model.addAttribute("usuarios", usuarioService.obtenerTodos());
+
         return "reserva/create";
     }
+
 
     // GUARDAR NUEVA RESERVA
     @PostMapping("/save")
@@ -106,10 +143,6 @@ public class ReservaController {
             model.addAttribute("usuarios", usuarioService.obtenerTodos());
             return "reserva/create";
         }
-
-        // Si quieres, puedes asignar el usuario logueado automáticamente
-        // Usuario usuarioLogueado = ...;
-        // reserva.setUsuario(usuarioLogueado);
 
 
         reservaService.crearOEditar(reserva);
@@ -127,11 +160,15 @@ public class ReservaController {
         return "reserva/edit";
     }
 
-    // DETALLES
     @GetMapping("/details/{id}")
     public String details(@PathVariable("id") Integer id, Model model) {
         Reserva reserva = reservaService.buscarPorId(id);
         model.addAttribute("reserva", reserva);
+
+        model.addAttribute("hoteles", hotelService.obtenerTodos());
+        model.addAttribute("tiposHabitacion", tipoHabitacionService.obtenerTodos());
+        model.addAttribute("usuarios", usuarioService.obtenerTodos());
+
         return "reserva/details";
     }
 
@@ -197,6 +234,10 @@ public class ReservaController {
         model.addAttribute("Imagenes", Imagenes);
         model.addAttribute("Hotel", hotel);
         model.addAttribute("Habitaciones", Habitaciones);
+
+        model.addAttribute("hoteles", hotelService.obtenerTodos());
+        model.addAttribute("tiposHabitacion", tipoHabitacionService.obtenerTodos());
+        model.addAttribute("usuarios", usuarioService.obtenerTodos());
 
         return "reserva/detallehotel";
     }

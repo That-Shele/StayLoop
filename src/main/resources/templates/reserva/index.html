@@ -49,9 +49,9 @@
             <tbody>
             <tr th:each="reserva : ${reservas.content}" class="hover:bg-gray-100">
                 <td class="py-2 px-4 border" th:text="${reserva.id}"></td>
-                <td class="py-2 px-4 border" th:text="${reserva.idUsuario}"></td>
-                <td class="py-2 px-4 border" th:text="${reserva.idHotel}"></td>
-                <td class="py-2 px-4 border" th:text="${reserva.idTipoHabitacion}"></td>
+                <td class="py-2 px-4 border" th:each="usuario : ${usuarios}" th:if="${usuario.id == reserva.idUsuario}" th:text="${usuario.nombre}"></td>
+                <td class="py-2 px-4 border" th:each="hotel : ${hoteles}" th:if="${hotel.id == reserva.idHotel}" th:text="${hotel.nombre}"></td>
+                <td class="py-2 px-4 border"  th:each="habitacion : ${tiposHabitacion}" th:if="${habitacion.id == reserva.idTipoHabitacion}" th:text="${habitacion.nombre}" ></td>
                     <td class="py-2 px-4 border" th:text="${#temporals.format(reserva.fechaInicio, 'dd-MM-yyyy HH:mm')}"></td>
                 <td class="py-2 px-4 border" th:text="${#temporals.format(reserva.fechaFin, 'dd-MM-yyyy HH:mm')}"></td>
                 <td class="py-2 px-4 border" th:text="${reserva.total}"></td>

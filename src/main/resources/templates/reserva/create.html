@@ -9,33 +9,43 @@
   <div class="max-w-md w-full space-y-6">
     <h2 class="text-center text-2xl font-bold">Crear Reserva</h2>
 
+
+
+
     <form th:action="@{/reservas/save}" th:object="${reserva}" method="post" class="mt-8 space-y-6">
+
+
 
 
       <div>
         <label for="idUsuario" class="block text-sm font-medium">Usuario</label>
-        <select th:field="*{idUsuario}" id="idUsuario" class="mt-1 block w-full border rounded-md p-2">
-          <option th:each="u : ${usuarios}" th:value="${u.id}" th:text="${u.nombre}"></option>
-        </select>
-        <p th:if="${#fields.hasErrors('idUsuario')}" th:errors="*{idUsuario}" class="text-red-500 text-sm"></p>
+        <input type="hidden" th:field="*{idUsuario}" />
+        <span th:text="${usuarioActual.nombre}"
+              class="mt-1 block w-full border rounded-md p-2 bg-gray-100"></span>
+        <p th:if="${#fields.hasErrors('idUsuario')}"
+           th:errors="*{idUsuario}"
+           class="text-red-500 text-sm"></p>
       </div>
 
       <div>
         <label for="idHotel" class="block text-sm font-medium">Hotel</label>
-        <select th:field="*{idHotel}" id="idHotel" class="mt-1 block w-full border rounded-md p-2">
-          <option th:each="h : ${hoteles}" th:value="${h.id}" th:text="${h.nombre}"></option>
-        </select>
+        <input type="hidden" th:field="*{idHotel}" />
+        <span th:text="${hotelActual.nombre}" class="mt-1 block w-full border rounded-md p-2 bg-gray-100"></span>
         <p th:if="${#fields.hasErrors('idHotel')}" th:errors="*{idHotel}" class="text-red-500 text-sm"></p>
       </div>
 
-      <!-- Tipo de habitación (dropdown por nombre) -->
+      <!-- Tipo de habitación  -->
       <div>
         <label for="idTipoHabitacion" class="block text-sm font-medium">Tipo de habitación</label>
-        <select th:field="*{idTipoHabitacion}" id="idTipoHabitacion" class="mt-1 block w-full border rounded-md p-2">
-          <option th:each="t : ${tiposHabitacion}" th:value="${t.id}" th:text="${t.nombre}"></option>
-        </select>
-        <p th:if="${#fields.hasErrors('idTipoHabitacion')}" th:errors="*{idTipoHabitacion}" class="text-red-500 text-sm"></p>
+        <input type="hidden" th:field="*{idTipoHabitacion}" />
+        <span th:text="${tipoHabitacionActual.nombre}"
+              class="mt-1 block w-full border rounded-md p-2 bg-gray-100"></span>
+        <p th:if="${#fields.hasErrors('idTipoHabitacion')}"
+           th:errors="*{idTipoHabitacion}"
+           class="text-red-500 text-sm"></p>
       </div>
+
+
 
       <!-- Fecha realizado -->
       <div>
@@ -88,5 +98,7 @@
         </a>
       </div>
 
-</div>
+
+
+  </div>
 </html>
