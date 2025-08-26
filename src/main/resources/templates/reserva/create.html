@@ -14,7 +14,7 @@
 
     <form th:action="@{/reservas/save}" th:object="${reserva}" method="post" class="mt-8 space-y-6">
 
-
+    <input type="hidden" id="precio" th:value="${tipoHabitacionActual.costo}">
 
 
       <div>
@@ -75,7 +75,7 @@
       <div>
         <label for="total" class="block text-sm font-medium">Total</label>
         <input type="number" step="0.01" th:field="*{total}" id="total" placeholder="Total"
-               class="mt-1 block w-full border rounded-md p-2"/>
+               class="mt-1 block w-full border rounded-md p-2" readonly/>
         <p th:if="${#fields.hasErrors('total')}" th:errors="*{total}" class="text-red-500 text-sm"></p>
       </div>
 
@@ -97,6 +97,49 @@
           Cancelar
         </a>
       </div>
+
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          const fechaInicioEl = document.getElementById('fechaInicio');
+          const fechaFinEl = document.getElementById('fechaFin');
+          const totalEl = document.getElementById('total');
+          const precioPorNocheEl = document.getElementById('precio');
+          const fechaRealizadoEl = document.getElementById('fechaRealizado');
+
+          // === Establecer fecha y hora actual en fechaRealizado ===
+          const ahora = new Date();
+          // Ajuste al formato YYYY-MM-DDTHH:MM para datetime-local
+          const offset = ahora.getTimezoneOffset();
+          const localISOTime = new Date(ahora.getTime() - offset * 60000)
+            .toISOString()
+            .slice(0, 16);
+          fechaRealizadoEl.value = localISOTime;
+
+          // === Cálculo del total ===
+          const calcularTotal = () => {
+            const fechaInicio = new Date(fechaInicioEl.value);
+            const fechaFin = new Date(fechaFinEl.value);
+            const precio = parseFloat(precioPorNocheEl.value);
+
+            if (
+              fechaInicioEl.value &&
+              fechaFinEl.value &&
+              fechaFin > fechaInicio &&
+              !isNaN(precio)
+            ) {
+              const diffTiempo = fechaFin.getTime() - fechaInicio.getTime();
+              const diffDias = Math.ceil(diffTiempo / (1000 * 3600 * 24));
+              const totalCalculado = diffDias * precio;
+              totalEl.value = totalCalculado.toFixed(2);
+            } else {
+              totalEl.value = '0.00';
+            }
+          };
+
+          fechaInicioEl.addEventListener('change', calcularTotal);
+          fechaFinEl.addEventListener('change', calcularTotal);
+        });
+      </script>
 
 
 
