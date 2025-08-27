@@ -5,6 +5,7 @@ import org.esfe.stayloop.modelos.*;
 import org.esfe.stayloop.servicios.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
@@ -58,7 +59,24 @@ public class HotelController {
         // si nombre viene nulo, se lo pasamos como "" para evitar errores
         String filtroNombre = (nombre == null) ? "" : nombre;
 
-        Page<Hotel> hoteles = hotelService.buscarPaginados(pageable, zona, filtroNombre);
+
+
+        Page<Hotel> hotels = hotelService.buscarPaginados(pageable, zona, filtroNombre);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+
+        Usuario usuario = usuarioService.buscarPorEmail(email).get();
+        Integer idUsuario = usuario.getId();
+
+        List<Hotel> appList = hotels.getContent();
+        List<Hotel> modifiedAppList = new ArrayList<>();
+        for (Hotel hotel : appList){
+            if(hotel.getIdUsuario().equals(idUsuario)){
+                modifiedAppList.add(hotel);
+            }
+        }
+
+        Page<Hotel> hoteles = new PageImpl<>(modifiedAppList, PageRequest.of(currentPage, pageSize),modifiedAppList.size());
 
 
         // info para el paginador

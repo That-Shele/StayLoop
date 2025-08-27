@@ -10,18 +10,27 @@
     <div class="mx-auto max-w-screen-xl">
       <nav class="mb-4 text-sm text-[var(--text-secondary)]">
         <ol class="flex items-center space-x-2">
-          <li><a class="hover:text-[var(--primary-color)]" href="#">Home</a></li>
+          <li><a class="hover:text-[var(--primary-color)]"
+                 th:href="@{/reservas/hoteles}">Hoteles</a></li>
           <li><span class="text-gray-400">/</span></li>
-          <li><a class="hover:text-[var(--primary-color)]" href="#">San Francisco</a></li>
+          <li><a class="hover:text-[var(--primary-color)]"
+                 th:href="@{/reservas/hoteles(zona=${Hotel.idZona})}"
+                 th:each="zona : ${zonas}"
+                 th:if="${zona.id == Hotel.idZona}"
+                 th:text="${zona.nombre}"></a></li>
           <li><span class="text-gray-400">/</span></li>
-          <li class="font-medium text-[var(--text-primary)]">Hotel Grand Vista</li>
+          <li class="font-medium text-[var(--text-primary)]" th:text="${Hotel.nombre}"></li>
         </ol>
       </nav>
       <section class="mb-8">
         <div class="flex items-start justify-between mb-4">
           <div>
-            <h2 class="text-4xl font-bold tracking-tight text-[var(--text-primary)]">Hotel Grand Vista</h2>
+            <div class="flex items-center gap-4 mb-2">
+              <img class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-11 border-2 border-transparent" style='max-width: 44px; max-height: 44px;' alt="test" th:src="@{'/usuarioControl/imagen/' + ${cadena.email}}">
+              <h2 class="text-4xl font-bold tracking-tight text-[var(--text-primary)]" th:text="${Hotel.nombre}"></h2>
+              <p class="text-xl font-medium text-gray-600 mt-1" th:text="${cadena.nombre}"></p>
 
+            </div>
           </div>
         </div>
         <div class="container mx-auto p-4">
@@ -53,7 +62,7 @@
       <div class="grid grid-cols-12 gap-12">
         <div class="col-span-8">
           <section class="mb-10 bg-white p-8 rounded-2xl shadow-lg">
-            <h3 class="text-2xl font-bold mb-4 border-b pb-3 text-[var(--text-primary)]">About this stay</h3>
+            <h3 class="text-2xl font-bold mb-4 border-b pb-3 text-[var(--text-primary)]">Acerca de este Hotel</h3>
 
             <span th:text="${Hotel.descripcion}"></span>
           </section>
@@ -109,33 +118,33 @@
 
       </div>
 
-      </aside>
     </div>
+  </main>
+  <script>
+    // Nos aseguramos de que el DOM esté completamente cargado
+    document.addEventListener('DOMContentLoaded', function () {
+
+        // 1. Seleccionamos el botón y las imágenes ocultas
+        const showMoreBtn = document.getElementById('show-more-btn');
+        const hiddenImages = document.querySelectorAll('.extra-image');
+
+        // 2. Verificamos si el botón existe en la página
+        if (showMoreBtn) {
+            // 3. Añadimos un "escuchador" de eventos para el clic
+            showMoreBtn.addEventListener('click', function () {
+
+                // 4. Iteramos sobre cada imagen oculta y le quitamos la clase 'hidden'
+                hiddenImages.forEach(function (image) {
+                    image.classList.remove('hidden');
+                });
+
+                // 5. Ocultamos el botón "Ver más" una vez que ha sido presionado
+                this.style.display = 'none';
+            });
+        }
+    });
+  </script>
 </div>
-<script>
-  // Nos aseguramos de que el DOM esté completamente cargado
-  document.addEventListener('DOMContentLoaded', function () {
 
-      // 1. Seleccionamos el botón y las imágenes ocultas
-      const showMoreBtn = document.getElementById('show-more-btn');
-      const hiddenImages = document.querySelectorAll('.extra-image');
-
-      // 2. Verificamos si el botón existe en la página
-      if (showMoreBtn) {
-          // 3. Añadimos un "escuchador" de eventos para el clic
-          showMoreBtn.addEventListener('click', function () {
-
-              // 4. Iteramos sobre cada imagen oculta y le quitamos la clase 'hidden'
-              hiddenImages.forEach(function (image) {
-                  image.classList.remove('hidden');
-              });
-
-              // 5. Ocultamos el botón "Ver más" una vez que ha sido presionado
-              this.style.display = 'none';
-          });
-      }
-  });
-</script>
 </html>
 
-</div>

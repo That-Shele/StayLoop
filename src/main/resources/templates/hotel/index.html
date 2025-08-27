@@ -37,6 +37,11 @@
                     </div>
                 </div>
             </div>
-        </section>
+    </div>
+    <div class="mt-4 flex justify-center gap-2" th:if="${pageNumbers != null}">
+        <a th:each="pageNum : ${pageNumbers}"
+           th:href="@{/hotel(page=${pageNum})}"
+           th:text="${pageNum}"
+           class="px-3 py-1 border rounded hover:bg-gray-200"></a>
     </div>
 </div>

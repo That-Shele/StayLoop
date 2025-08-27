@@ -11,9 +11,9 @@
                     <h1 class="text-5xl font-extrabold tracking-tight sm:text-6xl lg:text-7xl">Encuentra el lugar de tus sueños</h1>
                     <p class="mt-6 max-w-2xl mx-auto text-lg sm:text-xl">Explora hoteles de alta calidad, en lugares que ofrecen experiencias inolvidables.</p>
                     <div class="mt-10 max-w-2xl mx-auto">
-                        <form class="flex items-center bg-white rounded-full shadow-lg p-2">
+                        <form th:action="@{/reservas/hoteles}" method="get" class="flex items-center bg-white rounded-full shadow-lg p-2">
 
-                            <input class="form-input w-full min-w-0 flex-1 resize-none border-none bg-transparent text-[var(--text-primary)] focus:outline-none focus:ring-0 text-lg placeholder:text-gray-500" placeholder="A dónde vamos?" type="text"/>
+                            <input class=" w-full min-w-0 flex-1 resize-none border-none bg-transparent text-[var(--text-primary)] focus:outline-none focus:ring-0 text-lg placeholder:text-gray-500" placeholder="A dónde vamos?"id="nombre" name="nombre" type="text"/>
                             <button class="flex-shrink-0 ml-2 min-w-[100px] cursor-pointer rounded-full h-12 px-6 bg-[var(--primary-color)] text-white text-base font-bold tracking-[0.015em] hover:bg-green-500 transition-colors">
                                 <div class="pl-4 pr-2 text-white-400">
                                     <svg fill="currentColor" height="24" viewBox="0 0 256 256" width="24" xmlns="http://www.w3.org/2000/svg">

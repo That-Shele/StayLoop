@@ -40,18 +40,20 @@ public class DatabaseWebSecurity {
                 // aperturar el acceso a los recursos estáticos
                 //.requestMatchers("/assets/**", "/css/**", "/js/**").permitAll()
                 // las vistas públicas no requieren autenticación
-                .requestMatchers("/register", "/", "/login","/usuarioControl/save", "/error", "/hotel/portada/**").permitAll()
+                .requestMatchers("/register","/", "/login",
+                        "/usuarioControl/save", "/error", "/hotel/portada/**",
+                        "/reservas/hoteles", "/reservas/detallehotel/**",
+                        "/reservas/imagenesHotel/**", "/hotel/portada/**",
+                        "/usuarioControl/imagen/**").permitAll()
 
 
 
                 // Asignar permisos a URLs por ROLES
-                .requestMatchers("/usuarioControl/imagen/**", "/usuarioControl/perfil").authenticated()
-                .requestMatchers("/hotel/imagen/**").authenticated()
+                .requestMatchers( "/usuarioControl/perfil").authenticated()
                 .requestMatchers("/usuarioControl/**").hasAnyAuthority("admin")
                 .requestMatchers("/admin").hasAnyAuthority("admin")
                 .requestMatchers("/hotel/**").hasAnyAuthority("admin", "hotel")
                 .requestMatchers("/reservas/create", "/reservas/save").hasAnyAuthority("admin", "usuario")
-                .requestMatchers("/reservas/hoteles", "/reservas/detallehotel/**", "/reservas/imagenesHotel/**").hasAnyAuthority("usuario")
                 .requestMatchers("/reservas/**").hasAnyAuthority("admin")
                 .requestMatchers("/zonas/**").hasAnyAuthority("admin")
 

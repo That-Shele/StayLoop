@@ -44,7 +44,7 @@
                 <div class="rounded-xl bg-[var(--card-background)] p-4 shadow-sm sm:p-6" th:each="reserva : ${reservas}">
                     <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
                         <div class="h-32 w-full flex-shrink-0 rounded-lg bg-cover bg-center sm:h-24 sm:w-32" >
-                           <!--<img th:src="@{'/usuarioControl/imagen/' + ${usuario.email}}"> -->
+                           <img th:src="@{'/hotel/portada/' + ${reserva.idHotel}}">
                         </div>
                         <div class="flex-grow">
                             <h3 class="font-bold text-[var(--text-primary)]" th:each="hotel : ${hoteles}" th:if="${hotel.id == reserva.idHotel}" th:text="${hotel.nombre}"></h3>
@@ -53,6 +53,12 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="mt-4 flex justify-center gap-2" th:if="${pageNumbers != null}">
+                <a th:each="pageNum : ${pageNumbers}"
+                   th:href="@{/perfil(page=${pageNum})}"
+                   th:text="${pageNum}"
+                   class="px-3 py-1 border rounded hover:bg-gray-200"></a>
             </div>
         </div>
     </main>

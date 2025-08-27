@@ -67,10 +67,11 @@
         </div>
         </a>
         <nav sec:authorize="isAuthenticated()" class="hidden md:flex items-center gap-6 text-sm font-medium text-[var(--text-secondary)] mx-4">
-            <a class="hover:text-[var(--primary-color)] transition-colors hover:font-semibold hover:border-b-2 hover:border-[var(--primary-color)] hover:pb-1" th:href="@{/reservas/hoteles}">Stays</a>
-            <a class="hover:text-[var(--primary-color)] transition-colors hover:font-semibold hover:border-b-2 hover:border-[var(--primary-color)] hover:pb-1" href="#">Flights</a>
-            <a class="hover:text-[var(--primary-color)] transition-colors hover:font-semibold hover:border-b-2 hover:border-[var(--primary-color)] hover:pb-1" href="#">Car rentals</a>
-            <a class="hover:text-[var(--primary-color)] transition-colors hover:font-semibold hover:border-b-2 hover:border-[var(--primary-color)] hover:pb-1" href="#">Attractions</a>
+            <a sec:authorize="hasAnyAuthority('usuario')" class="hover:text-[var(--primary-color)] transition-colors hover:font-semibold hover:border-b-2 hover:border-[var(--primary-color)] hover:pb-1" th:href="@{/reservas/hoteles}">Hoteles</a>
+            <a sec:authorize="hasAnyAuthority('hotel')" class="hover:text-[var(--primary-color)] transition-colors hover:font-semibold hover:border-b-2 hover:border-[var(--primary-color)] hover:pb-1" th:href="@{/hotel}">Mis Hoteles</a>
+            <a sec:authorize="hasAnyAuthority('hotel')" class="hover:text-[var(--primary-color)] transition-colors hover:font-semibold hover:border-b-2 hover:border-[var(--primary-color)] hover:pb-1" href="#">Administrar</a>
+            <a class="hover:text-[var(--primary-color)] transition-colors hover:font-semibold hover:border-b-2 hover:border-[var(--primary-color)] hover:pb-1" th:href="@{/usuarioControl/perfil}">Mi Perfil</a>
+            <a sec:authorize="hasAnyAuthority('admin')" class="hover:text-[var(--primary-color)] transition-colors hover:font-semibold hover:border-b-2 hover:border-[var(--primary-color)] hover:pb-1" th:href="@{/admin}">Admin</a>
         </nav>
         <nav class="flex flex-1 justify-end gap-4">
             <button sec:authorize="isAnonymous()" class="flex items-center justify-center rounded-full h-12 px-6 bg-[var(--primary-color)] text-white font-bold hover:bg-green-500 transition-colors">
@@ -79,9 +80,6 @@
             <button sec:authorize="isAnonymous()" class="flex items-center justify-center rounded-full h-12 px-6 bg-[var(--card-background-color)] text-[var(--text-primary)] font-bold hover:bg-gray-200 transition-colors">
                 <a th:href="@{/register}"><span>Registrarse</span></a>
             </button>
-            <a th:href="@{/admin}" sec:authorize="hasAnyAuthority('admin')"  class="group flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-[var(--accent-blue)]">
-                <i class="bi bi-ui-radios-grid text-gray-400 group-hover:text-slate-900"></i>
-            </a>
             <button sec:authorize="isAuthenticated()" class="flex items-center justify-center rounded-full h-12 px-6 bg-[var(--primary-color)] text-white font-bold hover:bg-red-500 transition-colors">
                 <a th:href="@{/logout}"><span>Cerrar Sesión</span></a>
             </button>

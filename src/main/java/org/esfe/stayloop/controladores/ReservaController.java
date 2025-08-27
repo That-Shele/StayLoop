@@ -36,6 +36,9 @@ public class ReservaController {
     @Autowired
     private IUsuarioService usuarioService;
 
+    @Autowired
+    private IZonaService zonaService;
+
     // LISTAR RESERVAS PAGINADAS
     @GetMapping
     public String getReservasPaginadas(
@@ -194,6 +197,7 @@ public class ReservaController {
         model.addAttribute("hoteles", hoteles);
         model.addAttribute("zona", zona);
         model.addAttribute("nombre", filtroNombre);
+        model.addAttribute("zonas", zonaService.obtenerTodos());
 
         return "reserva/hotelesusuarios";
     }
@@ -212,7 +216,8 @@ public class ReservaController {
 
         model.addAttribute("hoteles", hotelService.obtenerTodos());
         model.addAttribute("tiposHabitacion", tipoHabitacionService.obtenerTodos());
-        model.addAttribute("usuarios", usuarioService.obtenerTodos());
+        model.addAttribute("cadena", usuarioService.buscarPorId(hotel.getIdUsuario()).get());
+        model.addAttribute("zonas", zonaService.obtenerTodos());
 
         return "reserva/detallehotel";
     }
