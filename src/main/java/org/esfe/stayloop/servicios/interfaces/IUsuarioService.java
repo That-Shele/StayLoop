@@ -1,6 +1,5 @@
 package org.esfe.stayloop.servicios.interfaces;
 
-import org.esfe.stayloop.modelos.Hotel;
 import org.esfe.stayloop.modelos.Usuario;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +14,7 @@ public interface IUsuarioService {
 
     Optional<Usuario> buscarPorEmail(String email);
 
-    Optional<Usuario> buscarPorId(Integer id);
+    Usuario buscarPorId(Integer id);
 
     Usuario crearOEditar(Usuario usuario);
 

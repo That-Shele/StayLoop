@@ -45,6 +45,14 @@ public class ReservaService implements IReservaService {
     }
 
     @Override
+    public List<Reserva> buscarSegunPropietario(Integer idUsuario) {
+
+        LocalDateTime fechaLimite = LocalDateTime.now().minusDays(30);
+
+        return reservaRepository.findAllReservasByPropietarioDelHotel(idUsuario, fechaLimite);
+    }
+
+    @Override
     public Reserva buscarPorId(Integer id) {
         Optional<Reserva> reserva = reservaRepository.findById(id);
         return reserva.orElse(null);

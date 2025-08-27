@@ -150,14 +150,14 @@ public class UsuarioController {
             }
         }
         else {
-            Usuario user = usuarioService.buscarPorId(usuario.getId()).get();
+            Usuario user = usuarioService.buscarPorId(usuario.getId());
             usuario.setImgUsuario(user.getImgUsuario());
         }
 
 
 
         if(usuario.getPassword() != null &&Objects.equals(authCheck, "authEdit") ) {
-            Usuario user = usuarioService.buscarPorId(usuario.getId()).get();
+            Usuario user = usuarioService.buscarPorId(usuario.getId());
             usuario.setPassword(user.getPassword());
         }
         else {
@@ -181,7 +181,7 @@ public class UsuarioController {
 
     @GetMapping("/details/{id}")
     public String details(@PathVariable("id") Integer id, Model model){
-        Usuario usuario = usuarioService.buscarPorId(id).get();
+        Usuario usuario = usuarioService.buscarPorId(id);
         Rol rol = rolService.buscarPorId(usuario.getIdRol());
         model.addAttribute("usuario", usuario);
         model.addAttribute("rol", rol);
@@ -190,7 +190,7 @@ public class UsuarioController {
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Integer id, Model model){
-        Usuario usuario = usuarioService.buscarPorId(id).get();
+        Usuario usuario = usuarioService.buscarPorId(id);
         model.addAttribute("roles", rolService.obtenerTodos());
         model.addAttribute("usuario", usuario);
         return "admin/edit";
@@ -198,7 +198,7 @@ public class UsuarioController {
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") Integer id, Model model){
-        Usuario usuario = usuarioService.buscarPorId(id).get();
+        Usuario usuario = usuarioService.buscarPorId(id);
         Rol rol = rolService.buscarPorId(usuario.getIdRol());
         model.addAttribute("usuario", usuario);
         model.addAttribute("rol", rol);

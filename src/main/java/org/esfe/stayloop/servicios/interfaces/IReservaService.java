@@ -23,6 +23,8 @@ public interface IReservaService {
 
     List<Reserva> buscarPorIdHotel(Integer idHotel);
 
+    List<Reserva> buscarSegunPropietario(Integer idUsuario);
+
 
     Reserva buscarPorId(Integer id);
 

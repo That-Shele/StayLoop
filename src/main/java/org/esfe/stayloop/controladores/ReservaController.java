@@ -216,7 +216,7 @@ public class ReservaController {
 
         model.addAttribute("hoteles", hotelService.obtenerTodos());
         model.addAttribute("tiposHabitacion", tipoHabitacionService.obtenerTodos());
-        model.addAttribute("cadena", usuarioService.buscarPorId(hotel.getIdUsuario()).get());
+        model.addAttribute("cadena", usuarioService.buscarPorId(hotel.getIdUsuario()));
         model.addAttribute("zonas", zonaService.obtenerTodos());
 
         return "reserva/detallehotel";

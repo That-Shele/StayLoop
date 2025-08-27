@@ -265,35 +265,39 @@ public class HotelController {
     }
 
 
-    @GetMapping("/Administrador")
+    @GetMapping("/administrador")
     public String getReservasPaginadas(
             Model model,
             @RequestParam(value = "page", required = false) Optional<Integer> page,
-            @RequestParam(value = "size", required = false) Optional<Integer> size,
-            @RequestParam(value = "idUsuario", required = false) Optional<Integer> idUsuario,
-            @RequestParam(value = "idHotel", required = false) Optional<Integer> idHotel,
-            @RequestParam(value = "totalMin", required = false) Optional<BigDecimal> totalMin
+            @RequestParam(value = "size", required = false) Optional<Integer> size
     ) {
         int currentPage = page.orElse(1) - 1;
         int pageSize = size.orElse(5);
         Pageable pageable = PageRequest.of(currentPage, pageSize, Sort.by(Sort.Direction.DESC, "id"));
 
-        Integer idUsuarioValue = idUsuario.orElse(null);
-        Integer idHotelValue = idHotel.orElse(null);
-        BigDecimal totalMinValue = totalMin.orElse(null);
-
-        Page<Reserva> reservas = reservaService.buscarPaginados(
-                idUsuarioValue,
-                idHotelValue,
-                totalMinValue,
-                pageable
-        );
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
 
         Usuario usuario = usuarioService.buscarPorEmail(email).get();
         Integer idHotelview = usuario.getId();
+
+        List<Reserva> modifiedAppList = reservaService.buscarSegunPropietario(idHotelview);
+
+        Page<Reserva> reservas = new PageImpl<>(modifiedAppList, pageable ,modifiedAppList.size());
+
+        Double ingresos = 0.0;
+        Integer hospedajes = 0;
+
+        for (Reserva reserva : modifiedAppList){
+            BigDecimal revenue = reserva.getTotal();
+            ingresos += revenue.doubleValue();
+
+            hospedajes += reserva.getTipoHabitacion().getCantPersonas();
+        }
+
+
+
 
         int totalPages = reservas.getTotalPages();
         if (totalPages > 0) {
@@ -307,7 +311,9 @@ public class HotelController {
         model.addAttribute("tiposHabitacion", tipoHabitacionService.obtenerTodos());
         model.addAttribute("usuarios", usuarioService.obtenerTodos());
         model.addAttribute("reservas", reservas);
-        model.addAttribute("totalMin", totalMinValue);
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("ingresos", ingresos);
+        model.addAttribute("hospedajes", hospedajes);
 
         return "hotel/hotelview";
     }

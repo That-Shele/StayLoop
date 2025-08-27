@@ -1,6 +1,5 @@
 package org.esfe.stayloop.servicios.implementaciones;
 
-import org.esfe.stayloop.modelos.Hotel;
 import org.esfe.stayloop.modelos.Usuario;
 import org.esfe.stayloop.repositorios.IUsuarioRepository;
 import org.esfe.stayloop.servicios.interfaces.IUsuarioService;
@@ -35,8 +34,8 @@ public class UsuarioService implements IUsuarioService {
     }
 
     @Override
-    public Optional<Usuario> buscarPorId(Integer id) {
-        return usuarioRepository.findById(id);
+    public Usuario buscarPorId(Integer id) {
+        return usuarioRepository.findById(id).get();
     }
 
     @Override

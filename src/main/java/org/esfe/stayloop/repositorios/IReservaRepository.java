@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -22,6 +23,12 @@ public interface IReservaRepository extends JpaRepository<Reserva, Integer> {
             BigDecimal total,
             Pageable pageable
     );
+
+    @Query("SELECT r FROM Reserva r JOIN TipoHabitacion th ON r.idTipoHabitacion = th.id JOIN Hotel h ON r.idHotel = h.id WHERE h.idUsuario = :idUsuario " +
+    "AND r.fechaRealizado >= :fechaRealizado")
+    List<Reserva> findAllReservasByPropietarioDelHotel(
+            @Param("idUsuario") Integer idUsuario,
+            @Param("fechaRealizado") LocalDateTime fechaRealizado);
 
     List<Reserva> findByIdHotel(Integer idHotel);
 }

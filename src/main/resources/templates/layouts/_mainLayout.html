@@ -69,7 +69,7 @@
         <nav sec:authorize="isAuthenticated()" class="hidden md:flex items-center gap-6 text-sm font-medium text-[var(--text-secondary)] mx-4">
             <a sec:authorize="hasAnyAuthority('usuario')" class="hover:text-[var(--primary-color)] transition-colors hover:font-semibold hover:border-b-2 hover:border-[var(--primary-color)] hover:pb-1" th:href="@{/reservas/hoteles}">Hoteles</a>
             <a sec:authorize="hasAnyAuthority('hotel')" class="hover:text-[var(--primary-color)] transition-colors hover:font-semibold hover:border-b-2 hover:border-[var(--primary-color)] hover:pb-1" th:href="@{/hotel}">Mis Hoteles</a>
-            <a sec:authorize="hasAnyAuthority('hotel')" class="hover:text-[var(--primary-color)] transition-colors hover:font-semibold hover:border-b-2 hover:border-[var(--primary-color)] hover:pb-1" href="#">Administrar</a>
+            <a sec:authorize="hasAnyAuthority('hotel')" class="hover:text-[var(--primary-color)] transition-colors hover:font-semibold hover:border-b-2 hover:border-[var(--primary-color)] hover:pb-1" th:href="@{/hotel/administrador}">Administrar</a>
             <a class="hover:text-[var(--primary-color)] transition-colors hover:font-semibold hover:border-b-2 hover:border-[var(--primary-color)] hover:pb-1" th:href="@{/usuarioControl/perfil}">Mi Perfil</a>
             <a sec:authorize="hasAnyAuthority('admin')" class="hover:text-[var(--primary-color)] transition-colors hover:font-semibold hover:border-b-2 hover:border-[var(--primary-color)] hover:pb-1" th:href="@{/admin}">Admin</a>
         </nav>
