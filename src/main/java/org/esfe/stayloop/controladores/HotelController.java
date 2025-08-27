@@ -319,4 +319,30 @@ public class HotelController {
     }
 
 
+    @GetMapping("/details/{id}")
+    public String details(@PathVariable("id") Integer id, Model model) {
+        Reserva reserva = reservaService.buscarPorId(id);
+        model.addAttribute("reserva", reserva);
+
+        model.addAttribute("hoteles", hotelService.obtenerTodos());
+        model.addAttribute("tiposHabitacion", tipoHabitacionService.obtenerTodos());
+        model.addAttribute("usuarios", usuarioService.obtenerTodos());
+
+        return "hotel/viewreserva";
+    }
+
+    @GetMapping("/deletereserva/{id}")
+    public String deletereserva(@PathVariable("id") Integer id, Model model) {
+        Reserva reserva = reservaService.buscarPorId(id);
+        model.addAttribute("reserva", reserva);
+        return "hotel/deletereserva";
+    }
+
+    @PostMapping("/removereserva")
+    public String remove(@RequestParam("id") Integer id) {
+        reservaService.eliminarPorId(id);
+        return "redirect:/hotelview";
+    }
+
+
 }

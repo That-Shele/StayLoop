@@ -74,8 +74,8 @@
                 <td class="py-2 px-4 border" th:text="${#temporals.format(reserva.fechaFin, 'dd-MM-yyyy HH:mm')}"></td>
                 <td class="py-2 px-4 border" th:text="${reserva.total}"></td>
                 <td class="py-2 px-4 border flex gap-2">
-                    <a th:href="@{/reservas/details/{id}(id=${reserva.id})}" class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600">Ver</a>
-                    <a th:href="@{/reservas/delete/{id}(id=${reserva.id})}" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Eliminar</a>
+                    <a th:href="@{/hotel/details/{id}(id=${reserva.id})}" class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600">Ver</a>
+                    <a th:href="@{/hotel/deletereserva/{id}(id=${reserva.id})}" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Eliminar</a>
                 </td>
             </tr>
             </tbody>
