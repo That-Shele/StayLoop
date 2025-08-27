@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Pago cancelado</title>
+</head>
+<body>
+<h2>❌ Pago cancelado</h2>
+<p>La reserva con ID <span th:text="${reserva.id}"></span> no fue pagada.</p>
+<a th:href="@{/reservas}">Volver a reservas</a>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+
+<div layout:fragment="content" class="flex flex-1 justify-center py-10 px-4 sm:px-6 lg:px-8">
+
+    <div class="max-w-md w-full space-y-6">
+        <h2 class="text-center text-2xl font-bold text-green-600">Nueva Reserva</h2>
+
+        <div class="bg-white shadow rounded p-6">
+            <form th:action="@{/reservas/save}" th:object="${reserva}" method="post">
+
+                <div class="mb-4">
+                    <label class="block text-gray-700">Usuario</label>
+                    <input type="text" th:field="*{idUsuario}" class="w-full border px-3 py-2 rounded"/>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-gray-700">Hotel</label>
+                    <input type="text" th:field="*{idHotel}" class="w-full border px-3 py-2 rounded"/>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-gray-700">Tipo de Habitación</label>
+                    <input type="text" th:field="*{idTipoHabitacion}" class="w-full border px-3 py-2 rounded"/>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-gray-700">Fecha Inicio</label>
+                    <input type="datetime-local" th:field="*{fechaInicio}" class="w-full border px-3 py-2 rounded"/>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-gray-700">Fecha Fin</label>
+                    <input type="datetime-local" th:field="*{fechaFin}" class="w-full border px-3 py-2 rounded"/>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-gray-700">Total</label>
+                    <input type="number" th:field="*{total}" class="w-full border px-3 py-2 rounded"/>
+                </div>
+
+                <div class="flex justify-between">
+                    <a th:href="@{/reservas}" class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500">
+                        Cancelar
+                    </a>
+                    <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                        Guardar
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+</html>

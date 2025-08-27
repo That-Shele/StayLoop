@@ -1,28 +1,18 @@
 package org.esfe.stayloop.controladores;
 
 import jakarta.validation.Valid;
-import org.esfe.stayloop.modelos.Hotel;
-import org.esfe.stayloop.modelos.Imagen;
-import org.esfe.stayloop.modelos.Reserva;
-import org.esfe.stayloop.modelos.TipoHabitacion;
-import org.esfe.stayloop.servicios.implementaciones.ImagenService;
+import org.esfe.stayloop.modelos.*;
 import org.esfe.stayloop.servicios.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.esfe.stayloop.modelos.Usuario;
-
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -60,7 +50,6 @@ public class ReservaController {
         int pageSize = size.orElse(5);
         Pageable pageable = PageRequest.of(currentPage, pageSize, Sort.by(Sort.Direction.DESC, "id"));
 
-
         Integer idUsuarioValue = idUsuario.orElse(null);
         Integer idHotelValue = idHotel.orElse(null);
         BigDecimal totalMinValue = totalMin.orElse(null);
@@ -96,7 +85,6 @@ public class ReservaController {
             Model model,
             Reserva reserva) {
 
-        // Hotel fijo
         if (idHotel != null) {
             Hotel hotel = hotelService.buscarPorId(idHotel);
             if (hotel != null) {
@@ -105,7 +93,6 @@ public class ReservaController {
             }
         }
 
-        // Tipo de habitación fijo
         if (idTipoHabitacion != null) {
             TipoHabitacion tipo = tipoHabitacionService.buscarPorId(idTipoHabitacion);
             if (tipo != null) {
@@ -114,10 +101,8 @@ public class ReservaController {
             }
         }
 
-        // Usuario logueado fijo
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String email = auth.getName(); // Spring Security guarda aquí el username o email
-
+        String email = auth.getName();
         usuarioService.buscarPorEmail(email).ifPresent(usuarioLogueado -> {
             model.addAttribute("usuarioActual", usuarioLogueado);
             reserva.setIdUsuario(usuarioLogueado.getId());
@@ -131,7 +116,6 @@ public class ReservaController {
         return "reserva/create";
     }
 
-
     // GUARDAR NUEVA RESERVA
     @PostMapping("/save")
     public String saveReserva(@Valid @ModelAttribute("reserva") Reserva reserva,
@@ -144,12 +128,12 @@ public class ReservaController {
             return "reserva/create";
         }
 
+        Reserva nuevaReserva = reservaService.crearOEditar(reserva);
 
-        reservaService.crearOEditar(reserva);
-        return "redirect:/reservas";
+        // ✅ Cambio: ahora redirige a un GET que Stripe soporta
+        return "redirect:/checkout/create-checkout-session/" + nuevaReserva.getId();
     }
 
-    // FORMULARIO EDITAR
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Integer id, Model model) {
         Reserva reserva = reservaService.buscarPorId(id);
@@ -172,7 +156,6 @@ public class ReservaController {
         return "reserva/details";
     }
 
-    // ELIMINAR
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") Integer id, Model model) {
         Reserva reserva = reservaService.buscarPorId(id);
@@ -186,7 +169,6 @@ public class ReservaController {
         return "redirect:/reservas";
     }
 
-
     @GetMapping("/hoteles")
     public String index(Model model,
                         @RequestParam("page") Optional<Integer> page,
@@ -198,13 +180,9 @@ public class ReservaController {
         int pageSize = size.orElse(5);
         Pageable pageable = PageRequest.of(currentPage, pageSize);
 
-        // si nombre viene nulo, se lo pasamos como "" para evitar errores
         String filtroNombre = (nombre == null) ? "" : nombre;
-
         Page<Hotel> hoteles = hotelService.buscarPaginados(pageable, zona, filtroNombre);
 
-
-        // info para el paginador
         int totalPages = hoteles.getTotalPages();
         if (totalPages > 0) {
             List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
@@ -213,27 +191,24 @@ public class ReservaController {
             model.addAttribute("pageNumbers", pageNumbers);
         }
 
-
-
         model.addAttribute("hoteles", hoteles);
         model.addAttribute("zona", zona);
         model.addAttribute("nombre", filtroNombre);
 
-        return "reserva/hotelesusuarios"; // tu dashboard de hoteles
+        return "reserva/hotelesusuarios";
     }
-
 
     @GetMapping("/detallehotel/{id}")
     public String detallehotel(@PathVariable("id") Integer id, Model model) {
         Reserva reserva = new Reserva();
         model.addAttribute("reserva", reserva);
-        List<Imagen>Imagenes= imagenService.buscarPorIdHotel(id);
-        List<TipoHabitacion>Habitaciones= tipoHabitacionService.buscarPorIdHotel(id);
+        List<Imagen> imagenes = imagenService.buscarPorIdHotel(id);
+        List<TipoHabitacion> habitaciones = tipoHabitacionService.buscarPorIdHotel(id);
         Hotel hotel = hotelService.buscarPorId(id);
 
-        model.addAttribute("Imagenes", Imagenes);
+        model.addAttribute("Imagenes", imagenes);
         model.addAttribute("Hotel", hotel);
-        model.addAttribute("Habitaciones", Habitaciones);
+        model.addAttribute("Habitaciones", habitaciones);
 
         model.addAttribute("hoteles", hotelService.obtenerTodos());
         model.addAttribute("tiposHabitacion", tipoHabitacionService.obtenerTodos());
@@ -250,8 +225,18 @@ public class ReservaController {
                 .orElse(null);
     }
 
+    @GetMapping("/cancel")
+    public String paymentCancel(@RequestParam Integer id, Model model) {
+        Reserva reserva = reservaService.buscarPorId(id);
+        model.addAttribute("reserva", reserva);
+        return "checkout/cancel";
+    }
 
 
+    @GetMapping("/simular-pago")
+    public String simularPago() {
+        return "reserva/simular-pago"; // apunta al HTML anterior
+    }
 
 
 }
