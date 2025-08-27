@@ -4,10 +4,7 @@ import jakarta.validation.Valid;
 import org.esfe.stayloop.modelos.*;
 import org.esfe.stayloop.servicios.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -268,6 +265,52 @@ public class HotelController {
     }
 
 
+    @GetMapping("/Administrador")
+    public String getReservasPaginadas(
+            Model model,
+            @RequestParam(value = "page", required = false) Optional<Integer> page,
+            @RequestParam(value = "size", required = false) Optional<Integer> size,
+            @RequestParam(value = "idUsuario", required = false) Optional<Integer> idUsuario,
+            @RequestParam(value = "idHotel", required = false) Optional<Integer> idHotel,
+            @RequestParam(value = "totalMin", required = false) Optional<BigDecimal> totalMin
+    ) {
+        int currentPage = page.orElse(1) - 1;
+        int pageSize = size.orElse(5);
+        Pageable pageable = PageRequest.of(currentPage, pageSize, Sort.by(Sort.Direction.DESC, "id"));
+
+        Integer idUsuarioValue = idUsuario.orElse(null);
+        Integer idHotelValue = idHotel.orElse(null);
+        BigDecimal totalMinValue = totalMin.orElse(null);
+
+        Page<Reserva> reservas = reservaService.buscarPaginados(
+                idUsuarioValue,
+                idHotelValue,
+                totalMinValue,
+                pageable
+        );
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+
+        Usuario usuario = usuarioService.buscarPorEmail(email).get();
+        Integer idHotelview = usuario.getId();
+
+        int totalPages = reservas.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                    .boxed()
+                    .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+
+        model.addAttribute("hoteles", hotelService.obtenerTodos());
+        model.addAttribute("tiposHabitacion", tipoHabitacionService.obtenerTodos());
+        model.addAttribute("usuarios", usuarioService.obtenerTodos());
+        model.addAttribute("reservas", reservas);
+        model.addAttribute("totalMin", totalMinValue);
+
+        return "hotel/hotelview";
+    }
 
 
 }

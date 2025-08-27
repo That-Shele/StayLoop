@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+
+<div layout:fragment="content" class="flex flex-1 justify-center py-10 px-4 sm:px-6 lg:px-8">
+
+    <div class="w-full max-w-6xl">
+
+        <h2 class="text-2xl font-bold mb-6">Reservas</h2>
+
+        <!-- Filtros -->
+        <form th:action="@{/reservas}" method="get" class="mb-4 flex flex-wrap gap-4">
+
+            <input type="number" name="idUsuario" th:value="${idUsuario}" placeholder="ID Usuario"
+                   class="border rounded p-2"/>
+
+            <input type="number" name="idHotel" th:value="${idHotel}" placeholder="ID Hotel"
+                   class="border rounded p-2"/>
+
+            <input type="number" step="0.01" name="totalMin" th:value="${totalMin}" placeholder="Total mínimo"
+                   class="border rounded p-2"/>
+
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Filtrar</button>
+        </form>
+
+        <!-- Botón crear -->
+        <div class="mb-4">
+            <a th:href="@{/reservas/create}" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                Crear Reserva
+            </a>
+        </div>
+
+        <!-- Tabla de reservas -->
+        <table class="min-w-full bg-white border rounded">
+            <thead class="bg-gray-200">
+            <tr>
+                <th class="py-2 px-4 border">ID</th>
+                <th class="py-2 px-4 border">Usuario</th>
+                <th class="py-2 px-4 border">Hotel</th>
+                <th class="py-2 px-4 border">Tipo Habitación</th>
+                <th class="py-2 px-4 border">Fecha Inicio</th>
+                <th class="py-2 px-4 border">Fecha Fin</th>
+                <th class="py-2 px-4 border">Total</th>
+                <th class="py-2 px-4 border">Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="reserva : ${reservas.content}" class="hover:bg-gray-100">
+                <td class="py-2 px-4 border" th:text="${reserva.id}"></td>
+                <td class="py-2 px-4 border" th:each="usuario : ${usuarios}" th:if="${usuario.id == reserva.idUsuario}" th:text="${usuario.nombre}"></td>
+                <td class="py-2 px-4 border" th:each="hotel : ${hoteles}" th:if="${hotel.id == reserva.idHotel}" th:text="${hotel.nombre}"></td>
+                <td class="py-2 px-4 border"  th:each="habitacion : ${tiposHabitacion}" th:if="${habitacion.id == reserva.idTipoHabitacion}" th:text="${habitacion.nombre}" ></td>
+                <td class="py-2 px-4 border" th:text="${#temporals.format(reserva.fechaInicio, 'dd-MM-yyyy HH:mm')}"></td>
+                <td class="py-2 px-4 border" th:text="${#temporals.format(reserva.fechaFin, 'dd-MM-yyyy HH:mm')}"></td>
+                <td class="py-2 px-4 border" th:text="${reserva.total}"></td>
+                <td class="py-2 px-4 border flex gap-2">
+                    <a th:href="@{/reservas/details/{id}(id=${reserva.id})}" class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600">Ver</a>
+                    <a th:href="@{/reservas/edit/{id}(id=${reserva.id})}" class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600">Editar</a>
+                    <a th:href="@{/reservas/delete/{id}(id=${reserva.id})}" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Eliminar</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- Paginación -->
+        <div class="mt-4 flex justify-center gap-2" th:if="${pageNumbers != null}">
+            <a th:each="pageNum : ${pageNumbers}"
+               th:href="@{/reservas(page=${pageNum})}"
+               th:text="${pageNum}"
+               class="px-3 py-1 border rounded hover:bg-gray-200"></a>
+        </div>
+
+    </div>
+
+</div>
+</html>
