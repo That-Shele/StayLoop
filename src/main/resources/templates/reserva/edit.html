@@ -16,25 +16,28 @@
       <!-- Usuario -->
       <div>
         <label for="idUsuario" class="block text-sm font-medium">Usuario</label>
-        <input type="number" th:field="*{idUsuario}" id="idUsuario" placeholder="ID del usuario"
-               class="mt-1 block w-full border rounded-md p-2"/>
-        <p th:if="${#fields.hasErrors('idUsuario')}" th:errors="*{idUsuario}" class="text-red-500 text-sm"></p>
+        <span th:each="usuario : ${usuarios}"
+              th:if="${usuario.id == reserva.idUsuario}"
+              th:text="${usuario.nombre}"
+              class="mt-1 block border rounded-md p-2 bg-gray-100"></span>
       </div>
 
       <!-- Hotel -->
       <div>
         <label for="idHotel" class="block text-sm font-medium">Hotel</label>
-        <input type="number" th:field="*{idHotel}" id="idHotel" placeholder="ID del hotel"
-               class="mt-1 block w-full border rounded-md p-2"/>
-        <p th:if="${#fields.hasErrors('idHotel')}" th:errors="*{idHotel}" class="text-red-500 text-sm"></p>
+        <span th:each="hotel : ${hoteles}"
+              th:if="${hotel.id == reserva.idHotel}"
+              th:text="${hotel.nombre}"
+              class="mt-1 block border rounded-md p-2 bg-gray-100"></span>
       </div>
 
       <!-- Tipo de habitación -->
       <div>
         <label for="idTipoHabitacion" class="block text-sm font-medium">Tipo de habitación</label>
-        <input type="number" th:field="*{idTipoHabitacion}" id="idTipoHabitacion" placeholder="ID del tipo de habitación"
-               class="mt-1 block w-full border rounded-md p-2"/>
-        <p th:if="${#fields.hasErrors('idTipoHabitacion')}" th:errors="*{idTipoHabitacion}" class="text-red-500 text-sm"></p>
+        <span th:each="tipo : ${tiposHabitacion}"
+              th:if="${tipo.id == reserva.idTipoHabitacion}"
+              th:text="${tipo.nombre}"
+              class="mt-1 block border rounded-md p-2 bg-gray-100"></span>
       </div>
 
       <!-- Fecha realizado -->
@@ -71,10 +74,16 @@
 
       <!-- Botón Guardar -->
       <div class="flex justify-end">
+
+        <a th:href="@{/reservas}" class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500">
+          Volver
+        </a>
+
         <button type="submit"
                 class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
           Guardar Cambios
         </button>
+
       </div>
     </form>
   </div>

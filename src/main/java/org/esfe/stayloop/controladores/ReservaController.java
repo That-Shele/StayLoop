@@ -163,6 +163,11 @@ public class ReservaController {
     public String delete(@PathVariable("id") Integer id, Model model) {
         Reserva reserva = reservaService.buscarPorId(id);
         model.addAttribute("reserva", reserva);
+
+        model.addAttribute("usuarios", usuarioService.obtenerTodos());
+        model.addAttribute("hoteles", hotelService.obtenerTodos());
+        model.addAttribute("tiposHabitacion", tipoHabitacionService.obtenerTodos());
+
         return "reserva/delete";
     }
 
