@@ -76,7 +76,12 @@ public class CheckoutController {
     @GetMapping("/cancel")
     public String paymentCancel(@RequestParam Integer id, Model model) {
         Reserva reserva = reservaService.buscarPorId(id);
-        model.addAttribute("reserva", reserva);
-        return "checkout/cancel"; // Crear vista
+        if (reserva != null) {
+            model.addAttribute("reserva", reserva);
+
+            // También podrías mostrar el usuario si quieres personalizar más el mensaje
+            model.addAttribute("usuarioActual", reserva.getUsuario());
+        }
+        return "checkout/cancel";
     }
 }
