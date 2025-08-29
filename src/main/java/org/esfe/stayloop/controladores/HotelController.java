@@ -273,7 +273,7 @@ public class HotelController {
     ) {
         int currentPage = page.orElse(1) - 1;
         int pageSize = size.orElse(5);
-        Pageable pageable = PageRequest.of(currentPage, pageSize, Sort.by(Sort.Direction.DESC, "id"));
+        ;
 
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -283,6 +283,7 @@ public class HotelController {
         Integer idHotelview = usuario.getId();
 
         List<Reserva> modifiedAppList = reservaService.buscarSegunPropietario(idHotelview);
+        Pageable pageable = PageRequest.of(currentPage, pageSize);
 
         Page<Reserva> reservas = new PageImpl<>(modifiedAppList, pageable ,modifiedAppList.size());
 
@@ -310,6 +311,7 @@ public class HotelController {
         model.addAttribute("hoteles", hotelService.obtenerTodos());
         model.addAttribute("tiposHabitacion", tipoHabitacionService.obtenerTodos());
         model.addAttribute("usuarios", usuarioService.obtenerTodos());
+        model.addAttribute("cantReservas", modifiedAppList.size());
         model.addAttribute("reservas", reservas);
         model.addAttribute("usuario", usuario);
         model.addAttribute("ingresos", ingresos);
@@ -341,7 +343,7 @@ public class HotelController {
     @PostMapping("/removereserva")
     public String remove(@RequestParam("id") Integer id) {
         reservaService.eliminarPorId(id);
-        return "redirect:/hotelview";
+        return "redirect:/hotel/administrador";
     }
 
 

@@ -25,7 +25,7 @@ public interface IReservaRepository extends JpaRepository<Reserva, Integer> {
     );
 
     @Query("SELECT r FROM Reserva r JOIN TipoHabitacion th ON r.idTipoHabitacion = th.id JOIN Hotel h ON r.idHotel = h.id WHERE h.idUsuario = :idUsuario " +
-    "AND r.fechaRealizado >= :fechaRealizado")
+    "AND r.fechaRealizado >= :fechaRealizado ORDER BY r.id DESC")
     List<Reserva> findAllReservasByPropietarioDelHotel(
             @Param("idUsuario") Integer idUsuario,
             @Param("fechaRealizado") LocalDateTime fechaRealizado);

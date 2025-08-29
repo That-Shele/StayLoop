@@ -125,6 +125,16 @@ public class ReservaController {
                               BindingResult bindingResult,
                               Model model) {
         if (bindingResult.hasErrors()) {
+            if(reserva.getId() != null){
+                model.addAttribute("reserva", reserva);
+                TipoHabitacion tipo = tipoHabitacionService.buscarPorId(reserva.getIdTipoHabitacion());
+                if (tipo != null) {
+                    model.addAttribute("tipoHabitacionActual", tipo);
+                }
+                model.addAttribute("hoteles", hotelService.obtenerTodos());
+                model.addAttribute("tiposHabitacion", tipoHabitacionService.obtenerTodos());
+                return "reserva/edit";
+            }
             model.addAttribute("hoteles", hotelService.obtenerTodos());
             model.addAttribute("tiposHabitacion", tipoHabitacionService.obtenerTodos());
             model.addAttribute("usuarios", usuarioService.obtenerTodos());
@@ -132,14 +142,25 @@ public class ReservaController {
         }
 
         Reserva nuevaReserva = reservaService.crearOEditar(reserva);
-
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
+        Usuario user = usuarioService.buscarPorEmail(email).get();
         // ✅ Cambio: ahora redirige a un GET que Stripe soporta
-        return "redirect:/checkout/create-checkout-session/" + nuevaReserva.getId();
+        if(user.getIdRol() != 1) {
+            return "redirect:/checkout/create-checkout-session/" + nuevaReserva.getId();
+        }
+        else {
+            return "redirect:/reservas";
+        }
     }
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Integer id, Model model) {
         Reserva reserva = reservaService.buscarPorId(id);
+        TipoHabitacion tipo = tipoHabitacionService.buscarPorId(reserva.getIdTipoHabitacion());
+        if (tipo != null) {
+            model.addAttribute("tipoHabitacionActual", tipo);
+        }
         model.addAttribute("reserva", reserva);
         model.addAttribute("hoteles", hotelService.obtenerTodos());
         model.addAttribute("tiposHabitacion", tipoHabitacionService.obtenerTodos());

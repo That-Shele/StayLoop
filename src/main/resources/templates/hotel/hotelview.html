@@ -24,7 +24,7 @@
                             <svg fill="currentColor" height="20" viewBox="0 0 256 256" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M208,80H176V56a48,48,0,0,0-96,0V80H48A16,16,0,0,0,32,96v96a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V96A16,16,0,0,0,208,80ZM96,56a32,32,0,0,1,64,0V80H96ZM208,192H48V96H80v16a8,8,0,0,0,16,0V96h64v16a8,8,0,0,0,16,0V96h32Z"></path></svg>
                         </div>
                     </div>
-                    <p class="text-[var(--text-secondary)] text-4xl font-bold" th:text="${#lists.size(reservas)}"></p>
+                    <p class="text-[var(--text-secondary)] text-4xl font-bold" th:text="${cantReservas}"></p>
                     <p class="text-green-600 text-sm font-medium">En los ultimos 30 días</p>
                 </div>
                 <div class="kpi-card">

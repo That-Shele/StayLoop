@@ -90,7 +90,7 @@ public class Reserva {
         return fechaRealizado;
     }
 
-    public void setFechaRealizado(@NotNull(message = "La fecha de realización es obligatoria") @PastOrPresent(message = "La fecha de realización no puede ser futura") LocalDateTime fechaRealizado) {
+    public void setFechaRealizado(@NotNull(message = "La fecha de realización es obligatoria")  LocalDateTime fechaRealizado) {
         this.fechaRealizado = fechaRealizado;
     }
 
